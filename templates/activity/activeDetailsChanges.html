@@ -1,0 +1,45 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>修改活动</span>
+	</div>
+	<form action="{% url 'updateactivity_ID' %}" method="POST" role="form" class="form-horizontal">
+		{% csrf_token %}
+		<div class="operationbox">
+			<p class="red">{{ updateAct.name }}</p>
+			<div class="activities">
+				<span class="fontgrey">活动编号：</span>
+				<span class="fontgrey">{{ updateAct.id }}</span>
+                <input type="hidden" name="id"  value="{{ updateAct.id }}">
+				<input type="hidden" name="name"  value="{{ updateAct.name }}" >
+			</div>
+			<div class="activities">
+				<span class="fontgrey">活动日期：</span>
+                <input type="text" name="start_date" placeholder="请选择日期区间" class="div-date" id="txtBeginDate" value="{{ updateAct.start_date|date:"Y-m-d" }}"/>
+				<span class="fontgrey">&nbsp;至&nbsp;</span>
+                <input type="text" name="end_date" placeholder="请选择日期区间" class="div-date" id="txtEndDate" value="{{ updateAct.end_date|date:"Y-m-d" }}"/>
+			</div>
+			<div class="activities">
+				<span class="fontgrey">广告主：</span>
+				<input class="fontgrey bigredtext" type="text" style="text-align:center;margin-left:27px;" name="advertiser_name" value="{{ updateAct.advertiser_name }}">
+			</div>
+			<div class="activities">
+				<span class="fontgrey smallfontsize">活动总预算：</span>
+				<input class="fontgrey bigredtext" type="text" style="text-align:center" name="budget" value="{{ updateAct.budget }}">
+			</div>
+			<div class="activities">
+				<button class="blue" type="submit">保存</button>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

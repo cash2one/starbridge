@@ -1,0 +1,51 @@
+{%  extends 'base.html' %}
+{% block title %}Management{% endblock %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+	</div>
+	<div class="operationbox">
+	    <b class="fontblue">欢乐颂第二季发布会</b>
+	    <div class="activities">
+	    	<span class="fontgrey">活动编号：</span>
+	    	<span class="fontgrey">20160505001</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">活动日期：</span>
+            <span class="fontgrey">2016年5月5日</span>
+	    	<span class="fontgrey">&nbsp;至&nbsp;</span>
+	    	<span class="fontgrey">2016年8月10日</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">广告主：</span>
+	    	<span class="fontgrey">英菲尼迪公司</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey smallfontsize">活动总预算：</span>
+	    	<span class="fontgrey">120000</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">创建时间：</span>
+            <span class="fontgrey">2016-05-05</span>
+	    	<span class="fontgrey">21:17:49</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">已创建订单：</span>
+	    	<span class="fontgrey">还未创建订单</span>
+            <span class="fontblue ordered">订单1，</span>
+	    </div>
+	    <div class="activities">
+	    	<button class="blue">修改活动</button>
+	    	<button class="blue">关闭活动</button>
+	    	<button class="blue">创建订单</button>
+	    </div>
+	</div>
+</div>
+{% endblock %}

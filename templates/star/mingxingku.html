@@ -1,0 +1,372 @@
+{%  extends 'base.html' %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/redMan.css">
+<script type="text/javascript" src="/static/js/paginator.js"></script>
+<script type="text/javascript" src="/static/js/celebrity.js"></script>
+
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>明星库</span>
+	</div>
+{% include 'celebrity/redManSelect.html'%}
+{#	<div class="smalloperationbox" id ="star">#}
+{#	    <b class="fontgrey bigfontsize">明星库</b>#}
+{##}
+{#	    <ul class="optionbox" id= "gender">#}
+{#	    	<span class="redtitle" >性别：</span>#}
+{#            {% for a in dict.gender %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.id }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.id }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#            {% endfor %}#}
+{#	    </ul>#}
+{##}
+{#	    <ul class="optionbox" id= "category">#}
+{#	    	<span class="redtitle">分类：</span>#}
+{#            {% for a in dict.category %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.id }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.id }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#            {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "fans_num">#}
+{#	    	<span class="redtitle">粉丝数：</span>#}
+{#            {% for a in dict.fans_num %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.id }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.id }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#             {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "price">#}
+{#	    	<span class="redtitle">参考报价：</span>#}
+{#            {% for a in dict.price %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.id }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.id }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#             {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "area">#}
+{#	    	<span class="redtitle">地域：</span>#}
+{#            {% for a in dict.area %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.id }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.id }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#        {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "broadcast_platform">#}
+{#	    	<span class="redtitle">直播平台：</span>#}
+{#            {% for a in dict.broadcast_platform %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.id }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.id }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#        {% endfor %}#}
+{#	    </ul>#}
+{#	</div>#}
+{##}
+{##}
+{#	<div class="tablechoicebox" id="star">#}
+{#	    <div class="tablechoiceone" id="cred">#}
+{#	    	<div class="tablechoice">#}
+{#			    <input type="checkbox" checked>#}
+{#	    	    <span>全选本页</span>#}
+{#		    </div>#}
+{#			<div class="tablechoice">#}
+{#				<input type="checkbox">#}
+{#		    	 <span>认证</span>#}
+{#			</div>#}
+{#			<div class="tablechoice">#}
+{#				<input type="checkbox">#}
+{#		    	 <span>只显示已选</span>#}
+{#			</div>#}
+{#	    </div>#}
+{##}
+{#	    <div class="tablechoicetwo"  id="search">#}
+{#	    	<div class="tablechoice searchbox">#}
+{#			    <input type="text" placeholder="请输入你的关键字">#}
+{#			    <img src="/static/img/search.png">#}
+{#		    </div>#}
+{#			<div class="select blue">#}
+{#				<select>#}
+{#					<option>每页只显示20个</option>#}
+{#					<option>每页只显示50个</option>#}
+{#					<option>每页只显示100个</option>#}
+{#				</select>#}
+{#			</div>#}
+{#	    </div>#}
+{#	</div>#}
+
+	<table class="redmantable">
+		<tr class="blue trone">
+            <td>
+				<span>主播名称</span>
+			</td>
+			<td>
+				<span>平台名称</span>
+			</td>
+            <td>
+				<span>平台ID</span>
+			</td>
+
+            <td>
+				<span>地域</span>
+
+			</td>
+
+			<td>
+				<span>粉丝数</span>
+			</td>
+
+            <td>
+				<span>平均观看数</span>
+			</td>
+            <td>
+				<span>订阅量</span>
+			</td>
+
+			<td>
+				<span>口播</span>
+			</td>
+			<td>
+				<span>商品植入</span>
+			</td>
+			<td>
+				<span>品牌露出</span>
+			</td>
+			<td>
+				<span>CPS%</span>
+			</td>
+            <td>
+				<span>备注</span>
+			</td>
+{#			<td>#}
+{#				<span>活动</span>#}
+{#				<br>#}
+{#				<span>状态</span>#}
+{#			</td>#}
+{#			<td>#}
+{#				<span>操作</span>#}
+{#			</td>#}
+		</tr>
+
+        {% for a  in starvalue.list %}
+
+		<tr class="redtr">
+			<td>
+				<div class="headportrait">
+			    	<img src="">
+			    	<div class="draw">
+			    		<img src="/static/img/duihao.png">
+			    	</div>
+                    <span class="status" style="display:none">{{ a.is_credibility }}</span>
+			    </div>
+                <script>
+                //判断明星是否认证，如果认证，就加上reddraw属性，也就是加上对勾
+                $(".redtr").each(function(){
+                if($(this).find(".status").text()=="B"){
+                    $(this).find("td:first-child").find(".draw").addClass("reddraw");
+                }
+                if($(this).find(".status").text()=="A"){
+                    $(this).find("td:first-child").find(".draw").removeClass("reddraw");
+                }
+                })
+                </script>
+
+{#			    <div class="headportraittitle">#}
+                    <span class="headportraittitle_span"><a href="{% url 'star_detail' %}?id={{ a.id }}">{{ a.nickname }}</a></span>
+{#			    </div>#}
+			</td>
+{#			<td>105万</td>#}
+{#			<td>200万</td>#}
+{#			<td>1000</td>#}
+{#			<td>200</td>#}
+{#			<td>3000</td>#}
+{##}
+{#			<td>#}
+{#			    <span></span>}#}
+{#			</td>#}
+{#            <td>#}
+{#			    <span></span>#}
+{#			</td>#}
+{#            <td>#}
+{#			    <span></span>#}
+{##}
+{#			</td>#}
+			<td>
+			    <span>{{ a.broadcast_platform }}</span>
+			</td>
+
+            <td>
+			    <span>{{ a.platform_id }}</span>
+			</td>
+            <td>
+			    <span>{{ a.area }}</span>
+			</td>
+			<td>
+			    <span>{{ a.fans_num }}</span>
+			</td>
+            <td>
+				<span>{{ a.average_num }}</span>
+			</td>
+			<td>
+				<span>{{ a.reads_num }}</span>
+			</td>
+			<td>
+			   <span>{{ a.export_price }}</span>
+			</td>
+
+            <td>
+			   <span>{{ a.ad_implants_price }}</span>
+			</td>
+
+            <td>
+			   <span>{{ a.brand_exposed_price }}</span>
+			</td>
+			<td>
+                <span>{{ a.star.cps }}</span>
+            </td>
+
+            <td>
+                <span>{{ a.memo }}</span>
+            </td>
+
+{#			<td>#}
+{#			    <span>有活动</span>#}
+{#			    <br>#}
+{#			    <span class="fontblue">详情</span>#}
+{#			</td>#}
+{#			<td>#}
+{#				 <span class="blue choice">已选</span>#}
+{#				 <span class="blue cancelchoice" style="display:none">取消选择</span>#}
+{#			</td>#}
+		</tr>
+       {% empty %}
+        <tr>
+        <td colspan="12">无记录</td>
+        </tr>
+       {% endfor %}
+
+	</table>
+
+<!--
+	<div class="pagebreakbox">
+		<div class="pagebox">
+			<div class="pagebtnbox blue prev">
+			    <span>
+			    	<img src="/static/img/left.png" width="15px">
+			    </span>
+				<span>PREV</span>
+			</div>
+			<div class="pagenumbox blue darkblue">1</div>
+			<div class="pagenumbox blue">2</div>
+			<div class="pagenumbox blue">3</div>
+			<div class="pagenumbox blue">4</div>
+			<div class="pagebtnbox blue next">
+				<span>
+			    	<img src="/static/img/right.png" width="15px">
+			    </span>
+				<span>NEXT</span>
+			</div>
+		</div>
+	</div>
+</div>
+-->
+<!--分页代码-->
+<!--
+    <div class="pagebreakbox">
+		    <div class="pagebox" >
+                            <ul class="pager pagebox">
+                {% if star_list.has_previous %}
+                    <li class="previous pagebtnbox blue prev">
+                                    <span>
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                        <a href="{{ query_category }}page={{ star_list.previous_page_number }}">上一页</a>
+                    </li>
+                {% else %}
+                    <li class="previous disabled pagebtnbox blue prev">
+                                	<span>
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                        <a href="">上一页</a>
+                    </li>
+                {% endif %}
+
+                            <input type="hidden" value={{ star_list.number }} id="currentpage">
+			                <input type="hidden" value={{ star_list.paginator.num_pages }} id="totalpages">
+                {% if star_list.has_next %}
+                    <li class="next pagebtnbox blue next">
+                        <a href="{{ query_category }}page={{ star_list.next_page_number }}">下一页</a>
+                                    <span style="left:53px">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+                    </li>
+                {% else %}
+                    <li class="next disabled pagebtnbox blue next">
+                        <a href="">下一页</a>
+                                	<span style="left:53px">
+								    	<img src="/static/img/right.png" width="15px" >
+								    </span>
+                    </li>
+                {% endif %}
+            </ul>
+
+            </div>
+        </div>
+-->
+  <div class="managementpage">
+		    <div class="pagination" style="width:75%">
+                        <ul class="pager pagebox">
+                            {% if starvalue.list.has_previous %}
+                                <li class="previous pagebtnbox blue prev">
+									<a href="{{ query_category }}&page={{ starvalue.list.previous_page_number }}">
+                                    <span style="top:0px;left:-24px;">
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                                      上一页</a>
+                                </li>
+                            {% else %}
+                                <li class="previous disabled pagebtnbox blue prev">
+									<a href="#">
+                                	<span style="top:0px;left:-24px;">
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                                	上一页</a>
+                                </li>
+                            {% endif %}
+                            {% for p in starvalue.page_range %}
+                                {% ifequal p starvalue.list.number %}
+                                    <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
+                                {% else %}
+                                    <li class="pagenumbox blue"><a href="{{ query_category }}&page={{p}}" title="第{{p}}页">{{p}}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
+
+                            {% if starvalue.list.has_next %}
+                                <li class="next pagebtnbox blue next">
+                                <input type="hidden" value="{{ starvalue.list.next_page_number }}">
+                                    <a href="{{ query_category }}&page={{ starvalue.list.next_page_number }}">下一页
+                                    <span  style="left:41px;top:0px">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+									</a>
+                                </li>
+                            {% else %}
+                                <li class="next disabled pagebtnbox blue next">
+                                	<a href="#">下一页
+                                	<span  style="left:41px;top:0px;">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+									</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+            </div>
+        </div>
+	</div>
+</div>
+
+{% endblock %}

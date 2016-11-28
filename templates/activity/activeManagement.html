@@ -1,0 +1,281 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/activeManagement.css">
+	<script type="text/javascript" src="/static/js/finance.js"></script>
+    <script>
+
+    //获取查询的条件并保持查询的记录
+	$(function(){
+        $("#active_son_ul li").click(function(){
+            $("#img").val($(this).attr("value"));
+        })
+
+		$("#searchActivity").click(function(){
+			$("#activityname").val($(".activityname").val());
+			$("#activitystartdate").val($("#txtBeginDate").val());
+			$("#activityenddate").val($("#txtEndDate").val());
+			$("#activityform").submit();
+		});
+        //付款按钮的状态改变
+        var tbodyValue = $("tbody[name=zmbactorderpay]")
+        $.each(tbodyValue,function(){
+            var actorderpay = $(this).find("#actpaystatus").text();
+            if(actorderpay == "已付款"){
+                $(this).find("button[name=orderpay]").parent("a").attr("href","javascrot:;")
+                $(this).find("button[name=orderpay]").hide();
+{#                $(this).find("button[name=orderpay]").attr("disabled",true).text("已付款");#}
+{#                $(this).find("button[name=orderpay]").text("已付款").click(function () {#}
+{#                    alert("对不起,您已经付款了!");#}
+{##}
+{#                });#}
+{#                $(this).find("button[name=orderpay]").attr("disabled",true).css("background","#666").text("已付款");#}
+
+            }
+        });
+        //导出查询后的数据以excel保存
+        $('#export').find("span").click(function () {
+            var name = $(".activityname").val();
+            var start_date = $("#txtBeginDate").val();
+            var end_date = $("#txtEndDate").val();
+            var activity_status = $("#img").val();
+{#            $.ajax({#}
+{#                type: "GET",#}
+{#                async: false,#}
+{#                url:"/activity/exportactivity/",#}
+{#                contentType:'application/vnd.ms-excel',#}
+{#                data: {"name": name, "start_date": start_date, "end_date": end_date, "activity_status": activity_status},#}
+{#                success: function(data){#}
+{#                    return false#}
+{#                }#}
+{#            });#}
+            window.location.href="/activity/exportactivity?&name="+name+"&start_date="+start_date+"&end_date="+end_date+"&activity_status="+activity_status
+        });
+    });
+</script>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+	</div>
+	<div class="smalloperationbox">
+		<!--多条件查询-->
+		<form action="{% url 'queryactivity' %}" method="get" id="activityform">
+	    <div class="activemanagement">
+	    	<div class="management">
+				<span class="fontgrey spanbox">活动名称：</span>
+                <input type="text" class="activityname"value="{{ actname }}" placeholder="请输入活动名称">
+	        </div>
+	        <div class="management">
+	    		<span class="fontgrey spanbox">活动日期：</span>
+				<input type="text" id="txtBeginDate" class="div-date" value="{{ start_dates }}" style="margin-left: 14px;">
+	    		<span class="fontgrey zhi">&nbsp;至&nbsp;&nbsp;</span>
+				<input type="text" id="txtEndDate" class="div-date" value="{{ end_dates }}">
+	    	</div>
+	    </div>
+	    <div class="activemanagement">
+	    	<span class="fontgrey spanbox">状态：</span>
+            <ul class="main_box"  style="position:absolute;display:block;z-index:100;margin: -20px 0 0 50px;">
+                <li class="select_box">
+                    {% if actstatus == 'A' %}
+                    <span class="img">待审核</span>
+                    {% elif actstatus == 'B' %}
+                    <span class="img">待上传素材</span>
+                    {% elif actstatus == 'C' %}
+                    <span class="img">已通过审核，待接单</span>
+                    {% elif actstatus == 'D' %}
+                    <span class="img">已支付</span>
+                    {% elif actstatus == 'E' %}
+                    <span class="img">投放中</span>
+                    {% elif actstatus == 'F' %}
+                    <span class="img">投放结束，待结算</span>
+                    {% elif actstatus == 'G' %}
+                    <span class="img">已结算</span>
+                    {% elif actstatus == 'H' %}
+                    <span class="img">已关闭</span>
+                    {% else %}
+                    <span class="img">全部状态</span>
+                    {% endif %}
+                    <ul class="son_ul" id="active_son_ul">
+                        <li value="">全部状态</li>
+                        <li value="A">待审核</li>
+                        <li value="B">待上传素材</li>
+                        <li value="C">已通过审核，待接单</li>
+                        <li value="D">已支付</li>
+                        <li value="E">投放中</li>
+                        <li value="F">投放结束，待结算</li>
+                        <li value="G">已结算</li>
+                        <li value="H">已关闭</li>
+                    </ul>
+                </li>
+            </ul>
+	    </div>	
+	    <div class="activemanagement float" >
+	    	<button class="blue search" id="searchActivity">查询</button>
+            <a id="export" style="cursor:pointer;">
+                <span class="blue"
+                    style="border: 0;display: inline-block;
+                    width: 98px;height: 35px;border-radius: 5px;
+                    text-align: center;line-height: 35px;">导出
+                </span>
+            </a>
+	    </div>
+            <input type="hidden" name="name" id="activityname" value="">
+            <input type="hidden" name="start_date" id="activitystartdate" value="">
+            <input type="hidden" name="end_date" id="activityenddate" value="">
+            <input type="hidden" name="activity_status" id="img" value="{{ actstatus }}">
+		</form>
+	</div>
+	<div class="activemanagement">
+	    <a href="{% url 'addactivity' %}" style="color:#fff"><button class="blue up">创建活动</button></a>
+	</div>
+    {% for activity in page_range.list %}
+        <!--活动无订单显示-->
+        {% if activity.list|length == 0 %}
+            <ul  class="smalloperationbox onlyshowactive">
+                <li>活动名称：{{ activity.object.name }}</li>
+                <li>活动日期：<span>{{ activity.object.start_date|date:"Y-m-d" }}</span>至<span>{{ activity.object.end_date|date:"Y-m-d" }}</span></li>
+                <li>广告主：<span>{{ activity.object.advertiser_name }}</span></li>
+                <li>活动状态：<span>{{ activity.object.get_activity_status_display }}</span></li>
+                <li >
+                        <a   style="color:#ff0000;"  href="{% url 'acitve_detail' %}?id={{ activity.object.id }}">详情</a>
+                    {% if activity.object.activity_status != 'H' %}
+                        <strong class="fontblue" style="padding:0 5px;">|</strong>
+                        <a  style="color:#ff0000;"  href="{% url 'acitve_close' %}?id={{ activity.object.id }}">关闭活动</a>
+                    {% endif %}
+                </li>
+            </ul>
+            {% else %}<!--活动有订单显示订单详细信息-->
+            <ul class="blue orderbox">  <!--蓝色table活动标签-->
+                <li>活动名称：{{ activity.object.name }}</li>
+                <li>活动日期：<span>{{ activity.object.start_date|date:"Y-m-d" }}</span>至<span>{{ activity.object.end_date|date:"Y-m-d" }}</span></li>
+                <li>广告主：<span>{{ activity.object.advertiser_name }}</span></li>
+                <li><a href="{% url 'acitve_detail' %}?id={{ activity.object.id }}">详情</a></li>
+            </ul>
+            <table class="actorderlist">
+                <thead>
+                        <tr class="table_head">
+                            <td rowspan="2" style="width:159px">名称</td>
+                            <td rowspan="1">直播投放时间</td>
+                            <td rowspan="2">活动素材</td>
+                            <td rowspan="2">奖励佣金</td>
+                            <td rowspan="2" style="width:90px">保底佣金</td>
+                            <td rowspan="2" style="width:90px">平台报价</td>
+                            <td rowspan="2">状态</td>
+                            <td rowspan="2">实收款（元）</td>
+                        </tr>
+        {#                <tr>#}
+        {#                    <td style="width:60px">直播</td>#}
+        {#                </tr>#}
+                </thead>
+                {% for actorder in activity.list %}
+                    <tbody name="zmbactorderpay">
+                    <tr>
+                        <td>{{ actorder.order.name }}</td>
+                        <td>{{ actorder.order.start_time|date:"Y-m-d" }}</td>
+                        {% for zhibo in actorder.createzhibo %}
+                            <td>{{ zhibo.0.get_is_upload_display }}</td>
+                        {% endfor %}
+                        {% for orderadd in actorder.order_adds %}
+                            {% if orderadd.cps|length != 0 %}
+                                <td>{{ orderadd.cps }}</td>
+                            {% else %}
+                                <td>0</td>
+                            {% endif %}
+                        {% endfor %}
+                        {% for coms in actorder.comms %}
+                            {% if coms|length != 0 %}
+                                <td>{{ coms }}</td>
+                            {% else %}
+                                <td>0</td>
+                            {% endif %}
+                        {% endfor %}
+                        <td id="paynums">{{ actorder.order.order_pay }}</td>
+                        <td id="actpaystatus">{{ actorder.order.get_status_display }}</td>
+                        <td>{{ actorder.order.order_pay }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="10" id="orderpay">
+                            <div>
+                                <p>订单:<span id="orderid">{{ actorder.order.id }}&nbsp;{{ actorder.order.name }}</span></p>
+                                <p>投放日期：<span>{{ actorder.order.start_time|date:"Y-m-d" }}</span>至<span>{{ actorder.order.end_time|date:"Y-m-d" }}</span></p>
+                                <p>已选
+                                    <span>红人</span>{{ actorder.celebritynum }}个&nbsp;,
+                                    <span>明星</span>0个&nbsp;
+                                </p>
+                            </div>
+                            <div>创建时间：
+                                <span>{{ actorder.order.create_time|date:"Y-m-d" }}</span>
+                            </div>
+                            <div>
+                                <a class="red click" href="{% url 'order_details' %}?id={{ actorder.order.id }}">点击查看</a>
+                            </div>
+                            <a href="{% url 'pay' %}?id={{ actorder.order.id }}">
+                                <button class="blue pay" name="orderpay">付款</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endfor %}
+
+
+
+
+
+
+<!--分页-->
+ <div class="pagebreakbox managementpage">
+    <div class="pagination" style="width:100%">
+    <ul class="pager pagebox">
+        {% if page_range.list.has_previous %}
+            <li class="previous pagebtnbox blue prev">
+                <a href="?type={{getValue}}&page={{ page_range.list.previous_page_number }}" class="previous">
+                    <span style="top:0px;left:-24px;">
+                        <img src="../../static/img/left.png" width="15px">
+                    </span>上一页</a>
+            </li>
+        {% else %}
+            <li class="previous disabled pagebtnbox blue prev">
+                <a href="#">
+                    <span style="top:0px;left:-24px;">
+                        <img src="../../static/img/left.png" width="15px">
+                    </span>
+                    上一页</a>
+            </li>
+        {% endif %}
+
+        {% for p in page_range.page_range %}
+            {% ifequal p page_range.list.number %}
+                <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
+            {% else %}
+                <li class="pagenumbox blue"><a href="?type={{getValue}}&page={{p}}" title="第{{p}}页">{{p}}</a></li>
+            {% endifequal %}
+        {% endfor %}
+        {% if page_range.list.has_next %}
+            <li class="next pagebtnbox blue next">
+                <a href="?type={{getValue}}&page={{ page_range.list.next_page_number }}">下一页
+                    <span  style="left:41px;top:0px">
+                        <img src="../../static/img/right.png" width="15px">
+                    </span>
+                </a>
+            </li>
+        {% else %}
+            <li class="next disabled pagebtnbox blue next">
+                <a href="#">下一页
+                    <span  style="left:41px;top:0px;">
+                        <img src="../../static/img/right.png" width="15px">
+                    </span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+    </div>
+   </div>
+</div>
+{% endblock %}

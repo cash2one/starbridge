@@ -1,0 +1,402 @@
+{%  extends 'base.html' %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/redMan.css">
+<script type="text/javascript" src="/static/js/paginator.js"></script>
+<script type="text/javascript" src="/static/js/celebrity.js"></script>
+
+<div class="containerbox" >
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>红人库</span>
+	</div>
+
+    {% include 'celebrity/redManSelect.html'%}
+{#			<div class="smalloperationbox"  id ="celebrity">#}
+{#	    <b class="fontgrey bigfontsize">红人库</b>#}
+{##}
+{#	    <ul class="optionbox" id= "gender">#}
+{#	    	<span class="redtitle" >性别：</span>#}
+{#            {% for a in filters.gender %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.sid }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.sid }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#            {% endfor %}#}
+{#	    </ul>#}
+{##}
+{#	    <ul class="optionbox" id= "category">#}
+{#	    	<span class="redtitle">分类：</span>#}
+{#            {% for a in filters.category %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.sid }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.sid }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#            {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "fans_num">#}
+{#	    	<span class="redtitle">粉丝数：</span>#}
+{#            {% for a in filters.fans_num %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.sid }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.sid }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#             {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "price">#}
+{#	    	<span class="redtitle">参考报价：</span>#}
+{#            {% for a in filters.price %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.sid }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.sid }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#             {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "area">#}
+{#	    	<span class="redtitle">地域：</span>#}
+{#            {% for a in filters.area %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.sid }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.sid }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#        {% endfor %}#}
+{#	    </ul>#}
+{#	    <ul class="optionbox" id= "platform">#}
+{#	    	<span class="redtitle">直播平台：</span>#}
+{#            {% for a in filters.platform %}#}
+{#                        {% if  forloop.first %}<li class="redli redborder" id={{ a.sid }}><span>{{ a.name }}</span></li>#}
+{#                        {% else%}  <li class="redli" id="{{ a.sid }}"><span>{{ a.name }}</span></li>#}
+{#                        {% endif %}#}
+{#        {% endfor %}#}
+{#	    </ul>#}
+{#	</div>#}
+{##}
+{##}
+{#	<div class="tablechoicebox" id="celebrity">#}
+{#	    <div class="tablechoiceone" id="cred">#}
+{#	    	<div class="tablechoice">#}
+{#			    <input type="checkbox" checked>#}
+{#	    	    <span>全选本页</span>#}
+{#		    </div>#}
+{#			<div class="tablechoice">#}
+{#				<input type="checkbox">#}
+{#		    	 <span>认证</span>#}
+{#			</div>#}
+{#			<div class="tablechoice">#}
+{#				<input type="checkbox">#}
+{#		    	 <span>只显示已选</span>#}
+{#			</div>#}
+{#	    </div>#}
+{##}
+{#	    <div class="tablechoicetwo" id="search">#}
+{#	    	<div class="tablechoice searchbox" >#}
+{#			    <input type="text" placeholder="请输入你的关键字">#}
+{#			    <img src="/static/img/search.png">#}
+{#		    </div>#}
+{#			<div class="select blue">#}
+{#				<select>#}
+{#					<option>每页只显示20个</option>#}
+{#					<option>每页只显示50个</option>#}
+{#					<option>每页只显示100个</option>#}
+{#				</select>#}
+{#			</div>#}
+{#	    </div>#}
+{#	</div>#}
+
+	<table class="redmantable">
+		<tr class="blue trone">
+
+            <td>
+				<span>主播名称</span>
+			</td>
+			<td>
+				<span>平台名称</span>
+			</td>
+            <td>
+				<span>平台ID</span>
+			</td>
+
+            <td>
+				<span>地域</span>
+
+			</td>
+
+			<td>
+				<span>粉丝数</span>
+			</td>
+
+            <td>
+				<span>平均观看数</span>
+			</td>
+            <td>
+				<span>订阅量</span>
+			</td>
+
+			<td>
+				<span>口播报价</span>
+			</td>
+			<td>
+				<span>商品植入报价</span>
+			</td>
+			<td>
+				<span>品牌露出报价</span>
+			</td>
+			<td>
+				<span>CPS%</span>
+			</td>
+            <td>
+				<span>备注</span>
+			</td>
+{#			<td>#}
+{#				<span>活动</span>#}
+{#				<br>#}
+{#				<span>状态</span>#}
+{#			</td>#}
+{#			<td>#}
+{#				<span>操作</span>#}
+{#			</td>#}
+		</tr>
+
+        {% for a  in  celebrityList %}
+
+		<tr class="redtr">
+			<td>
+{#				<div class="headportrait">#}
+{#			    	<img src="">#}
+{#			    	<div class="draw">#}
+{#			    		<img src="/static/img/duihao.png">#}
+{#			    	</div>#}
+{#			    </div>#}
+{#			    <div class="headportraittitle">#}
+                	<div class="headportrait">
+                        <img src="http://qs4.datacross.cn/img_head/{{ a.id }}.png" alt="{{ a.name }}"/>
+{#			    	    <img src="http://qs4.datacross.cn/img_head/1.png">#}
+                        <div id="duihao" class="draw">
+                            <img src="/static/img/duihao.png">
+                        </div>
+                         <span class="status" style="display:none">{{ a.is_credibility }}</span>
+                        <script>
+                        //判断红人是否认证，如果认证，就加上reddraw属性，也就是加上对勾
+                        $(".redtr").each(function(){
+                        if($(this).find(".status").text()=="B"){
+                            $(this).find("td:first-child").find(".draw").addClass("reddraw");
+                        }
+                        if($(this).find(".status").text()=="A"){
+                            $(this).find("td:first-child").find(".draw").removeClass("reddraw");
+                        }
+                        })
+                        </script>
+
+
+                    </div>
+                  <div class="headportraittitle">
+                    <span class="headportraittitle_span"><a  href="{% url 'celebrity_detail' %}?id={{ a.id }}">{{ a.celebrity.name }}</a></span>
+                  </div>
+			</td>
+
+			<td>
+                {% if a.broadcast_platform != None %}
+			    <span>{{ a.broadcast_platform }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+
+            <td>
+			    <span>{{ a.platform_id }}</span>
+			</td>
+            <td>
+                {% if a.area != None %}
+			    <span>{{ a.area }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+			<td>
+                {% if a.fans_num != None %}
+			    <span>{{ a.fans_num }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+            <td>
+                {% if a.average_num != None %}
+                <span>{{ a.average_num }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+			<td>
+                {% if a.reads_num != None %}
+				<span>{{ a.reads_num }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+			<td>
+                {% if a.export_price != None %}
+			   <span>{{ a.export_price }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+
+            <td>
+                {% if a.ad_implants_price != None %}
+			   <span>{{ a.ad_implants_price }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+
+            <td>
+                {% if a.brand_exposed_price != None %}
+			   <span>{{ a.brand_exposed_price }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+			</td>
+			<td>
+                {% if a.celebrity.cps != None %}
+                <span>{{ a.celebrity.cps }}</span>
+                {% else %}
+                <span></span>
+                {% endif %}
+            </td>
+
+            <td>
+                 {% if a.memo != None %}
+                <span>{{ a.memo }}</span>
+                 {% else %}
+                <span></span>
+                {% endif %}
+            </td>
+		</tr>
+    {% empty %}
+    <tr>
+    <td colspan="12">无记录</td>
+    </tr>
+       {% endfor %}
+
+
+	</table>
+
+<!--
+	<div class="pagebreakbox">
+		<div class="pagebox">
+			<div class="pagebtnbox blue prev">
+			    <span>
+			    	<img src="/static/img/left.png" width="15px">
+			    </span>
+				<span>PREV</span>
+			</div>
+			<div class="pagenumbox blue darkblue">1</div>
+			<div class="pagenumbox blue">2</div>
+			<div class="pagenumbox blue">3</div>
+			<div class="pagenumbox blue">4</div>
+			<div class="pagebtnbox blue next">
+				<span>
+			    	<img src="/static/img/right.png" width="15px">
+			    </span>
+				<span>NEXT</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+-->
+    <!--分页代码-->
+<!--
+    <div class="pagebreakbox">
+        <div class="pagebox">
+            <ul class="pager pagebox">
+                {% if celebrityList.has_previous %}
+                    <li class="previous pagebtnbox blue prev">
+                                    <span>
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                        <a href="{{ query_category }}page={{ celebrityList.previous_page_number}}">上一页</a>
+                    </li>
+                {% else %}
+                    <li class="previous disabled pagebtnbox blue prev">
+                                	<span>
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                        <a href="">上一页</a>
+                    </li>
+                {% endif %}
+
+                            <input type="hidden" value={{ celebrityList.number }} id="currentpage">
+			                <input type="hidden" value={{ celebrityList.paginator.num_pages }} id="totalpages">
+                {% if celebrityList.has_next %}
+                    <li class="next pagebtnbox blue next">
+                        <a href="{{ query_category }}page={{ celebrityList.next_page_number }}">下一页</a>
+                                    <span style="left:53px">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+                    </li>
+                {% else %}
+                    <li class="next disabled pagebtnbox blue next">
+                        <a href="">下一页</a>
+                                	<span style="left:53px">
+								    	<img src="/static/img/right.png" width="15px" >
+								    </span>
+                    </li>
+                {% endif %}
+            </ul>
+
+                </div>
+            </div>
+-->
+    <div class="managementpage">
+		    <div class="pagination">
+                        <ul class="pager pagebox">
+                            {% if celebrityList.has_previous %}
+                                <li class="previous pagebtnbox blue prev">
+									<a href="{{ query_category }}&page={{ celebrityList.previous_page_number }}">
+                                    <span style="top:0px;left:-24px;">
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                                      上一页</a>
+                                </li>
+                            {% else %}
+                                <li class="previous disabled pagebtnbox blue prev">
+									<a href="#">
+                                	<span style="top:0px;left:-24px;">
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                                	上一页</a>
+                                </li>
+                            {% endif %}
+
+                            {% for p in page_range %}
+                                {% ifequal p celebrityList.number %}
+                                    <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
+                                {% else %}
+                                    <li class="pagenumbox blue"><a href="{{ query_category }}&page={{p}}" title="第{{p}}页">{{p}}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
+
+                            {% if celebrityList.has_next %}
+                                <li class="next pagebtnbox blue next">
+                                <input type="hidden" value="{{ celebrityList.next_page_number }}">
+                                    <a href="{{ query_category }}&page={{ celebrityList.next_page_number }}">下一页
+                                    <span  style="left:41px;top:0px">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+									</a>
+                                </li>
+                            {% else %}
+                                <li class="next disabled pagebtnbox blue next">
+                                	<a href="#">下一页
+                                	<span  style="left:41px;top:0px;">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+									</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+{% endblock %}

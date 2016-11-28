@@ -1,0 +1,24 @@
+{%  extends 'base.html' %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<body>
+<div class="containerbox tanchuang">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>订单详情</span>
+	</div>
+	<div class="operationbox">
+	     <div class="textcenter bigfontsize">支付未完成，账户余额不足，请先充值</div>
+	     <div class="textcenter">
+	     	<button class="blue">确定</button>
+	     </div>
+	</div>
+</div>
+{% endblock %}

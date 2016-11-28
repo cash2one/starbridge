@@ -1,0 +1,66 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+	<script type="text/javascript">
+		$(function(){
+			$('.close_button').click(function(){
+				alert('该活动已创建过订单，请先关闭订单再关闭活动。')
+			})
+		})
+	</script>
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+	</div>
+
+	<div class="operationbox">
+        <!--活动-->
+	    <p class="fontblue">{{ activity_list.name }}</b>
+	    <div class="activities">
+	    	<span class="fontgrey">活动编号：</span>
+	    	<span class="fontgrey">{{ activity_list.id }}</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">活动日期：</span>
+            <span class="fontgrey">{{ activity_list.start_date|date:"Y-m-d" }}</span>
+	    	<span class="fontgrey">&nbsp;至&nbsp;</span>
+	    	<span class="fontgrey">{{ activity_list.end_date|date:"Y-m-d" }}</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">广告主：</span>
+	    	<span class="fontgrey">{{ activity_list.advertiser_name }}</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey smallfontsize">活动总预算：</span>
+	    	<span class="fontgrey">{{ activity_list.budget }}</span>
+	    </div>
+        <!--订单-->
+	    <div class="activities">
+	    	<span class="fontgrey">已创建订单：</span>
+			{% for o in order_list%}
+                <span class="fontblue ordered fontgrey_span "><a href="{% url 'order_details' %}?id={{ o.id }}">&nbsp;{{ o.name}}</a></span>
+            {% empty %}
+                <span class="fontblue ordered"><a href="#" style="color: red">&nbsp;暂无订单</a></span>
+			{% endfor %}
+	    </div>
+
+	    <div class="activities">
+	    	<a href="{% url 'updateactivity' %}?id={{ activity_list.id }}"><button class="blue">修改活动</button></a>
+	    	{% if activity_list.activity_status != 'H' %}
+                <a href="{% url 'acitve_close' %}?id={{ activity_list.id }}"><button class="blue close_button">关闭活动</button></a></b>
+            {% endif %}
+            {% if activity_list.activity_status != 'H' %}
+                <a href="{% url 'create_order1' %}?id={{ activity_list.id }}"><button class="blue up">创建订单</button></a>
+            {% endif %}
+             <a href="{% url 'activity' %}"><button class="blue up">返回活动列表</button></a>
+	    </div>
+	</div>
+</div>
+{% endblock %}

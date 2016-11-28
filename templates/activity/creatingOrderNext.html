@@ -1,0 +1,111 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>创建订单</span>
+	</div>
+	<div class="operationbox creatingOrder">
+	    <p class="fontblue">英菲尼迪新车发布会</p>
+	     <div class="activities">
+	    	<span class="fontgrey">广告主：</span>
+	    	<span class="fontgrey">英菲尼迪公司</span>
+	    </div>
+	    <div class="activities huodongstyle">
+	    	<span class="fontgrey">活动编号：</span>
+	    	<span class="fontgrey">20160505001</span>
+	    </div>
+	    <div class="activities huodongstyle">
+	    	<span class="fontgrey">活动日期：</span>
+            <span class="fontgrey">2016年5月5日</span>
+	    	<span class="fontgrey">&nbsp;至&nbsp;</span>
+	    	<span class="fontgrey">2016年8月10日</span>
+	    </div>
+	    <hr>
+	    <b class="fontblue">平台投放排期及素材设置</b>
+	    <div class="direct">
+	        <div style="margin-left:30px;">
+	        	<input type="checkbox">&nbsp;&nbsp;&nbsp;<span class="fontgrey fontsize">直播平台</span>
+	        </div>
+	        <div style="margin-left:55px;">
+	        	<div class="directcontent">
+			    	<span class="fontgrey">投放1</span>
+			    	<span class="fontblue lookdetails"><a href="{% url 'schedule' %}">修改</a></span>
+			    	<span class="fontblue lookdetails"><a href="#">删除</a></span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">素材1：</span>
+		            <span class="fontgrey">活动素材1</span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">日期：</span>
+		            <span class="fontgrey">2016-05-05</span>
+			    	<span class="fontgrey">&nbsp;至&nbsp;</span>
+			    	<span class="fontgrey">2016-05-08</span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">时段：</span>
+			    	<span class="fontgrey">任意</span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">投放平台：</span>
+			    	<span class="fontgrey">淘宝</span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">指派至</span>
+			    	<span class="fontblue lookdetails">所有</span>
+			    	<span class="fontgrey">等</span>
+			    </div>
+			    <div class="activities">
+			    	<span class="fontblue lookdetails"><b><a href="#">点击添加新的素材</a></b></span>
+			    </div>
+	        </div>
+	    </div>
+	    	    <hr>
+	    <b class="fontblue">额外佣金奖励</b>
+	    <div class="direct">
+	        <div style="margin-left:55px;">
+	        	<div class="directcontent">
+			    	<span class="fontgrey">平均佣金（CPS）</span>
+			    	<span class="fontgrey cpsbox">35</span>
+			    	<span class="fontgrey">%</span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">根据粉丝量来批量设置保底佣金：</span>
+			    </div>
+			    <div class="directcontent">
+			    	<input type="checkbox">&nbsp;&nbsp;&nbsp;<span class="fontgrey fontsize">粉丝量为0  至  1万，保底佣金为</span>
+			    	<span class="fontgrey cpsbox">2000</span>
+			    </div>
+			    <div class="directcontent">
+			    	<input type="checkbox">&nbsp;&nbsp;&nbsp;<span class="fontgrey fontsize">粉丝量为1万 至 5 万，保底佣金为</span>
+			    	<span class="fontgrey cpsbox">3000</span>
+			    </div>
+			    <div class="directcontent">
+			    	<input type="checkbox">&nbsp;&nbsp;&nbsp;<span class="fontgrey fontsize">粉丝量为 5万 至  10万，保底佣金为</span>
+			    	<span class="fontgrey cpsbox"></span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey cpsbox bigcpsbox">添加新条件</span>
+			    </div>
+			    <div class="activities">
+			    	<span class="fontblue lookdetails"><b>点击调整部分排期和佣金的设置</b></span>
+			    </div>
+	        </div>
+	    </div>
+	   <div class="successtitle">
+	        <a href="{% url 'create_order1' %}"><button class="blue">上一步</button></a>
+	    	<a href="{% url 'create_order3' %}"><button class="blue">下一步</button></a>
+	    </div>
+	</div>
+</div>
+{% endblock %}

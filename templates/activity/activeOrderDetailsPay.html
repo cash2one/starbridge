@@ -1,0 +1,65 @@
+{%  extends 'base.html' %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<body>
+<div class="containerbox tanchuang">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>订单详情</span>
+	</div>
+	<div class="operationbox creatingOrder">
+    {% for act in activity %}
+        <span class="fontgrey">活动名称:&nbsp;{{ act.name }}</span>
+	     <div class="activities">
+	    	<span class="fontgrey">直播平台投放日期:&nbsp;</span>
+             {% for flight in flightingplatform %}
+                 <span class="fontgrey">{{ flight.custom_time }}</span>
+             {% endfor %}
+	    </div>
+    {% endfor %}
+	    <div class="activities">
+	    	<span class="fontgrey">活动素材:&nbsp;</span>
+            {% for creative in creativezhibo %}
+                <span class="fontgrey">素材{{ creative.id }}{% if not forloop.last%},{% endif %}</span>
+            {% endfor %}
+	    </div>
+	    <div class="activities">
+	        <span class="fontgrey">选择红人</span>
+	    	<span class="fontgrey">{{ celebritycount }}</span>
+	    	<span class="fontgrey">人</span>
+	    </div>
+	    <div class="fontgrey paydetail">
+	    	<span>账户余额:&nbsp;</span>
+            <span class="fontred" id="balancemoney">{{ balance_money }}</span>
+	    	<div class="fright">
+	    		<span>支付</span>
+                    <span class="fontred " id="orderactualcosts">{{ payall }}</span>
+		    	<span>元</span>
+	    	</div>
+	    </div>
+	    <div class="activities">
+	    	<button class="blue"><a href="{% url 'finance' %}?type=2">充值汇款</a></button>
+	    </div>
+	    <div class="activities" style="margin-top:72px;">
+            <input type="hidden" id="payorderid" value="{{ orderid }}">
+	    	<a href="javascript:;"><button class="blue" id="payment">确认付款</button></a>
+	    </div>
+        <div class="blackbackground"></div>
+
+        <div class="operationbox" id="paymentsuccess">
+            <div class="visibleboxpay" style="width:17px;float:right;cursor:pointer;margin-top: -8px;font-size: 30px;margin-right: 10px;">×</div>
+            <div class="textcenter bigfontsize">支付成功</div>
+            <div class="textcenter">
+                <a href="{% url 'activity' %}"><button class="blue">确定</button></a>
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock %}

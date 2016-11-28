@@ -1,0 +1,66 @@
+.page_content{
+    width: 90%;
+    margin-left:25px;
+}
+.middle{
+    width: 90%;
+    padding-bottom: 65px;
+    background-color: #f8f8f8;
+}
+.breadcrumb{
+    background-color: white!important;
+    font-size: 18px;
+}
+.breadcrumb li a{
+    color: #303030!important;
+}
+.guide{
+    margin-left: 20px;
+}
+.page_content .nav li{
+    width: 200px !important;
+}
+.page_content .nav li a{
+    width: 95% !important;
+    height:55px !important;
+    line-height:34px !important;
+}
+.info th{
+    background-color: #51bbe0!important;
+    color: white;
+}
+.table{
+    width: 97%;
+    margin-left: 2%;
+
+}
+.middle_head{
+    height: 80px;
+    line-height: 80px;
+    margin-left: 2%;
+}
+.middle_head label input{
+    margin-top: 33px;
+}
+.middle_head .input-group{
+    margin-right: 3%;
+}
+.pagination{
+    float: right;
+    margin-right: 3%;
+}
+.normal{
+    background-color: #51bbe0 !important;
+    border: none !important;
+    color: white;
+}
+.click{
+    background-color:#70d0f3 !important;
+    border: none !important;
+    color: white;
+}
+.slice{
+    background-color:#3a9fc4 !important;
+    border: none !important;
+    color: white;
+}

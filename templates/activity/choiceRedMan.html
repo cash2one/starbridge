@@ -1,0 +1,234 @@
+{%  extends 'base.html' %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/redMan.css">
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<body>
+<div class="containerbox tanchuang">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>订单详情</span>
+	</div>
+	<div class="operationbox pagebreakbox">
+	     <b class="fontblue">英菲尼迪新车发布会</b>
+	     <div class="activities">
+	    	<span class="fontgrey">广告主：</span>
+	    	<span class="fontgrey">英菲尼迪公司</span>
+	    </div>
+	    <div class="activities huodongstyle">
+	    	<span class="fontgrey">活动编号：</span>
+	    	<span class="fontgrey">20160505001</span>
+	    </div>
+	    <div class="activities huodongstyle">
+	    	<span class="fontgrey">活动日期：</span>
+            <span class="fontgrey">2016年5月5日</span>
+	    	<span class="fontgrey">&nbsp;至&nbsp;</span>
+	    	<span class="fontgrey">2016年8月10日</span>
+	    </div>
+	    <hr>
+	    <div class="activities">
+	    	<span class="fontgrey">订单1：</span>
+	    	<span class="fontgrey">英菲尼迪公司</span>
+	    </div>
+	    <div class="activities huodongstyle">
+	    	<span class="fontgrey">订单状态：</span>
+	    	<span class="fontgrey">待审核</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">订单1选择红人</span>
+	    	<span class="fontred">10</span>
+	    	<span class="fontgrey">人，明星</span>
+	    	<span class="fontred">8</span>
+	    	<span class="fontgrey">人。</span>
+	    </div>
+	    <div class="activities">
+	    <div class="tablechoiceone">
+	    	<div class="tablechoice">
+			    <input type="checkbox" checked>
+	    	    <span>全选本页</span>
+		    </div>
+	    </div>
+	    <div class="tablechoicetwo">
+	    	<div class="tablechoice searchbox">
+			    <input type="text" value="请输入你的关键字">
+			    <img src="/static/img/search.png">
+		    </div>
+			<div class="select blue">
+				<select>
+					<option>每页只显示10个</option>
+					<option>每页只显示50个</option>
+					<option>每页只显示100个</option>
+				</select>
+			</div>
+	    </div>
+	</div>
+	<span class="fontred">注：参考报价仅作参考之用，最终结算以实际报价为准。</span>
+	<table class="redmantable activities" style="width:958px;">
+		<tr class="green trtwo">
+			<td>主播名称</td>
+			<td>
+				<span>平台</span>	
+			</td>
+			<td>
+				<span>平台ID</span>
+			</td>
+			<td>
+			    <span>地域</span>
+			</td>
+			<td>
+				<span>粉丝数</span>
+			</td>
+			<td>
+				<span>平均观看数</span>
+			</td>
+			<td>
+				<span>订阅量</span>
+			</td>
+			<td>
+				<span>参考报价</span>
+			</td>
+			<td>
+				<span>能接受</span>
+				<br>
+				<span>CPS%</span>
+			</td>
+			<td>
+				<span>备注</span>
+			</td>
+		</tr>
+		<tr class="redtr">
+			<td>
+				<div class="headportrait">
+			    	<img src="">
+			    	<div class="draw">
+			    		<img src="image/duihao.png">
+			    	</div>
+			    </div>
+			    <div class="headportraittitle">
+			    	<span>呛口小辣椒</span>
+			    </div> 
+			</td>
+			<td>映客</td>
+			<td>
+				<span>房间号</span>
+			    <br>
+			    <span>533150</span>
+			</td>
+			<td>上海</td>
+			<td>2000-3000</td>
+			<td>1000</td>
+			<td>200</td>
+			<td>
+				<span>口播：</span><span>2000</span>
+			    <br>
+			    <span>商品露出：</span><span>3000</span>
+			    <br>
+			    <span>品牌植入：</span><span>4000</span>
+			</td>
+			<td>10%</td>
+			<td>网红主播</td>
+		</tr>
+		<tr class="green redtr">
+			<td>
+			    <div class="headportrait">
+			    	<img src="image/he.jpg">
+			    	<div class="draw reddraw">
+			    		<img src="image/duihao.png">
+			    	</div>
+			    </div>
+			    <div class="headportraittitle">
+			    	<span>同道大叔</span>
+			    </div>
+			</td>
+			<td>一起秀</td>
+			<td>
+				<span>茜茜</span>
+			    <br>
+			    <span>_GT_Girl</span>
+			</td>
+			<td>广州</td>
+			<td>10000+</td>
+			<td></td>
+			<td>50000</td>
+			<td>2000</td>
+			<!-- <td>
+				<span>口播：</span><span>2000</span>
+			    <br>
+			    <span>商品露出：</span><span>3000</span>
+			    <br>
+			    <span>品牌植入：</span><span>4000</span>
+			</td> -->
+			<td>8%</td>
+			<td>网红主播</td>
+		</tr>
+		<tr class="redtr">
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		</tr>
+		<tr class="redtr">
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		</tr>
+	</table>
+	<div class="activities">
+		<div class="pagebox">
+			<div class="pagebtnbox blue prev">
+			    <span>
+			    	<img src="/static/img/left.png" width="15px">
+			    </span>
+				<span>PREV</span>
+			</div>
+			<div class="pagenumbox blue darkblue">1</div>
+			<div class="pagenumbox blue">2</div>
+			<div class="pagenumbox blue">3</div>
+			<div class="pagenumbox blue">4</div>
+			<div class="pagebtnbox blue next">
+				<span>
+			    	<img src="/static/img/right.png" width="15px">
+			    </span>
+				<span>NEXT</span>
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:30px;">
+		<div class="green orderchoicered">
+		<span class="fontgrey">订单2选择红人</span>
+	    <span class="fontred">10</span>
+	    <span class="fontgrey">人，明星</span>
+	    <span class="fontred">8</span>
+	    <span class="fontgrey">人。</span>
+	</div>
+	<div class="green orderchoicered">
+		<span class="fontgrey">订单3选择红人</span>
+	    <span class="fontred">10</span>
+	    <span class="fontgrey">人，明星</span>
+	    <span class="fontred">8</span>
+	    <span class="fontgrey">人。</span>
+	</div>
+	</div>
+	
+	</div>
+</div>
+{% endblock %}

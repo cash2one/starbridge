@@ -1,0 +1,43 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>创建活动</span>
+	</div>
+	<div class="operationbox">
+		<form action="{% url 'addactivity' %}" method="POST" role="form" class="form-horizontal">
+			{% csrf_token %}
+			<p class="fontblue">填写活动基本信息</p>
+			<div class="activities">
+				<span class="fontgrey spanbox">活动名称：</span><input type="text" id="name" required name="name" autofocus>
+			</div>
+			<div class="activities"><span class="fontgrey spanbox">活动日期：</span>
+                <input type="text" name="start_date" placeholder="请选择日期区间" class="div-date" id="txtBeginDate"/>
+				<span class="fontgrey">&nbsp;至&nbsp;&nbsp;</span>
+                <input type="text" name="end_date" placeholder="请选择日期区间" class="div-date" id="txtEndDate"/>
+			</div>
+			<div class="activities">
+				<span class="fontgrey spanbox">广告主：</span><input type="text" id="advertiser_name" required name="advertiser_name">
+				<span class="fontgrey smallfontsize">多个广告主请以逗号隔开</span>
+			</div>
+			<div class="activities">
+				<span class="fontgrey spanbox smallfontsize">活动总预算：</span><input type="text" id="budget" required name="budget" placeholder="请填写数字">
+			</div>
+			<div class="activities">
+				<span class="fontblue spanbox remark">备注：</span><textarea class="textarea" id="" name="memo"></textarea>
+			</div>
+			<div class="activities">
+				<button class="blue save" type="submit">保存</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

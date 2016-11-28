@@ -1,0 +1,292 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<body>
+<div class="containerbox tanchuang">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>创建订单</span>
+	</div>
+	<div class="operationbox creatingOrder">
+	     <p class="fontblue">{{ activitylists.name }}</p>
+		<div class="activities">
+			<span class="fontgrey">广告主：</span>
+			<span class="fontgrey">{{ activitylists.advertiser_name }}</span>
+		</div>
+		<div class="activities huodongstyle">
+			<span class="fontgrey">活动编号：</span>
+			<span class="fontgrey number">{{ activitylists.id }}</span>
+		</div>
+		<div class="activities huodongstyle">
+			<span class="fontgrey">活动日期：</span>
+			<span class="fontgrey">{{ activitylists.start_date|date:"Y-m-d" }}</span>
+			<span class="fontgrey">&nbsp;至&nbsp;</span>
+			<span class="fontgrey">{{ activitylists.end_date|date:"Y-m-d" }}</span>
+		</div>
+		<hr>
+	    <div class="activities">
+	    	<span class="fontgrey">订单：{{ ordername }}</span>
+
+	    </div>
+	    <div class="activities">
+            <b class="fontblue">平台投放排期及素材设置</b>
+	    </div>
+
+	    <div class="activities">
+	    	<span class="fontgrey">直播平台投放日期：</span>
+            {% for cre in creative_arr %}
+                {% for m in cre %}
+                    <span class="fontgrey">{{ m.0 }}</span>
+                    <span class="fontgrey">至</span>
+                    <span class="fontgrey">{{ m.1}}{% if not forloop.last%},{% endif %}</span>
+
+                    {% endfor %}
+            {% endfor %}
+	    </div>
+        <!--未选红人素材上传---->
+	    <div class="activities" id="mainContent">
+        {% for creat in creative_zhibos %}
+            <span class="fontgrey">素材:{{ creat.id }}</span>
+            {% if creat.is_upload != 'A' %}
+                <span class="fontred">素材未上传</span>
+                <span class="fontblue clicklist">
+                    <input type="hidden" name="id"  value="{{ creat.id }}" id="creatid">
+                    <input type="file" name="goods_url" id="goodsurl">
+                </span>
+                <span class="fontgrey blue" style="cursor:pointer;color:#fff;border:0;border-radius:5px;height:35px;width:98px;float:right;margin-top:-34px;margin-right:300px;text-align:center;line-height:35px;" id="waitwork">开始上传</span>
+            {% else %}
+                <span class="fontred">素材已上传</span><br/><br/>
+            {% endif %}
+        {% endfor %}
+	    	<span class="fontred red">&nbsp;注：订单必须上传完素材后才会被提交审核</span>
+	    </div>
+    <!---选择几个红人---->
+	    <div class="activities">
+	    	<span class="fontgrey">选择红人</span>
+	    	<b class="fontred">{{ celecount }}</b>
+	    	<span class="fontgrey">人，</span>
+	    	<span class="fontgrey red clickchoiceredform">点击查看已选择的红人列表</span>
+	    </div>
+	    <!-- 弹窗部分 -->
+	    <div class="blackbackground"></div>
+	    <div id="clickchoiceredform">
+		    <div class="visibletitle blue">
+				<span style="float:left">选择的红人列表</span>
+				<img src="/static/img/del.png" class="visibleboxtwox" style="width:17px;float:right;cursor:pointer;margin-top:15px">
+			</div>
+			<div class="redmantablebox">
+		    		<table class="redmantable">
+		<tr class="blue trone">
+            <td><span>主播名称</span></td>
+			<td><span>平台名称</span></td>
+            <td><span>平台ID</span></td>
+            <td><span>地域</span></td>
+			<td><span>粉丝数</span></td>
+            <td><span>平均观看数</span></td>
+            <td><span>订阅量</span></td>
+			<td><span>口播</span></td>
+			<td><span>商品植入</span></td>
+			<td><span>品牌露出</span></td>
+			<td><span>能接受CPS%</span></td>
+            <td><span>备注</span></td>
+		</tr>
+        {% for celebritys in celebrityalls %}
+		<tr class="redtr" id={{ celebritys.id }}>
+			<td>
+				<div class="headportrait"><img src="http://qs4.datacross.cn/img_head/{{ celebritys.0.id }}.png">
+                    <div class="draw"><img src="/static/img/duihao.png"></div>
+                    <span class="status" style="display:none">{{ celebritys.0.is_credibility }}</span>
+			    </div>
+			    <div class="headportraittitle">
+                    {% if celebritys.0.celebrity.name != None %}
+                        <span>{{ celebritys.0.celebrity.name }}</span>
+                    {% else %}
+                        <span></span>
+                    {% endif %}
+                </div>
+			</td>
+			<td>
+                {% if celebritys.0.broadcast_platform != None %}
+                    <span>{{ celebritys.0.broadcast_platform }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}
+            </td>
+            <td>
+                {% if celebritys.0.platform_id != None %}
+                    <span>{{ celebritys.0.platform_id }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}
+            </td>
+            <td>
+                {% if celebritys.0.area != None %}
+                    <span>{{ celebritys.0.area }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+            <td>
+                {% if celebritys.0.fans_num != None %}
+                    <span>{{ celebritys.0.fans_num }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+            <td>
+                {% if celebritys.0.average_num != None %}
+                    <span>{{ celebritys.0.average_num }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+			<td>
+                {% if celebritys.0.reads_num != None %}
+                    <span>{{ celebritys.0.reads_num }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}
+            </td>
+			<td>
+                {% if celebritys.0.export_price != None %}
+                    <span>{{ celebritys.0.export_price }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}
+            </td>
+			<td>
+                {% if celebritys.0.ad_implants_price != None %}
+                    <span>{{ celebritys.0.ad_implants_price }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+			<td>
+                {% if celebritys.0.brand_exposed_price != None %}
+                    <span>{{ celebritys.0.brand_exposed_price }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+			<td>
+                {% if celebritys.0.celebrity.cps != None %}
+                    <span>{{ celebritys.0.celebrity.cps }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+			<td>
+                {% if celebritys.0.memo != None %}
+                    <span>{{ celebritys.0.memo }}</span>
+                {% else %}
+                    <span></span>
+                {% endif %}</td>
+		</tr>
+        {% empty %}
+		<tr>
+            <td colspan="13">暂无直播素材</td>
+		</tr>
+		{% endfor %}
+	</table>
+			</div>
+	    </div>
+	    <!-- 弹窗部分结束 -->
+	    <div class="activities">
+	    	<span class="fontblue fonteight"><b>各平台报价总计：</b></span>
+	    </div>
+	    <table class="orderthreeform">
+	        <tr>
+	        	<th>平台</th>
+	        	<th>明细</th>
+	        	<th>报价（元）</th>
+        	</tr>
+            {% for sch in celebrityalls %}
+	    	<!-- <tr>
+                <td><b class="fonteight">直播</b></td>
+                <td></td>
+                <td class="fontred">30000</td>
+	    	</tr> -->
+                <tr class="getvalue">
+                	<td>{{ sch.0.broadcast_platform }}</td>
+                	<td>口播</td>
+                    {% if sch.0.export_price != None %}
+                        <td>{{ sch.0.export_price }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                <tr class="getvalue">
+                	<td></td>
+                	<td>商品植入</td>
+                    {% if sch.0.ad_implants_price != None %}
+                        <td>{{ sch.0.ad_implants_price }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                <tr class="getvalue">
+                	<td></td>
+                	<td>品牌露出</td>
+                    {% if sch.0.brand_exposed_price != None %}
+                        <td>{{ sch.0.brand_exposed_price }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+                <tr>
+                	<td><b calss="fontblue fonteight">平台费用总计</b></td>
+                	<td></td>
+                	<td><b calss="fontblue fonteight" id="total"></b></td>
+            	</tr>
+	    </table>
+	    <div class="activities fonteight orderdetails">
+	    	<span class="fontgrey">平均佣金:&nbsp;&nbsp;<span class="averege">{{ cps }}</span>%,</span>
+        </br>
+            {% for comm in commission %}
+{#                <span class="fontgrey">粉丝量为&nbsp;{{ comm.0 }}&nbsp;万至&nbsp;{{ comm.1 }}万&nbsp;,</span>#}
+                <span class="fontgrey">&nbsp;保底佣金总数为:&nbsp;&nbsp;<span class="minimum">{{ comm.2 }}</span>&nbsp;元</span></br>
+            {% endfor %}
+	    </div>
+	    <div class="activities fonteight orderdetailformula">
+	    	<span class="fontgrey">实际结算费用总数</span>
+	    	<span class="fontgrey">&nbsp;=&nbsp;</span>
+	    	<span class="fontgrey" id="totally"></span>
+	    	<span class="fontgrey">&nbsp;+&nbsp;</span>
+	    	<span class="fontgrey" id="minimum"></span>
+	    	<span class="fontgrey">&nbsp;+&nbsp;</span>
+	    	<span class="fontgrey" id="totalandminimum"></span>
+	    	<span class="fontgrey">&nbsp;*&nbsp;</span>
+	    	<span class="fontgrey">{{ cps }}</span>
+	    	<span class="fontgrey">%(CPS)</span>
+	    </div>
+	    <div style="margin-top:15px;">
+	    	<span class="fontgrey" style="margin-left:135px;"></span>
+	    	<span class="fontgrey">&nbsp;平台费用总额&nbsp;&#43;</span>
+	    	<span class="fontgrey">&nbsp;保底佣金总额&nbsp;&#43;</span>
+	    	<span class="fontgrey">&nbsp;红人CPS销售佣金&nbsp;</span>
+	    </div>
+	     <div class="activities">
+	    	<span class="fontgrey red">&nbsp;注：&nbsp;</span>
+	    	<span class="fontgrey red">&nbsp;红人CPS的销售佣金以实际发生的费用为准。&nbsp;</span>
+	    </div>
+	   
+	   <div class="successtitle" style="margin-top:60px;">
+{#            <button class="blue">上一步</button>#}
+           <button class="blue" id="ordersavesumbit">保存</button>
+           <a href="{% url 'activity' %}?id={{ 0 }}"><button class="blue">取消</button></a>
+           <form action="{% url 'save_order' %}?id={{ activitylists.id }}" method="POST" id="ordersavesform">
+               {% csrf_token %}
+               <input type="hidden" value="{{ order_add_id }}" id="order_add_id" name="order_add_id">
+               <input type="hidden" value="{{ ordername }}" id="ordername" name="ordername">
+               <input type="hidden" value="{{ ordertimepre }}" id="ordertimepre" name="ordertimepre">
+               <input type="hidden" value="{{ ordertimenext }}" id="ordertimenext" name="ordertimenext">
+               <input type="hidden" value="{{ sch_id }}" id="sch_id" name="sch_id">
+               <input type="hidden" value="" id="hiddentotally" name="hiddentotally">
+           </form>
+	    </div>
+	</div>
+</div>
+{% endblock %}

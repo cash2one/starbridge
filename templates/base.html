@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-store"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <title>{% block title %}创星纪{% endblock %}</title>
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/base/daterangepicker.css"/>
+    <link rel="stylesheet" href="/static/css/base/common.css"/>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+
+    <script type="text/javascript" src="/static/js/common/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/common/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="/static/js/common/jQuery_UI-v1.10.4.js"></script>
+    <script type="text/javascript" src="/static/js/common/Bootstrap v3.3.5.js"></script>
+    <script type="text/javascript" src="/static/js/common/moment.js"></script>
+    <script type="text/javascript" src="/static/js/common/daterangepicker.js"></script>
+    <script type="text/javascript" src="/static/js/base.js"></script>
+    <script type="text/javascript">
+        function home() {
+             window.location.href = '/home/'
+         }        
+         function activity() {
+             window.location.href = '/activity/'
+         }
+         function creative() {
+             window.location.href = '/creative/'
+         }
+         function report() {
+             window.location.href = '/report/'
+         }
+         function celebrity() {
+             window.location.href = '/celebrity/'
+         }
+         function star() {
+             window.location.href = '/star/'
+         }
+         function finance() {
+             window.location.href = '/finance/'
+         }
+    </script>
+</head>
+<body>
+    <div id="contetn_star" style="height:100%; position:fixed;z-index:999;">
+            <div class="logo shadow"> 
+            <img src="/static/img/mainlogo.png" class="mainlogo">
+                <div id="toggleMenu">
+                    <div class="list"></div>
+                </div>
+            </div>
+            <div class="triangle"></div>
+            <div class="title">
+                <div class="title-admin">
+                    <div class="admin">
+                        <div class="triangle-login"></div>
+                        <img class="ren" src="/static/img/ren.png">
+                        <input class="login" type="text" readonly="value" value={{request.user}}>
+                    </div>
+                    <ul class="setting">
+                        <li class="button_li"><a href="{% url 'changedata' %}?id={{ request.user.id }}" selectid="1" class="hover_login">修改个人信息</a></li>
+                        <li class="button_li"><a href="{% url 'logout' %}" selectid="2" class="hover_login">退出登录</a></li>
+                    </ul>
+                </div>    
+            </div>
+            <div class="mainpage">
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li class="DASHBOARD" onclick="home()"><span>首页</span></li>
+                            <li class="USERS" onclick="activity()"><span>活动管理</span></li>
+                            <li class="PRIORITY" onclick="creative()"><span>素材中心</span></li>
+                            <li class="COLLECTIONS" onclick="report()"><span>数据报表</span></li>
+                            <li class="ARCHIVED" onclick="celebrity()"><span>红人库</span></li>
+                            <li class="DELETED" onclick="star()"><span>明星库</span></li>
+                            <li class="TRENDS" onclick="finance()"><span>财务报表</span></li>
+                        </ul>
+                    </div>
+            </div>
+    </div>        
+    <div id="pagecontent" style="margin-left:50px;height: 100%;padding-top:60px;">
+         {% block content %}
+         {% endblock %}
+    </div>
+</body>
+</html>

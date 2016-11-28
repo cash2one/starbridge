@@ -1,0 +1,154 @@
+.smalloperationbox{
+	 box-shadow: none;
+	 width: 960px;
+	 margin-top:10px;
+}
+.activemanagement{
+	overflow: hidden;
+	margin-top: 20px;
+	width: 960px;
+}
+.activemanagement .up{
+	float: right;
+	margin-right: 0;
+}
+.activemanagement:first-of-type{
+	margin-top: 0;
+}
+.activityname{
+	width: 180px;
+	height:32px;
+	padding-left: 12px;
+}
+.activemanagement .zhi{
+	width: 38px;
+}
+.management{
+	margin-right: 30px;
+	float: left;
+}
+.activemanagement .select{
+	margin-left: -3px;
+	border-radius: 3px;
+	height:32px;
+	line-height: 32px;
+}
+.activemanagement button{
+	margin-right: 10px;
+}
+.activemanagement button:hover{
+	background:#faa81b;
+}
+.onlyshowactive li{
+	float: left;
+}
+.onlyshowactive li:nth-child(odd){
+	width: 18%;
+}
+.onlyshowactive li:nth-child(even){
+	width: 32%;
+}
+.onlyshowactive li:last-of-type{
+	width: 14%;
+	float: right;
+}
+.onlyshowactive b a{
+    cursor: pointer;
+    color: #e45b5e;
+}
+.onlyshowactive p{
+	margin-top: 30px;
+	margin-bottom: 0;
+}
+.onlyshow{
+	padding-left: 20px;
+/*	color: #969595;*/
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+.onlyshow input{
+	margin-right: 10px;
+}
+/*订单详情*/
+.orderbox{
+	margin-top: 10px;
+	width:960px;
+	height:40px;
+	color: #fff;
+	border-radius:5px 5px 0 0;
+	overflow: hidden;
+	line-height: 40px;
+	padding-left: 30px;
+	background: #faa81b;
+}
+.orderbox li{
+	float: left;
+}
+.orderbox li:nth-child(odd){
+	width: 25%;
+}
+.orderbox li:nth-child(even){
+	width: 40%;
+}
+.orderbox li:last-of-type{
+	width: 10%;
+	float: right;
+}
+.orderbox span{
+	margin:0 10px;
+}
+.orderbox b a{
+    cursor: pointer;
+    color: #fff;
+}
+a{color: #fff;}
+.containerbox table{
+	width: 960px;
+	color: #666;
+	background: #fffbef;
+}
+.table_head td{color: #333;}
+ td{
+	position: relative;
+	padding:10px;
+}
+ td div{
+	overflow: hidden;
+	text-align: left;
+}
+ td .click{
+	letter-spacing: 0px;
+	cursor: pointer;
+	padding: 0 30px;
+}
+ td .click:first-of-type{
+	padding-left: 0px;
+	padding-right: 100px;
+}
+ td p{
+	float: left;
+	text-align: left;
+	margin:0;
+	margin-left: 20px;
+}
+ td p:first-of-type{
+	margin-left: 0;
+}
+ td .pay{
+	position: absolute;
+	right: 20px;
+	top:19px;
+	bottom: 0;
+	width: 100px;
+	height: 35px;
+	margin-left: 30px;
+	cursor: pointer;
+}
+.managementpage{
+	width: 970px;
+	margin-top: 40px;
+}
+.float{
+	float: left;
+	margin:-20px 0 0 247px;
+}

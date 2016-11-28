@@ -1,0 +1,32 @@
+{%  extends 'base.html' %}
+{% block title %}Management{% endblock %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+</head>
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>创建活动</span>
+	</div>
+	<div class="operationbox">
+	    <div class="successtitle">
+	        <b class="fontblue">英菲尼迪新车发布会</b>
+	    </div>
+	    <div class="successtitle fontgrey fontsize">
+	    	<span>活动已成功创建。</span>
+	    </div>
+	    <div class="successtitle">
+	    	 <span class="fontblue lookdetails">查看详情</span>
+	    </div>
+	    <div class="successtitle">
+	    	<button class="blue">修改活动</button>
+	    	<button class="blue">关闭活动</button>
+	    	<button class="blue">创建订单</button>
+	    </div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,535 @@
+{#<!--#}
+{#{%  extends 'base.html' %}#}
+{#{% block title %}{{ active_menu }}{% endblock %}#}
+{#{% block content %}#}
+{#    <link href="/static/css/mingxingku.css" rel="stylesheet">#}
+{#    <link rel="stylesheet" href="../../static/css/base/Bootstrap v3.3.5.min.css"/>#}
+{#    <script type="text/javascript" src="../../static/js/common/jquery-2.1.4.min.js"></script>#}
+{#    <script type="text/javascript" src="../../static/js/common/Bootstrap v3.3.5.js"></script>#}
+{#    <script type="text/javascript" src="../../static/js/highcharts/highcharts.js"></script>#}
+{#    <script type="text/javascript" src="../../static/js/highcharts/exporting.js"></script>#}
+{#    <style>#}
+{#        .rm_head{#}
+{#            width: 90%;#}
+{#            height: 350px;#}
+{#            border: 1px solid black;#}
+{#        }#}
+{#        .rm_table{#}
+{#            width: 90%;#}
+{#            border: 1px solid black;#}
+{#        }#}
+{#        .head_img{#}
+{#            width:20%;#}
+{#            float: left;#}
+{#            margin-left: 20px;#}
+{#        }#}
+{#        .head_detail{#}
+{#            width: 70%;#}
+{#            float: left;#}
+{#            margin-left: 30px;#}
+{#        }#}
+{#        .head_detail .detail{#}
+{#            width: 80%;#}
+{#            height: 180px;#}
+{#            overflow: auto;#}
+{#        }#}
+{#        .head_img_pic{#}
+{#            width: 200px;#}
+{#            height: 200px;#}
+{#            border: 1px solid black;#}
+{#            margin-top: 20px;#}
+{#        }#}
+{#        .head_collect {#}
+{#            width: 200px;#}
+{#            height: 50px;#}
+{#            line-height: 50px;#}
+{#            border: 1px solid black;#}
+{#            text-align: center;#}
+{#        }#}
+{#        .content{#}
+{#            margin-left: 20px;#}
+{#        }#}
+{#    </style>#}
+{##}
+{##}
+{##}
+{##}
+{#<div class="content">#}
+{#    <div class="guide">#}
+{#        <ol class="breadcrumb">#}
+{#            <li><a href="#">首页</a></li>#}
+{#            <span class="slash">/</span>#}
+{#            <li><a href="#">明星库</a></li>#}
+{#            <span class="slash">/</span>#}
+{#            <li><a href="#">明星介绍页</a></li>#}
+{#        </ol>#}
+{#    </div>#}
+{#    <div class="rm_head">#}
+{##}
+{#        <div class="head_img">#}
+{##}
+{#            <div class="head_img_pic">#}
+{#                <img src="" alt=""/>#}
+{#            </div>#}
+{##}
+{#            <br/>#}
+{##}
+{#            <div class="head_collect">收藏</div>#}
+{#        </div>#}
+{##}
+{#        <div class="head_detail">#}
+{#            {%  for a in star_data %}#}
+{#            <h2>{{ a.name }}</h2>#}
+{#            <br/>#}
+{#            <div> 关键字：{{ a.key_words }}</div>#}
+{#            <br/>#}
+{#            <div class="detail">{{ a.introduce }}</div>#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="rm_table">#}
+{#        <br/>#}
+{##}
+{#        <br/>#}
+{##}
+{#        <br/>#}
+{##}
+{#        <table class="table table-bordered" style="">#}
+{#            <tr class="info">#}
+{#                <th>直播平台</th>#}
+{#                <th>平台ID</th>#}
+{#                <th>平均观看人数</th>#}
+{#                <th>订阅量</th>#}
+{#                <th>口播</th>#}
+{#                <th>商品露出</th>#}
+{#                <th>品牌植入</th>#}
+{#                <th>能接受的CPS %</th>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>{{ a.star_zhibo__broadcast_platform }}</td>#}
+{#                <td>{{ a.star_zhibo__platform_id }}</td>#}
+{#                <td>{{ a.star_zhibo__average_num }}</td>#}
+{#                <td>{{ a.star_zhibo__reads_num }}</td>#}
+{#                <td>{{ a.star_zhibo__export_price }}</td>#}
+{#                <td>{{ a.star_zhibo__ad_implants_price }}</td>#}
+{#                <td>{{ a.star_zhibo__brand_exposed_price }}</td>#}
+{#                <td>{{ a.cps }}</td>#}
+{#            </tr>#}
+{#            {%  endfor %}#}
+{#        </table>#}
+{#        <br/>#}
+{#        <table class="table table-bordered" style="">#}
+{#            <tr class="info">#}
+{#                <th>直播指数</th>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>#}
+{#                    <div class="content-charts">#}
+{#                        <div id="container_online" style="min-width: 310px; height: 400px; margin: 0 auto"></div>#}
+{#                    </div>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>#}
+{#                    <div class="content-charts">#}
+{#                        <div id="container_online_colomn" style="min-width: 310px; height: 400px; margin: 0 auto"></div>#}
+{#                    </div>#}
+{#                </td>#}
+{#            </tr>#}
+{#        </table>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{##}
+{##}
+{#<script type="text/javascript">#}
+{#    $(function () {#}
+{#        x_label = [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15]#}
+{#        //微博折线图#}
+{#        $('#container_weibo').highcharts({#}
+{#            title: {#}
+{#                text: '近7天的微博浏览',#}
+{#                x: -500 //center#}
+{##}
+{#            },#}
+{#            subtitle: {#}
+{#                text: '',#}
+{#                x: -20#}
+{#            },#}
+{#            xAxis: {#}
+{#                type: 'linear',#}
+{#                gridLineWidth: 1,#}
+{#                categories: x_label,#}
+{#                tickmarkPlacement:'on',#}
+{#                tickLength:10#}
+{#            },#}
+{#            yAxis: {#}
+{#                title: {#}
+{#                    //text: 'Temperature (°C)'#}
+{#                },#}
+{#                plotLines: [{#}
+{#                    value: 0,#}
+{#                    width: 1,#}
+{#                    color: '#808080'#}
+{#                }]#}
+{#            },#}
+{#            tooltip: {#}
+{#                //valueSuffix: '°C'#}
+{#            },#}
+{#            legend: {#}
+{#                layout: 'vertical',#}
+{#                align: 'right',#}
+{#                verticalAlign: 'middle',#}
+{#                borderWidth: 0#}
+{#            },#}
+{#            series: [{#}
+{#                name: 'PV',#}
+{#                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,12,15,2,3,4]#}
+{#            }, {#}
+{#                name: 'UV',#}
+{#                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,21,4,4,4,4]#}
+{#            }]#}
+{#        });#}
+{#//微博柱状图#}
+{#        $('#container_weibo_colomn').highcharts({#}
+{#            chart: {#}
+{#                type: 'column'#}
+{#            },#}
+{#            title: {#}
+{#                text: '近7天微博的评论数、转发数、点赞数'#}
+{#            },#}
+{#            /* subtitle: {#}
+{#             text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'#}
+{#             },*/#}
+{#            xAxis: {#}
+{#                type: 'category',#}
+{#                labels: {#}
+{#                    rotation: -45,#}
+{#                    style: {#}
+{#                        fontSize: '13px',#}
+{#                        fontFamily: 'Verdana, sans-serif'#}
+{#                    }#}
+{#                }#}
+{#            },#}
+{#            yAxis: {#}
+{#                min: 0,#}
+{#                title: {#}
+{#                    text: 'Population (millions)'#}
+{#                }#}
+{#            },#}
+{#            legend: {#}
+{#                enabled: false#}
+{#            },#}
+{#            tooltip: {#}
+{#                pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'#}
+{#            },#}
+{#            series: [{#}
+{#                name: 'Population',#}
+{#                data: [#}
+{#                    ['评论数', 1000],#}
+{#                    ['转发数', 5000],#}
+{#                    ['点赞数', 2000],#}
+{##}
+{#                ],#}
+{#                dataLabels: {#}
+{#                    enabled: true,#}
+{#                    rotation: -90,#}
+{#                    color: '#FFFFFF',#}
+{#                    align: 'right',#}
+{#                    format: '{point.y:.1f}', // one decimal#}
+{#                    y: 10, // 10 pixels down from the top#}
+{#                    style: {#}
+{#                        fontSize: '13px',#}
+{#                        fontFamily: 'Verdana, sans-serif'#}
+{#                    }#}
+{#                }#}
+{#            }]#}
+{#        });#}
+{#        //微信折线图#}
+{#        $('#container_weixin').highcharts({#}
+{#            title: {#}
+{#                text: '近7天的微信浏览',#}
+{#                x: -500 //center#}
+{##}
+{#            },#}
+{#            subtitle: {#}
+{#                text: '',#}
+{#                x: -20#}
+{#            },#}
+{#            xAxis: {#}
+{#                type: 'linear',#}
+{#                gridLineWidth: 1,#}
+{#                categories: x_label,#}
+{#                tickmarkPlacement:'on',#}
+{#                tickLength:10#}
+{#            },#}
+{#            yAxis: {#}
+{#                title: {#}
+{#                    //text: 'Temperature (°C)'#}
+{#                },#}
+{#                plotLines: [{#}
+{#                    value: 0,#}
+{#                    width: 1,#}
+{#                    color: '#808080'#}
+{#                }]#}
+{#            },#}
+{#            tooltip: {#}
+{#                //valueSuffix: '°C'#}
+{#            },#}
+{#            legend: {#}
+{#                layout: 'vertical',#}
+{#                align: 'right',#}
+{#                verticalAlign: 'middle',#}
+{#                borderWidth: 0#}
+{#            },#}
+{#            series: [{#}
+{#                name: 'PV',#}
+{#                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,12,15,2,3,4]#}
+{#            }, {#}
+{#                name: 'UV',#}
+{#                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,21,4,4,4,4]#}
+{#            }]#}
+{#        });#}
+{#//微信柱状图#}
+{#        $('#container_weixin_colomn').highcharts({#}
+{#            chart: {#}
+{#                type: 'column'#}
+{#            },#}
+{#            title: {#}
+{#                text: '近7天微信的评论数、转发数、点赞数'#}
+{#            },#}
+{#            /* subtitle: {#}
+{#             text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'#}
+{#             },*/#}
+{#            xAxis: {#}
+{#                type: 'category',#}
+{#                labels: {#}
+{#                    rotation: -45,#}
+{#                    style: {#}
+{#                        fontSize: '13px',#}
+{#                        fontFamily: 'Verdana, sans-serif'#}
+{#                    }#}
+{#                }#}
+{#            },#}
+{#            yAxis: {#}
+{#                min: 0,#}
+{#                title: {#}
+{#                    text: 'Population (millions)'#}
+{#                }#}
+{#            },#}
+{#            legend: {#}
+{#                enabled: false#}
+{#            },#}
+{#            tooltip: {#}
+{#                pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'#}
+{#            },#}
+{#            series: [{#}
+{#                name: 'Population',#}
+{#                data: [#}
+{#                    ['评论数', 1000],#}
+{#                    ['转发数', 5000],#}
+{#                    ['点赞数', 2000],#}
+{##}
+{#                ],#}
+{#                dataLabels: {#}
+{#                    enabled: true,#}
+{#                    rotation: -90,#}
+{#                    color: '#FFFFFF',#}
+{#                    align: 'right',#}
+{#                    format: '{point.y:.1f}', // one decimal#}
+{#                    y: 10, // 10 pixels down from the top#}
+{#                    style: {#}
+{#                        fontSize: '13px',#}
+{#                        fontFamily: 'Verdana, sans-serif'#}
+{#                    }#}
+{#                }#}
+{#            }]#}
+{#        });#}
+{#        //直播平台折线图#}
+{#        $('#container_online').highcharts({#}
+{#            title: {#}
+{#                text: '近7天的直播平台浏览',#}
+{#                x: -500 //center#}
+{##}
+{#            },#}
+{#            subtitle: {#}
+{#                text: '',#}
+{#                x: -20#}
+{#            },#}
+{#            xAxis: {#}
+{#                type: 'linear',#}
+{#                gridLineWidth: 1,#}
+{#                categories: x_label,#}
+{#                tickmarkPlacement:'on',#}
+{#                tickLength:10#}
+{#            },#}
+{#            yAxis: {#}
+{#                title: {#}
+{#                    //text: 'Temperature (°C)'#}
+{#                },#}
+{#                plotLines: [{#}
+{#                    value: 0,#}
+{#                    width: 1,#}
+{#                    color: '#808080'#}
+{#                }]#}
+{#            },#}
+{#            tooltip: {#}
+{#                //valueSuffix: '°C'#}
+{#            },#}
+{#            legend: {#}
+{#                layout: 'vertical',#}
+{#                align: 'right',#}
+{#                verticalAlign: 'middle',#}
+{#                borderWidth: 0#}
+{#            },#}
+{#            series: [{#}
+{#                name: 'PV',#}
+{#                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,12,15,2,3,4]#}
+{#            }, {#}
+{#                name: 'UV',#}
+{#                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,21,4,4,4,4]#}
+{#            }]#}
+{#        });#}
+{#//直播平台柱状图#}
+{#        $('#container_online_colomn').highcharts({#}
+{#            chart: {#}
+{#                type: 'column'#}
+{#            },#}
+{#            title: {#}
+{#                text: '近7天的微信送爱心数'#}
+{#            },#}
+{#            /* subtitle: {#}
+{#             text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'#}
+{#             },*/#}
+{#            xAxis: {#}
+{#                type: 'category',#}
+{#                labels: {#}
+{#                    rotation: -45,#}
+{#                    style: {#}
+{#                        fontSize: '13px',#}
+{#                        fontFamily: 'Verdana, sans-serif'#}
+{#                    }#}
+{#                }#}
+{#            },#}
+{#            yAxis: {#}
+{#                min: 0,#}
+{#                title: {#}
+{#                    text: 'Population (millions)'#}
+{#                }#}
+{#            },#}
+{#            legend: {#}
+{#                enabled: false#}
+{#            },#}
+{#            tooltip: {#}
+{#                pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'#}
+{#            },#}
+{#            series: [{#}
+{#                name: 'Population',#}
+{#                data: [#}
+{#                    ['送爱心数', 1000]#}
+{##}
+{##}
+{#                ],#}
+{#                dataLabels: {#}
+{#                    enabled: true,#}
+{#                    rotation: -90,#}
+{#                    color: '#FFFFFF',#}
+{#                    align: 'right',#}
+{#                    format: '{point.y:.1f}', // one decimal#}
+{#                    y: 10, // 10 pixels down from the top#}
+{#                    style: {#}
+{#                        fontSize: '13px',#}
+{#                        fontFamily: 'Verdana, sans-serif'#}
+{#                    }#}
+{#                }#}
+{#            }]#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+{#-->#}
+
+
+{%  extends 'base.html' %}
+{% block title %}明星介绍页{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/redMan.css">
+<script type="text/javascript" src="../../static/js/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="../../static/js/highcharts/exporting.js"></script>
+<script type="text/javascript" src="../../static/js/introduce.js"></script>
+<div class="content">
+  <div class="crumb">
+      <span>首页</span>
+      <span class="slash">/</span>
+      <span>明星库</span>
+      <span class="slash">/</span>
+      <span>明星介绍页</span>
+  </div>
+  <div class="rm_head">
+    <div class="head_img" style="width:200px;height:200px;background:#999;">
+{#       <img src="{{ a }}/{{ celebrity_data.0.celebrity_zhibo__sid }}.png" alt="{{ celebrity_data.0.name }}"/>#}
+    </div>
+        <div class="head_detail">
+            {%  for a in star_data %}
+            <h2>{{ a.name }}</h2>
+            <br/>
+            <div> 关键字：{{ a.key_words }}</div>
+            <br/>
+            <div class="detail">{{ a.introduce }}</div>
+
+        </div>
+    </div>
+    <div class="rm_table">
+        <br/>
+
+        <br/>
+
+        <br/>
+
+        <table class="table table-bordered" style="">
+            <tr class="info">
+                <th>直播平台</th>
+                <th>平台ID</th>
+                <th>平均观看人数</th>
+                <th>订阅量</th>
+                <th>口播</th>
+                <th>商品露出</th>
+                <th>品牌植入</th>
+                <th>CPS %</th>
+            </tr>
+            <tr>
+                <td>{{ a.star_zhibo__broadcast_platform }}</td>
+                <td>{{ a.star_zhibo__platform_id }}</td>
+                <td>{{ a.star_zhibo__average_num }}</td>
+                <td>{{ a.star_zhibo__reads_num }}</td>
+                <td>{{ a.star_zhibo__export_price }}</td>
+                <td>{{ a.star_zhibo__ad_implants_price }}</td>
+                <td>{{ a.star_zhibo__brand_exposed_price }}</td>
+                <td>{{ a.cps }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+    <br/>
+    <table class="table table-bordered charts">
+          <tr class="info">
+              <th>直播指数</th>
+          </tr>
+          <tr>
+              <td>
+                  <div class="content-charts">
+                      <div id="container_online"></div>
+                  </div>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <div class="content-charts">
+                      <div id="container_online_colomn"></div>
+                  </div>
+              </td>
+          </tr>
+    </table>
+  </div>
+</div>
+{% endblock %}

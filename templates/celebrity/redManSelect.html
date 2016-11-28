@@ -1,0 +1,154 @@
+<form role="form"  name="filter_form" method="get">
+
+<div class="smalloperationbox"  id ="celebrity">
+<!-- 	    <b class="fontgrey bigfontsize">{{ active_menu }}</b> -->
+
+	    <ul class="optionbox" id= "gender">
+	    	<span class="redtitle" >性别：</span>
+            {% for a in filters.gender %}
+                <li class="redli" id="{{ a.sid }}" onclick="keyOn()"><span>{{ a.name }}</span></li>
+            {% endfor %}
+            <input  class="filter" name="gender" type="hidden" value="0" id="gender" />
+	    </ul>
+
+	    <ul class="optionbox" id= "category">
+	    	<span class="redtitle">分类：</span>
+            {% for a in filters.category %}
+                <li class="redli" id="{{ a.sid }}" onclick="keyOn()"><span>{{ a.name }}</span></li>
+            {% endfor %}
+            <input class="filter" name="category" type="hidden" value="0" id="category" />
+	    </ul>
+	    <ul class="optionbox" id= "fans_num">
+	    	<span class="redtitle">粉丝数：</span>
+            {% for a in filters.fans_num %}
+                <li class="redli" id="{{ a.sid }}" onclick="keyOn()"><span>{{ a.name }}</span></li>
+            {% endfor %}
+            <div style="float:right;margin-top:3px;">
+	    		<input id="fans_num1" name="fans_num1" type="text" class="subscribe">-&nbsp;&nbsp;<input id="fans_num2" name="fans_num2" type="text" class="subscribe"><button id="confirm_fansnum" class="blue">确认</button>
+	    	</div>
+            <input id="fans_num" class="filter testnum" name="fans_num" type="hidden" value="0"  />
+	    </ul>
+	    <ul class="optionbox" id= "price">
+	    	<span class="redtitle">参考报价：</span>
+            {% for a in filters.price %}
+                <li class="redli" id="{{ a.sid }}" onclick="keyOn()"><span>{{ a.name }}</span></li>
+            {% endfor %}
+            <div style="float:right;margin-top:3px;">
+	    		<input id="price1" name="price1" type="text" class="quote">-&nbsp;&nbsp;<input id="price2" name="price2" type="text" class="quote"><button id="confirm_price" class="blue">确认</button>
+	    	</div>
+            <input class="filter testprice" name="price" type="hidden" value="0" id="price" />
+	    </ul>
+	    <ul class="optionbox" id= "area">
+	    	<span class="redtitle">地域：</span>
+            {% for a in filters.area %}
+                <li class="redli" id="{{ a.sid }}" onclick="keyOn()"><span>{{ a.name }}</span></li>
+            {% endfor %}
+            <input class="filter" name="area" type="hidden" value="0" id="area" />
+	    </ul>
+	    <ul class="optionbox" id= "platform">
+	    	<span class="redtitle">直播平台：</span>
+            {% for a in filters.platform %}
+                <li class="redli" id="{{ a.sid }}" onclick="keyOn()"><span>{{ a.name }}</span></li>
+            {% endfor %}
+            <input class="filter" name="platform" type="hidden" value="0" id="platform" />
+	    </ul>
+
+</div>
+
+<div class="tablechoicebox" id="celebrity">
+	    <div class="tablechoiceone" id="cred">
+			<div class="tablechoice">
+				 <input type="checkbox" name="cred" value="0" id="cred_input" onclick = "checkOn()">
+		    	 <span>认证</span>
+			</div>
+	    </div>
+
+	    <div class="tablechoicetwo" id="search" name="key">
+	    	<div class="tablechoice searchbox">
+			    <input type="search" class="form-control" id="id_search_input" name="key" placeholder="请输入你的关键字" onkeyup="keyUp()" autofocus>
+                <img src="/static/img/search.png">
+		    </div>
+	    </div>
+</div>
+
+</form>
+
+{#  js#}
+
+<script type="text/javascript">
+
+        //加载后 执行 设置状态
+    var List = {{ selected|safe }};
+
+    for (i in List){
+            //认证
+            if (i =="cred"){
+                if (List[i] == '1'){
+                     $('#cred_input').prop("checked",true);
+                     $('#cred_input').val(1)
+                }
+            }
+            else {
+                $("#"+i).find(".filter").val(List[i]);
+                $("#"+i).find("#"+List[i]).addClass("redborder");
+            }
+    }
+    //当粉丝数点击确认后，把状态清0
+    $("#confirm_fansnum").click(function(){
+        $(".testnum ").val("0");
+    })
+    //当参考报价点击确认后，把状态清0
+    $("#confirm_price").click(function(){
+        $(".testprice").val("0");
+    })
+
+    //筛选条件的 点击后的行为
+    function keyOn(){
+
+
+    }
+    // 是否认证 checkbox 点击后的行为
+    function checkOn(){
+            if ($("#cred_input")[0].checked){
+                $('#cred_input').val("1");
+            }
+            else{
+                $('#cred_input').val("0");}
+            setTimeout(function () {
+                document.filter_form.submit();
+            }, 1000);
+    }
+
+    // 选择框 的激发
+    function keyUp(){
+                      var old_value = $('#id_search_input').val();
+                            setTimeout(function () {
+                                var new_value = $('#id_search_input').val();
+                                if (old_value == new_value) {
+                                    document.filter_form.submit();
+                                }
+                            }, 1000);
+    }
+
+    $(".optionbox").find(".redli").click(function(){
+		$(this).parent().find(".redli").removeClass("redborder");
+        $(this).addClass("redborder");
+        $(this).parent().find(".filter").val($(this).attr("id"));
+
+            for (i in List){
+                if (i== "cred"  || i == "key"){
+
+                }
+
+                else{
+                     if ($("#"+i).find(".filter").attr("value") !=List[i]){
+
+                             setTimeout(function () {
+                                 document.filter_form.submit();
+                             }, 500);
+                     }
+                }
+            }
+	})
+
+</script>

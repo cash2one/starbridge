@@ -1,0 +1,166 @@
+{%  extends 'base.html' %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}
+	<link href="/static/css/data-report.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/paginator.js"></script>
+    <script type="text/javascript" src="/static/js/report.js"></script>
+	<div class="containerbox" id="content">
+		<div class="crumb">
+			<span>首页</span>
+			<span class="slash">/</span>
+			<span>数据报表</span>
+		</div>
+<form role="form"  name="filter_form" method="get">
+		<div class="content_head">
+			<div>
+				<br/><br/>
+				<span>投放效果分析 :</span>
+				<br/>
+				<div class="key_word">
+				    <span style="float: left;font-size: 12px;line-height: 35px">关键字：</span>
+	                <ul class="main_box" style="position:absolute;display:block;z-index:100;margin-left:82px;">
+	                    <li class="select_box">
+                            {% if type == '1' %}
+                                  <span class="img" style="margin-left:0;">活动编号</span>
+                                <input type="hidden" name="type" class="type_text" value="1" />
+                            {% else %}
+	                            <span class="img" style="margin-left:0;">活动名称</span>
+                                <input type="hidden" name="type" class="type_text" value="0" />
+                            {% endif %}
+	                        <ul class="son_ul">
+	                            <li value="0">活动名称</li>
+	                            <li value="1">活动编号</li>
+	                        </ul>
+	                    </li>
+	                </ul>
+						&nbsp;&nbsp;&nbsp;
+						<input type="text" name="key" class="key_text" placeholder="请输入关键字"  value="{{ key }}" style="margin-left:200px;padding-left:10px;"/>
+				</div>
+			</div>
+			<div>
+				<div class="key_word">
+					<span style="float: left;font-size: 12px;line-height: 35px">日期：</span>
+					<div class="date">
+						<input type="text" name="time" placeholder="请选择日期区间" class="choose-date" value="{{ timereport }}"/>
+					</div>
+					<div class="date_detail" id="today">今天</div>
+					<div class="date_detail" id="yesterday">昨天</div>
+					<div class="date_detail" id="last7">最近7天</div>
+					<div class="date_detail" id="last30">最近30天</div>
+				</div>
+			</div>
+
+			<div class="key_button">
+				<button type="submit" class="btn btn-default normal" style="float: left;margin-right:10px;" >查询</button>
+                <a onclick="textinput()" id="ep">
+                <span class="blue"
+                    style="border: 0;display: inline-block;
+                    width: 98px;height: 35px;border-radius: 5px;
+                    text-align: center;line-height: 35px;">导出
+                </span>
+            </a>
+			</div>
+		</div>
+</form>
+{%  for a in activity_list.list %}
+<div class="table1">
+    <table class="table table-bordered">
+        <div style="border-radius:5px;">
+				<thead>
+				<tr class="table_head" style="background-color: #faa81b;border: none;">
+					<th colspan="9">
+						<span class="font-weight">{{ a.object.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="font-weight">活动日期：{{ a.object.start_date | date:"Y.m.d" }}-{{ a.object.end_date | date:"Y.m.d" }}</span>&nbsp;&nbsp;&nbsp;
+						<span class="font-weight">广告主：{{ a.object.advertiser_name }}</span>&nbsp;&nbsp;&nbsp;
+					</th>
+				</tr>
+				<tr>
+					<th class="font-weight bottom_line" style="border-top:none;border-bottom:none;">订单名称</th>
+					<th class="font-weight bottom_line" style="border-top:none;border-bottom:none;">直播点击数</th>
+                    <th class="font-weight bottom_line" style="border-top:none;border-bottom:none;">直播订阅量</th>
+                    <th class="font-weight bottom_line" style="border-top:none;border-bottom:none;">直播访问量</th>
+				</tr>
+				</thead>
+            {% for o in a.list %}
+                <tbody style="border-top:1px solid #ddd!important;">
+                <tr>
+                    <td colspan="9" style="text-align:left;background-color:#fdf4e4;">
+                        <span>订单{{ o.order.id }}：{{ o.order.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>投放日期：{{ o.order.start_time|date:"Y.m.d" }}-{{ o.order.end_time|date:"Y.m.d" }}</span>&nbsp;&nbsp;&nbsp;
+                        <span>已选红人{{ o.celebritynum }}个,明星{{ o.starnum }}个</span>&nbsp;&nbsp;&nbsp;
+                        <span>创建日期：{{  o.order.create_time|date:"Y.m.d"  }}</span>&nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    {% if o.order.name != "" %}
+                    <td style="border-top:none;border-bottom:none;">{{ o.order.name }} </td>
+					<td style="border-top:none;border-bottom:none;">{{ o.report.zhibo_click }} </td>
+					<td style="border-top:none;border-bottom:none;">{{ o.report.zhibo_read }} </td>
+					<td style="border-top:none;border-bottom:none;">{{ o.report.zhibo_call }} </td>
+                    {% else %}
+                    <td>无 </td><td>无 </td><td>无 </td><td>无 </td>
+                {% endif %}
+				</tr>
+               {% empty %}
+                <tr>
+                <td colspan="4">无记录</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </div>
+    </table>
+</div>
+        {% endfor %}
+        <div class="managementpage">
+		    <div class="pagination" style="width:72%">
+                        <ul class="pager pagebox">
+                            {% if activity_list.list.has_previous %}
+                                <li class="previous pagebtnbox blue prev">
+									<a href="{{ query_category }}&page={{ activity_list.list.previous_page_number }}">
+                                    <span style="top:0;left:-24px;">
+								    	<img src="/static/img/left.png" style="width:15px;">
+								    </span>
+                                      上一页</a>
+                                </li>
+                            {% else %}
+                                <li class="previous disabled pagebtnbox blue prev">
+									<a href="#">
+                                	<span style="top:0;left:-24px;">
+								    	<img src="/static/img/left.png" style="width:15px;">
+								    </span>
+                                	上一页</a>
+                                </li>
+                            {% endif %}
+                            {% for p in activity_list.page_range %}
+                                {% ifequal p activity_list.list.number %}
+                                    <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
+                                {% else %}
+                                    <li class="pagenumbox blue"><a href="{{ query_category }}&page={{p}}" title="第{{p}}页">{{p}}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
+
+                            {% if activity_list.list.has_next %}
+                                <li class="next pagebtnbox blue next">
+                                    <a href="{{ query_category }}&page={{ activity_list.list.next_page_number }}">下一页
+                                    <span  style="left:41px;top:0">
+								    	<img src="/static/img/right.png" style="width:15px;">
+								    </span>
+									</a>
+                                </li>
+                            {% else %}
+                                <li class="next disabled pagebtnbox blue next">
+                                	<a href="#">下一页
+                                	<span  style="left:41px;top:0;">
+								    	<img src="/static/img/right.png" style="width:15px;">
+								    </span>
+									</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+            </div>
+        </div>
+
+
+	</div>
+{% endblock %}

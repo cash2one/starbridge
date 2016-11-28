@@ -1,0 +1,119 @@
+{%  extends 'base.html' %}
+{% block title %}红人介绍页{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/redMan.css">
+<script type="text/javascript" src="../../static/js/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="../../static/js/highcharts/exporting.js"></script>
+<script type="text/javascript" src="../../static/js/introduce.js"></script>
+<div class="content">
+  <div class="crumb">
+      <span>首页</span>
+      <span class="slash">/</span>
+      <span>红人库</span>
+      <span class="slash">/</span>
+      <span>红人介绍页</span>
+  </div>
+  <div class="rm_head">
+    <div class="head_img">
+       <img src="{{ a }}/{{ celebrity_data.0.celebrity_zhibo__sid }}.png" alt="{{ celebrity_data.0.name }}"/>
+    </div>
+    <div class="head_detail">
+        {% for b in celebrity_data %}
+          <h2>{{ b.name }}</h2>
+        <br/>
+          {% if b.key_words != None %}
+          <div> 关键字：{{ b.key_words }}</div>
+          {% else %}
+          <div> 关键字：</div>
+          {% endif %}
+        <br/>
+            {% if b.introduce != None %}
+          <div class="detail"> {{ b.introduce }}</div>
+          {% else %}
+          <div class="detail"> </div>
+          {% endif %}
+    </div>
+  </div>
+  <div class="rm_table">
+    <table class="table table-bordered">
+        <tr class="info">
+            <th>直播平台</th>
+            <th>平台ID</th>
+            <th>平均观看人数</th>
+            <th>订阅量</th>
+            <th>口播</th>
+            <th>商品露出</th>
+            <th>品牌植入</th>
+            <th>CPS %</th>
+        </tr>
+        <tr>
+            <td>{{ b.celebrity_zhibo__broadcast_platform__name }}</td>
+
+            {% if b.celebrity_zhibo__platform_id != None %}
+            <td>{{ b.celebrity_zhibo__platform_id }}</td>
+            {% else %}
+            <td></td>
+            {% endif %}
+
+            {% if b.celebrity_zhibo__average_num != None %}
+            <td>{{ b.celebrity_zhibo__average_num }}</td>
+           {% else %}
+           <td></td>
+           {% endif %}
+
+            {% if b.celebrity_zhibo__reads_num != None %}
+            <td>{{ b.celebrity_zhibo__reads_num }}</td>
+           {% else %}
+           <td></td>
+           {% endif %}
+
+            {% if b.celebrity_zhibo__export_price != None %}
+            <td>{{ b.celebrity_zhibo__export_price }}</td>
+            {% else %}
+           <td></td>
+           {% endif %}
+
+            {% if b.celebrity_zhibo__ad_implants_price != None %}
+            <td>{{ b.celebrity_zhibo__ad_implants_price }}</td>
+            {% else %}
+           <td></td>
+           {% endif %}
+
+            {% if b.celebrity_zhibo__brand_exposed_price != None %}
+            <td>{{ b.celebrity_zhibo__brand_exposed_price }}</td>
+            {% else %}
+           <td></td>
+           {% endif %}
+
+            {% if b.cps != None %}
+            <td>{{ b.cps }}</td>
+           {% else %}
+           <td></td>
+           {% endif %}
+
+        </tr>
+        {% endfor %}
+    </table>
+    <br/>
+    <table class="table table-bordered charts">
+          <tr class="info">
+              <th>直播指数</th>
+          </tr>
+          <tr>
+              <td>
+                  <div class="content-charts">
+                      <div id="container_online"></div>
+                  </div>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <div class="content-charts">
+                      <div id="container_online_colomn"></div>
+                  </div>
+              </td>
+          </tr>
+    </table>
+  </div>
+</div>
+{% endblock %}

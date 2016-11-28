@@ -1,0 +1,284 @@
+.optionbox{
+	overflow: hidden;
+	border-bottom: 1px solid #EDF1F4;
+	color: #364C64;
+
+}
+.optionbox:last-of-type{
+	border:0;
+}
+.redtitle{
+	display: inline-block;
+	float: left;
+	width:77px;
+	padding:10px 0;
+}
+.redli{
+	height:100%;
+	float: left;
+	margin: 0 10px;
+	padding:10px 0;
+	cursor: pointer;
+}
+.redli a:hover{
+	color: #faa81b;
+}
+.redborder{
+	border-bottom:2px solid #faa81b;
+	padding-bottom:8px
+}
+.redchoiced{
+	width:88px;
+	height:30px;
+	display: block;
+	float: right;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 5px;
+}
+.redmantable table{
+	margin-bottom: 30px;
+	background-color: #fffbef;
+}
+.redmantable th{
+	width: auto;
+}
+.green{
+	background:#E8F5E1
+}
+.headportrait{
+	width: 50px;
+	height:50px;
+	margin:0 10px;
+	position: relative;
+	overflow: hidden;
+	float: left;
+}
+.headportrait>img{
+	width: 100%;
+}
+.draw{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background: #fff;
+	width: 10px;
+	height: 10px;
+	font-size: 0;
+	overflow: hidden;
+}
+.draw img{
+	display: none;
+}
+.reddraw{
+	background: red;
+}
+.reddraw img{
+	display: inline-block;
+	width: 100%}
+.headportraittitle{
+	height: 100%;
+	float: left;
+	margin:15px;
+	margin-bottom: 0;
+}
+.headportraittitle_span a:hover{
+	color: #333;
+}
+
+.headportraittitle_span a{
+	color: #333;
+}
+.choice{
+	display: inline-block;
+	width:50px;
+	height:40px;
+	border-radius: 5px;
+	line-height: 40px;
+	text-align: center;
+	margin:15px 10px;
+	cursor: pointer;
+}
+.cancelchoice{
+	display: inline-block;
+	width:50px;
+	height:40px;
+	border-radius: 5px;
+	text-align: center;
+	margin:15px 10px;
+	cursor: pointer;
+	line-height: 15px;
+	padding: 5px 10px;
+}
+.redtr{
+	height:70px;
+}
+.redtr td{
+	padding:10px 0;
+	background-color: #fffbef;
+}
+.tablechoicebox{
+	overflow: hidden;
+	width: 1040px;
+	margin-top: 50px;
+	margin-bottom: 5px;
+}
+.tablechoice{
+	margin-right: 1px;
+	float: left;
+}
+.tablechoice>input{
+	color: #9A9A9A;
+	padding-left: 30px;
+	padding-right: 15px;
+	border:0;
+	border-bottom:1px solid #DCDCDC;
+}
+.form-control:focus{
+	border-color:#fff;
+	box-shadow: none;
+}
+.searchbox{
+	position: relative;
+}
+.searchbox>img{
+	display: block;
+	position: absolute;
+	right: 10px;top:9px;
+	width: 20px;
+
+}
+.trtwo span{
+	display: inline-block;
+	width: 52px;
+}
+.redmantable{
+	width: 1040px;
+}
+.tablechoiceone{
+	overflow: hidden;
+	float: left;
+}
+.tablechoicetwo{
+	overflow: hidden;
+	float: right;
+}
+.tablechoicetwo .select{
+	margin-right: 0
+}
+.pagebreakbox{
+	width: 1040px;
+	overflow: hidden;
+}
+.pagination{
+	float:right;
+	margin-right: 330px;
+}
+.pagebox div{
+	float: left;
+}
+.pagebtnbox{
+	width: 80px;
+	height:30px;
+	border-radius: 15px;
+	margin:0 10px;
+	position: relative;
+	cursor: pointer;
+}
+.prev span:first-of-type{
+	display: inline-block;
+	position: absolute;
+	left:7px;
+	top:5px;
+	background: #ff8600;
+	width: 20px;
+	height:20px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.prev span:last-of-type{
+	display: inline-block;
+	position: absolute;
+	right:13px;
+	top:5px;
+}
+.next span:first-of-type{
+	display: inline-block;
+	position: absolute;
+	right:7px;
+	top:5px;
+	background: #ff8600;
+	width: 20px;
+	height:20px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.next span:last-of-type{
+	display: inline-block;
+	position: absolute;
+	left:13px;
+	top:5px;
+}
+.pagenumbox{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 30px;
+	margin:0 10px;
+	cursor: pointer;
+}
+.rm_head{
+    width: 90%;
+    height: 300px;
+    background-color: #fffbef;
+    padding:50px 0;
+    border-radius: 5px;
+}
+.rm_table{
+    width: 90%;
+}
+.head_img{
+    width:20%;
+    float: left;
+    margin-left: 20px;
+}
+.head_detail{
+    width: 70%;
+    float: left;
+    margin-left: 30px;
+}
+.head_detail .detail{
+    width: 80%;
+    height: 180px;
+    overflow: auto;
+}
+.head_img_pic{
+    width: 200px;
+    height: 200px;
+    border: none;
+    margin-top: 20px;
+}
+.head_collect {
+    width: 200px;
+    height: 50px;
+	line-height: 50px;
+    border: none;
+    text-align: center;
+}
+.content{
+ margin-left: 20px; 
+}
+.info th {
+	font-weight: normal;
+	background-color: #faa81b !important;
+}
+.table td{
+	background-color: #fffbef;
+}
+#container_online{
+	width: 92.5%;
+}
+#container_online_colomn{
+    width: 85.5%;
+}

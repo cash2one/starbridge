@@ -1,0 +1,129 @@
+*{margin:0;padding: 0;font-size: 14px;font-family: "Microsoft YaHei"}
+.content{
+	background: url("/static/img/login.jpg") no-repeat center center;
+	width: 100%;
+	height: 1080px;
+    overflow: hidden;
+}
+.border{
+	margin:200px auto;
+	width: 650px;
+	height: 300px;
+	box-shadow: 0 -5px 6px #d47a58;
+	border-top:1px solid transparent;
+	border-bottom:none;
+	border-left:1px solid transparent;
+	border-right:1px solid transparent;
+}
+.border_center{
+	margin:80px auto;
+	width: 60%;
+}
+.white{color: #fff;}
+.border_input{
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    background: rgba(237,151,116,0.3);
+    width: 250px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    outline:medium;
+}
+.detial_ad{
+	margin-left:51px;
+}
+.detial{
+    margin-left: 60px;
+}
+.fieldWrapper{
+	margin-top:40px;
+}
+.rem_p_input{float:left;margin-top: 6px;margin-right: 5px;}
+.rem_key{margin:20px auto;}
+.rem_p{float:left;margin-left: 99px;font-size: 12px;}
+.rem_key a{ margin-left: 122px;text-decoration: none;cursor:pointer;}
+.rem{margin-right: 5px;font-size: 12px;float: left;margin-top:4px;}
+.button_dopuble{
+	margin-left:99px;
+}
+button{
+	width: 100px;
+	height: 30px;
+	color: #fff;
+	border: none ;
+	border-radius: 5px;
+	cursor:pointer;
+}
+.button_dopuble_ul{list-style-type: none;text-align: center;}
+.register{
+	background: rgba(255,255,255,0.3);
+}
+.button_dopuble_style{
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	border: none ;
+	border-radius: 5px;
+	cursor:pointer;
+    outline:medium;
+    float:left;
+    display: inline-block;
+}
+.button_dopuble input{
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	border: none ;
+	border-radius: 5px;
+	cursor:pointer;
+    outline:medium;
+    float:left;
+    display: inline-block;
+}
+.login{
+	background: rgba(255,255,255,0.3);
+	margin-left: 80px;
+}
+.text_align{
+	text-align: center;
+}
+.margin_top{margin-top: 20px;}
+.border_reg{
+	margin:200px auto;
+	width: 800px;
+	height: 500px;
+	box-shadow: 0 -5px 6px #d47a58;
+	border-top:1px solid transparent;
+	border-bottom:none;
+	border-left:1px solid transparent;
+	border-right:1px solid transparent;
+}
+.border_center_reg{
+	margin:0 auto;
+	width: 55%;
+}
+.button_margin{
+	margin-top:36px;
+	margin-left: 39px;
+}
+.fieldWrapper_reg{
+	margin-top:35px;
+}
+.detial_reg{
+	margin-right: 60px;
+	float:right;
+	margin-top:-7px;
+}
+.rem_reg_p{
+	float: left;
+	margin-top: 20px;
+	margin-left: 128px;
+}
+.font-size{
+	font-size:18px;
+}

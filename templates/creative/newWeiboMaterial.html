@@ -1,0 +1,47 @@
+{%  extends 'base.html' %}
+{% block title %}material{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>素材中心</span>
+		<span class="slash">/</span>
+		<span>微博素材</span>
+		<span class="slash">/</span>
+		<span>新建微博素材</span>
+	</div>
+	<div class="operationbox">
+	    <b class="fontblue">新建微博素材</b>
+	    <div class="activities">
+	    	<span class="fontgrey spanbox">素材名称：</span><input type="text" class="bigtext">
+	    </div>
+	     <div class="activities">
+	    	<span class="fontgrey">微博文字内容：</span><textarea class="textarea bigtextarea"></textarea>
+	    </div>
+	    <div class="prompts">
+	    	<span class="fontgrey smallfontsize">还可以写<span>140个字</span></span>
+	    </div>
+	    <button class="blue">+添加图片</button>
+	    <div class="activities">
+	        <p>
+	        	<span class="fontgrey smallfontsize">如有商品，</span><br/>
+	        	<span class="fontgrey smallfontsize">商品1的链接：</span>
+	        </p>
+	    	<input type="text" class="bigtext tonghang">
+	    </div>
+	    <div class="activities">
+	    	<button class="blue">添加商品链接</button>
+	    </div>
+	     <div class="activities">
+	    	<span class="fontblue spanbox remark askremark">要求备注：</span><textarea class="textarea middletextarea"></textarea>
+	    </div>
+	    <div class="activities">
+	    	<button class="blue save">保存</button>
+	    </div>
+	</div>
+</div>
+{% endblock %}
+	

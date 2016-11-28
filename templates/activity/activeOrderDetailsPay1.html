@@ -1,0 +1,52 @@
+{%  extends 'base.html' %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<body>
+<div class="containerbox tanchuang">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>订单详情</span>
+	</div>
+	<div class="operationbox creatingOrder">
+	     <b class="fontblue">英菲尼迪新车发布会</b>
+	     <div class="activities">
+	    	<span class="fontgrey">直播平台投放日期：</span>
+	    	<span class="fontgrey">2016年5月20日</span>
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey">活动：</span>
+	    	<span class="fontgrey">素材1</span>
+	    	<span>,</span>
+	    	<span class="fontgrey">素材2</span>
+	    </div>
+	    <div class="activities">
+	        <span class="fontgrey">选择红人</span>
+	    	<span class="fontgrey">10</span>
+	    	<span class="fontgrey">人</span>
+	    </div>
+	    <div class="fontgrey paydetail">
+	    	<span>账户余额</span>&nbsp;
+	    	<span>0</span>&nbsp;
+	    	<span class="fontred">余额不足，请先充值</span>
+	    	<div class="fright">
+	    		<span>支付</span>
+		    	<span class="fontred">45000</span>
+		    	<span>元</span>
+	    	</div>
+	    </div>
+	    <div class="activities">
+	    	<button class="blue">充值汇款</button>
+	    </div>
+	    <div class="activities" style="margin-top:72px;">
+	    	<button class="blue">确认付款</button>
+	    </div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+﻿{%  extends 'base.html' %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}  
+	<link href="/static/css/index.css" rel="stylesheet">
+	<script src="/static/js/highcharts/highcharts.js"></script>
+	<script src="/static/js/highcharts/exporting.js"></script>
+	<script src="/static/js/index.js"></script>
+	
+	<div class="containerbox content">
+		<div class="content_head">
+			<div>
+				<br/><br/>
+				<span class="font-size18">我的订单</span>
+				<span class="click_see"><a href="{% url 'activity' %}">点击查看</a></span>
+				<br/><br/><br/><br/>
+				<span class="click_detail">有&nbsp;<a class="font-size" href="{% url 'activity' %}">{{ order_count }}</a>&nbsp;个订单，待上传活动素材</span>
+			</div>
+			<div>
+				<br/><br/>
+				<span class="font-size18">我的账户余额</span>
+				<span class="click_see"><a href="{% url 'finance' %}">点击查看</a></span>
+				<br/><br/><br/><br/>
+				<section class="uk-money"><a class="font-size" href="{% url 'finance' %}?type=0">{{ balance_money }}</a>.00</section>
+				<span class="click_detail_button">
+                    <a href="{% url 'finance' %}?type=1"><button class="blue">转账</button></a>
+					<a href="{% url 'finance' %}?type=2"><button class="blue">充值</button></a>
+					<a href="{% url 'finance' %}?type=3"><button class="blue">提现</button></a>
+
+				</span>
+			</div>
+        </div>
+		<div class="content_middle">
+			<div class="btn-group" >
+                <ul class="main_box">
+                    <li class="select_box">
+                        <span class="img btn-name">活动名称</span>
+                        <ul class="son_ul">
+                            {% for bbbb in activity_list %}
+                                    <li>{{ bbbb.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+			</div>
+                <div class="date">
+                    <input type="text" placeholder="请选择日期区间" class="choose-date"/>
+                </div>
+                <div class="date_detail" id="today">今天</div>
+                <div class="date_detail" id="yesterday">昨天</div>
+                <div class="date_detail" id="last7">最近7天</div>
+                <div class="date_detail" id="last30">最近30天</div>
+                <div>
+                    <button class="blue check">查询</button>
+                </div>
+		</div>
+		<div class="content-charts" id="container"></div>
+		<div class="content-list">
+			<table class="table table-bordered" id="dongtai">
+				<thead>
+				<tr class="info">
+					<th>广告主名称</th>
+					<th>日期</th>
+					<th >总曝光数</th>
+					<th>总点击数</th>
+					<th>总点击率（%）</th>
+					<th>总消费金额（元）</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+        <div class="content_button">
+                <button class="list-mode">列表模式</button>
+                <button class="pic-mode blue">图形模式</button>
+        </div>
+    </div>
+{% endblock %}

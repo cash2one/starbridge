@@ -1,0 +1,105 @@
+{%  extends 'base.html' %}
+{% block title %}material{% endblock %}
+{% block content %}
+    <link href="/static/css/sucaizhongxin.css" rel="stylesheet">
+    <script type="text/javascript">
+        function up(){
+        	window.location.href ="{% url 'addcreative'%}"
+        }
+    </script>
+	<div id="content">
+				<div class="guide">
+					<ol class="breadcrumb">
+						<li><a href="#">首页</a></li>
+						<span class="slash">/</span>
+						<li><a href="#">素材中心</a></li>
+						<span class="slash">/</span>
+						<li><a href="#">微博素材</a></li>
+					</ol>
+				</div>
+		<div class="page_content">
+			<ul class="nav nav-tabs nav-justified">
+				<li class="active"><a href="#"  style="background-color: #70d0f3;color: white">微博素材</a></li>
+				<li><a href="#"  style="background-color: #3a9fc4;color: white">微博素材</a></li>
+				<li><a href="#"  style="background-color: #3a9fc4;color: white">微博素材</a></li>
+				<li>
+					<div class="input-group" style="float: right">
+						<input type="text" class="form-control" placeholder="请输入您的关键字">
+						<span class="input-group-btn">
+						<button type="submit" class="btn btn-default">提交</button>
+						</span>
+						<div/>
+				</li>
+			</ul>
+			<div class="middle">
+				<div class="middle_head">
+					<label class="checkbox-inline">
+						<input type="checkbox">全选
+					</label>
+
+					<label class="checkbox-inline ">
+						<input type="checkbox" >删除
+					</label>
+
+
+					<div class="input-group " style="float: right">
+						<button class="btn btn-info"  onclick="up()">创建素材</button>
+					</div>
+				</div>
+
+						<table class="table table-bordered">
+							<thead>
+							<tr class="info" style="">
+								<th></th>
+								<th>名称</th>
+								<th >创建时间</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td><input type="checkbox"/></td>
+								<td>英菲尼迪</td>
+								<td>2016.6.13</td>
+								<td>
+									<button class="btn btn-default normal" style="float: left;margin-right:10px;margin-top:10px;" >创建</button>
+									<!-- <button class="btn btn-default click" style="float: left;margin-right:10px;margin-top:10px;" >点击</button>
+									<button class="btn btn-default slice" style="float: left;margin-right:10px;margin-top:10px;" >划过</button> -->
+								</td>
+							</tr>
+							<tr class="">
+								<td><input type="checkbox"/></td>
+								<td>英菲尼迪</td>
+								<td>2016.6.13</td>
+								<td>
+									<button class="btn btn-default normal" style="float: left;margin-right:10px;margin-top:10px;" >创建</button>
+									<!-- <button class="btn btn-default click" style="float: left;margin-right:10px;margin-top:10px;" >点击</button>
+									<button class="btn btn-default slice" style="float: left;margin-right:10px;margin-top:10px;" >划过</button> -->
+								</td>
+							</tr>
+
+							</tbody>
+						</table>
+			<!-- <div class="pagebreakbox managementpage"> -->
+				<div class="pagebox">
+					<div class="pagebtnbox blue prev">
+					    <span>
+					    	<img src="/static/img/left.png" width="15px">
+					    </span>
+						<span style="color:#fff;">PREV</span>
+					</div>
+					<div class="pagenumbox blue darkblue">1</div>
+					<div class="pagenumbox blue">2</div>
+					<div class="pagenumbox blue">3</div>
+					<div class="pagenumbox blue">4</div>
+					<div class="pagebtnbox blue next">
+						<span>
+					    	<img src="/static/img/right.png" width="15px">
+					    </span>
+						<span style="color:#fff;">NEXT</span>
+					</div>
+				</div>
+			<!-- </div> -->
+		</dv>
+</div>
+{% endblock %}

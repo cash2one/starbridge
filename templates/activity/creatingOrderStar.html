@@ -1,0 +1,260 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/redMan.css">
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<body>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>创建订单</span>
+	</div>
+	<div class="operationbox bigoperationbox">
+	    <p class="fontblue">{{ activitylists.name }}</p>
+		<div class="activities">
+			<span class="fontgrey">广告主：</span>
+			<span class="fontgrey">{{ activitylists.advertiser_name }}</span>
+		</div>
+		<div class="activities huodongstyle">
+			<span class="fontgrey">活动编号：</span>
+			<span class="fontgrey number">{{ activitylists.id }}</span>
+		</div>
+		<div class="activities huodongstyle">
+			<span class="fontgrey">活动日期：</span>
+			<span class="fontgrey">{{ activitylists.start_date|date:"Y-m-d" }}</span>
+			<span class="fontgrey">&nbsp;至&nbsp;</span>
+			<span class="fontgrey">{{ activitylists.end_date|date:"Y-m-d" }}</span>
+		</div>
+		<hr>
+	   <div class="activities">
+	    	<span class="fontgrey spanbox">订单名称：</span><input type="text" class="ordername" placeholder="请输入订单名称">
+	    </div>
+	    <div class="activities">
+	    	<span class="fontgrey spanbox">投放日期：</span><input type="text" name="" placeholder="请选择日期区间" class="div-date" id="txtBeginDate"/>
+	    	<span class="fontgrey">&nbsp;至&nbsp;&nbsp;</span><input type="text" name="" placeholder="请选择日期区间" class="div-date" id="txtEndDate"/>
+	    </div>
+	    <div class="choicestar">
+	    <div class="choicestarbtn">
+	     	<span class=" rightredchoiced">直播</span>
+	        <span class="blue redchoiced">已选<b>&nbsp;20&nbsp;</b>个</span>
+	    </div>
+            <ul class="optionbox">
+	    	<span class="redtitle">类别：</span>
+	    	<li class="redli"><span><a href="{% url 'create_order1' %}?id={{ activitylists.id }}">网红</a></span></li>
+	    	<li class="redli redborder"><span>明星</span></li>
+	    </ul>
+
+	    <ul class="optionbox">
+	    	<span class="redtitle">主播性别：</span>
+	    	<li class="redli"><span>不限</span></li>
+	    	<li class="redli redborder"><span>女</span></li>
+	    	<li class="redli"><span>男</span></li>
+	    	<li class="redli"><span>其他</span></li>
+	    </ul>
+	    <ul class="optionbox">
+	    	<span class="redtitle">分类：</span>
+	    	<li class="redli"><span>不限</span></li>
+	    	<li class="redli"><span>旅游</span></li>
+	    	<li class="redli"><span>时尚</span></li>
+	    	<li class="redli"><span>娱乐影视</span></li>
+	    	<li class="redli"><span>母婴</span></li>
+	    	<li class="redli"><span>美食</span></li>
+	    	<li class="redli"><span>情感</span></li>
+	    	<li class="redli"><span>健康</span></li>
+	    	<li class="redli redborder"><span>音乐</span></li>
+	    	<li class="redli"><span>电影</span></li>
+	    	<li class="redli"><span>星座</span></li>
+	    	<li class="redli"><span>服装箱包</span></li>
+	    	<li class="redli"><span>美容美体</span></li>
+	    </ul>
+	    <ul class="optionbox">
+	    	<span class="redtitle">订阅量：</span>
+	    	<li class="redli"><span>不限</span></li>
+	    	<li class="redli redborder"><span>1万以下</span></li>
+	    	<li class="redli"><span>1-5万</span></li>
+	    	<li class="redli"><span>5-10万</span></li>
+	    	<li class="redli"><span>10万以上</span></li>
+	    	<div style="float:right;margin-top:3px;">
+	    		<input type="text" class="subscribe">-&nbsp;&nbsp;<input type="text" class="subscribe"><button class="blue">确认</button>
+	    	</div>
+	    </ul>
+	    <ul class="optionbox">
+	    	<span class="redtitle">参考报价：</span>
+	    	<li class="redli redborder"><span>不限</span></li>
+	    	<li class="redli"><span>1000元以下</span></li>
+	    	<li class="redli"><span>1000-5000元</span></li>
+	    	<li class="redli"><span>5000-10000元</span></li>
+	    	<li class="redli"><span>10000万以上</span></li>
+	    	<div style="float:right;margin-top:3px;">
+	    		<input type="text" class="quote">-&nbsp;&nbsp;<input type="text" class="quote"><button class="blue">确认</button>
+	    	</div>
+	    </ul>
+	    <ul class="optionbox">
+	    	<span class="redtitle">地域：</span>
+	    	<li class="redli"><span>不限</span></li>
+	    	<li class="redli redborder"><span>5万以下</span></li>
+	    	<li class="redli"><span>5-10万</span></li>
+	    	<li class="redli"><span>10-15万</span></li>
+	    	<li class="redli"><span>15万以上</span></li>
+	    </ul>
+	    <ul class="optionbox">
+	    	<span class="redtitle">直播平台：</span>
+	    	<li class="redli"><span>不限</span></li>
+	    	<li class="redli"><span>映客</span></li>
+	    	<li class="redli redborder"><span>一起秀</span></li>
+	    	<li class="redli"><span>斗鱼</span></li>
+	    	<li class="redli"><span>战旗</span></li>
+	    	<li class="redli"><span>秒拍</span></li>
+	    </ul>
+	</div>
+	<div class="tablechoicebox">
+	    <form id="materialform" action="{% url 'showchecked' %}" method="POST">
+			{% csrf_token %}
+	    <div class="tablechoiceone">
+	    	<div class="tablechoice">
+			    <input type="checkbox">
+	    	    <span class="selectall">全选本页</span>
+		    </div>
+			<div class="tablechoice">
+				<input type="submit" value="只显示已选" class="deletall"/>
+			</div>
+	    </div>
+	    <input name="materialid" type="hidden" value="" id="materialid">
+	    </form>
+	    <div class="tablechoicetwo">
+			<form role="form" method="post" name="search_form">
+				{% csrf_token %}
+				<div class="tablechoice searchbox">
+					<input type="search" class="form-control" id="id_search_input" name="keyword"
+						   placeholder="请输入你的关键字" onkeyup="key_up()" autofocus>
+					<img src="/static/img/search.png">
+				</div>
+			</form>
+		</div>
+		<!--搜索框自动提交的时间为距离上次按键抬起1秒-->
+		<script type="text/javascript">
+				function key_up(){
+				var old_value = $('#id_search_input').val();
+				setTimeout(function () {
+					var new_value = $('#id_search_input').val();
+					if (old_value == new_value) {
+						document.search_form.submit();
+						}
+					}, 1000);
+				}
+		</script>
+	</div>
+	<span style="color:red">注：参考报价仅作参考之用，最终结算以实际报价为准。</span>
+	<table class="redmantable">
+		<tr class="blue trone">
+            <td><span>主播名称</span></td>
+			<td><span>平台名称</span></td>
+            <td><span>平台ID</span></td>
+            <td><span>地域</span></td>
+			<td><span>粉丝数</span></td>
+            <td><span>平均观看数</span></td>
+            <td><span>订阅量</span></td>
+			<td><span>口播</span></td>
+			<td><span>商品植入</span></td>
+			<td><span>品牌露出</span></td>
+			<td><span>能接受CPS%</span></td>
+            <td><span>备注</span></td>
+			<td><span>操作</span></td>
+		</tr>
+        {% for celebritys in celebrity_list %}
+		<tr class="redtr" id={{ celebritys.id }}>
+			<td>
+				<div class="headportrait"><img src="">
+					<div class="draw"><img src="/static/img/duihao.png"></div>
+			    </div>
+			    <div class="headportraittitle"><span>{{ celebritys.nickname }}</span></div>
+			</td>
+			<td><span>{{ celebritys.broadcast_platform }}</span></td>
+            <td><span>{{ celebritys.platform_id }}</span></td>
+            <td><span>{{ celebritys.area }}</span></td>
+            <td><span>{{ celebritys.fans_num }}</span></td>
+            <td><span>{{ celebritys.average_num }}</span></td>
+			<td><span>{{ celebritys.reads_num }}</span></td>
+			<td><span>{{ celebritys.export_price }}</span></td>
+			<td><span>{{ celebritys.ad_implants_price }}</span></td>
+			<td><span>{{ celebritys.brand_exposed_price }}</span></td>
+			<td><span>{{ celebritys.celebrity.cps }}</span></td>
+			<td><span>{{ celebritys.memo }}</span></td>
+			<td><span class="blue choice">已选</span><span class="blue cancelchoice" style="display:none">取消选择</span></td>
+		</tr>
+        {% empty %}
+		<tr>
+            <td colspan="13">暂无直播素材</td>
+		</tr>
+		{% endfor %}
+	</table>
+		<!--分页代码-->
+		<div class="managementpage">
+		    <div class="pagination" style="width:100%">
+                        <ul class="pager pagebox">
+                            {% if celebrityList.has_previous %}
+                                <li class="previous pagebtnbox blue prev">
+									<a href="?page={{ celebrityList.previous_page_number }}">
+                                    <span style="top:0px;left:-24px;">
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                                      上一页</a>
+                                </li>
+                            {% else %}
+                                <li class="previous disabled pagebtnbox blue prev">
+									<a href="#">
+                                	<span style="top:0px;left:-24px;">
+								    	<img src="/static/img/left.png" width="15px">
+								    </span>
+                                	上一页</a>
+                                </li>
+                            {% endif %}
+                            {% for p in page_range %}
+                                {% ifequal p celebrityList.number %}
+                                    <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
+                                {% else %}
+                                    <li class="pagenumbox blue"><a href="?page={{p}}" title="第{{p}}页">{{p}}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
+
+                            {% if celebrityList.has_next %}
+                                <li class="next pagebtnbox blue next">
+                                    <a href="?page={{ celebrityList.next_page_number }}">下一页
+                                    <span  style="left:41px;top:0px">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+									</a>
+                                </li>
+                            {% else %}
+                                <li class="next disabled pagebtnbox blue next">
+                                	<a href="#">下一页
+                                	<span  style="left:41px;top:0px;">
+								    	<img src="/static/img/right.png" width="15px">
+								    </span>
+									</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+            </div>
+        </div>
+		<form  id="nextmaterialform" action="{% url 'create_order2' %}" method="POST">
+			{% csrf_token %}
+			<div class="successtitle">
+				<button class="blue up">下一步</button>
+			</div>
+			<input name="nextmaterialid" type="hidden" value="" id="nextmaterialid">
+			<input name="activityid" type="hidden"  value="" id="activityid">
+			<input name="ordername" type="hidden" value="" id="ordername">
+			<input name="ordertimepre" type="hidden" value="" id="ordertimepre">
+			<input name="ordertimenext" type="hidden" value="" id="ordertimenext">
+		</form>
+	</div>
+</div>
+{% endblock %}

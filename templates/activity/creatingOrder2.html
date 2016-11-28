@@ -1,0 +1,149 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Management{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<script type="text/javascript" src="/static/js/creatOrder2.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
+<div class="containerbox tanchuang">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>活动管理</span>
+		<span class="slash">/</span>
+		<span>活动详情</span>
+		<span class="slash">/</span>
+		<span>创建订单</span>
+	</div>
+	<div class="operationbox creatingOrder">
+	    <p class="fontblue" style="font-weight:800;">{{ activitylists.name }}</p>
+		<div class="activities">
+			<span class="fontgrey">广告主：</span>
+			<span class="fontgrey">{{ activitylists.advertiser_name }}</span>
+		</div>
+		<div class="activities huodongstyle">
+			<span class="fontgrey">活动编号：</span>
+			<span class="fontgrey number">{{ activitylists.id }}</span>
+		</div>
+		<div class="activities huodongstyle">
+			<span class="fontgrey">活动日期：</span>
+			<span class="fontgrey">{{ activitylists.start_date|date:"Y-m-d" }}</span>
+			<span class="fontgrey">&nbsp;至&nbsp;</span>
+			<span class="fontgrey">{{ activitylists.end_date|date:"Y-m-d" }}</span>
+		</div>
+		<hr>
+	    <b class="fontblue">投放排期及素材设置</b>
+ 		<div class="direct">
+	        <div style="margin-left:30px;">
+	        	<span class="fontgrey fontsize">直播平台</span>
+	        </div>
+	        <div class="activities" style="margin-left:28px;" id="platformfont">
+		    	<input type="button" value="点击添加新的素材" class="blue cpsbox lookdetails clicknewmaterial">
+		    </div>
+	    </div>
+	    <hr>
+	    <b class="fontblue">额外佣金奖励</b>
+	    <div class="direct">
+	        <div style="margin-left:28px;">
+	        	<div class="directcontent">
+			    	<span class="fontgrey">平均佣金（CPS）</span>
+			    	<input type="text" class="fontgrey cps" style="width:87px;height:30px;">
+			    	<span class="fontgrey">%</span>
+			    </div>
+			    <div class="directcontent">
+			    	<span class="fontgrey">根据粉丝量来批量设置保底佣金：</span>
+			    </div>
+			    <div class="directcontent fontgrey fansinput">
+			    	粉丝量为<input type="text" class="firstfansnum">万&nbsp;至&nbsp;<input type="text" class="secondfansnum">万&nbsp;，保底佣金为&nbsp;<input type="text" class="thirdfansnum">
+			    	<input type="button" value="确认" class="blue fanssure">
+			    </div>
+			    <div class="directcontent" id="clicknewcondition">
+			    	<input type="button" value="添加新条件" class="blue cpsbox lookdetails clicknewcondition">
+			    </div>
+	        </div>
+	    </div>
+	   <div class="successtitle" style="margin-top:60px;">
+	        <a href="{% url 'create_order1' %}?id={{ activitylists.id }}"><button class="blue">上一步</button></a>
+			<button class="blue" id="newordersubmit">下一步</button>
+           	<form action="{% url 'create_order3' %}?id={{ activitylists.id }}" method="POST" id="flightingform2">
+               {% csrf_token %}
+               <input type="hidden" value="{{ activitylists.id }}" id="activityid"  name="activityid">
+            	<input type="hidden" value="{{ ordername }}" id="ordername" name="ordername">
+            	<input type="hidden" value="{{ ordertimepre }}" id="ordertimepre" name="ordertimepre">
+            	<input type="hidden" value="{{ ordertimenext }}" id="ordertimenext" name="ordertimenext">
+            	<input type="hidden" value="" id="sucai" name="sucai">
+            	<input type="hidden" value="" id="cps" name="cps">
+            	<input type="hidden" value="" id="fansnum" name="fansnum">
+                <input type="hidden" value="{{ scheduleid }}" id="scheduleid" name="scheduleid">
+                <input type="hidden" value="" id="zhiboid" name="zhibo.id">
+                <input type="hidden" value="" id="outsidelink" name="outsidelink">
+           </form>
+	    </div>
+	</div>
+
+	<!--点击添加新的素材弹出表单-->
+	<div class="blackbackground"></div>
+	<form action="" method="POST" enctype="multipart/form-data" id="flightingform">
+        {% csrf_token %}
+	<div class="visiblebox">
+	
+		<div class="visibletitle blue">
+			<span>直播平台活动排期及素材选取</span>
+			<img src="/static/img/del.png" class="closevisible" style="width:17px;float:right;cursor:pointer;margin-top:15px">
+			<!-- <div class="closevisible">×</div> -->
+		</div>
+		<div class="visiblecontent">
+			<div class="visibleconbox">
+	        	<input type="checkbox" id="updisabled">&nbsp;&nbsp;&nbsp;<span class="fontgrey fontsize">素材稍后上传</span>
+	        </div>
+	        <div class="visibleconbox">
+	            <span class="fontgrey visiblewordbox">素材：</span>
+	            <input class="blue cpsbox lookdetails sucaixuanqu" type="button" value="从素材库选取" id="">
+	        </div>
+	        <div class="visibleconbox">
+	            <span class="fontgrey visiblewordbox">外部链接</span>
+	            <input type="text" class="fontgrey cpsbox inputcpsbux updisabledone">
+	        </div>
+	        <hr>
+	        <div class="visibleconbox">
+	        	<input class="blue cpsbox lookdetails" id="addnewschedule" type="button" value="添加新的排期">
+	        </div>
+            {% for sch in schedulealls %}
+                <span class="suibianla" style="display:none">{{ sch }}</span>
+            {% endfor %}
+	        <div class="visibleconbox">
+	        	<button class="blue search visiblesure" id="flightingsubmit">确认</button>
+	        </div>
+		</div>
+		</div>
+	</form>
+
+	<div class="visibleboxtwo">
+	<div class="visibletitle blue">
+		<span style="float:left">直播平台素材库</span>
+		<img src="/static/img/del.png" class="visibleboxtwox" style="width:17px;float:right;cursor:pointer;margin-top:15px">
+		<!-- <div class="visibleboxtwox" style="float:right;color:#fff;font-size: 30px;cursor:pointer">×</div> -->
+	</div>
+	<div style="overflow:auto;height:330px;padding:0 20px;">
+	<!-- <b class="fontsize fontgrey" style="font-size:16px;">素材库</b> -->
+		<table>
+			<tbody>
+				<tr>
+					<th style="font-weight:normal;color: #333;">名称</th>
+					<th style="font-weight:normal;color: #333;">创建时间</th>
+				</tr>
+                {% for zhibo in zhibo_list %}
+				<tr id="17" class="materialltr" style="cursor:pointer;">
+					<td>{{ zhibo.name }}</td>
+                    <input type="hidden" value="{{ zhibo.id }}" class="zhibo.id">
+					<td><span>{{ zhibo.create_time|date:'Y-m-d' }}</span></td>
+				</tr>
+                {% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+</div>
+
+{% endblock %}

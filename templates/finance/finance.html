@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}
+	
+	<link rel="stylesheet" type="text/css" href="/static/css/finance.css">
+    <script type="text/javascript" src="/static/js/finance.js"></script>
+
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>财务报表</span>
+	</div>
+	<div class="financecontain">
+		<ul class="financetitlebox">
+			<li class="financetitle lightblue" id="moneymanagement">
+			    <div class="name">资金管理</div>
+			</li>
+			<li class="financetitle blue" id="moneylist">
+			    <div class="name">消费记录明细</div>
+			</li>
+			<li class="financetitle blue" id="remit">
+			    <div class="name">充值汇款</div>
+			</li>
+			<li class="financetitle blue" id="refund">
+			    <div class="name">退款记录</div>
+			</li>
+<!-- 			<li class="financetitle blue" id="nvoice">
+			    <div class="name">发票记录</div>
+			</li>
+			<li class="financetitle blue" id="statements">
+			    <div class="name">财务报表</div>
+			</li> -->
+		</ul>
+		<div class="card-data" style="margin-top:-5px;">
+			<div id="tab-moneymanagement" class="operationbox">
+				<div class="list-money">
+	                  <span class="page">余额: </span>
+	                  <div class="money"><span style="font-size:18px">{{ balance_money }}</span>.00元</div>
+	                  <button class="blue recharge" style="margin-top:40px;">账户充值</button>
+				</div>
+				<div class="over-page">
+	               <div id="pag-moneylist" class="herf" href="">查看消费明细</div>
+	               <div id="pag-remit" class="herf" href="">查看汇款记录</div>
+	               <div id="pag-refund" class="herf" href="">查看退款记录</div>
+				</div>
+			</div>
+			<div id="tab-moneylist" class="operationbox">
+	        <ul class="main_box" style="position:absolute;display:block;z-index:100; top:160px;">
+                <li class="select_box">
+                    <span class="img">充值汇款</span>
+                    <ul class="son_ul">
+                        <li class="type-remint">充值汇款</li>
+                        <li class="type-refund">投放信息</li>
+                    </ul>
+                </li>
+            </ul>
+
+                <div class="time">
+                    <div class="date">
+                        <input type="text"  placeholder="请选择日期区间" class="choose-date  chaxun-date"/>
+                    </div>
+                    <div class="date_detail" id="today">今天</div>
+                    <div class="date_detail" id="yesterday">昨天</div>
+                    <div class="date_detail" id="last7">最近7天</div>
+                    <div class="date_detail" id="last30">最近30天</div>
+                        <button class="blue blucwlookbtn check" onclick="getValues()" style="float:right;">查询</button>
+                          <input type="hidden" name="timestr" id="choose-date-yang" value="">
+
+                </div>
+
+			    <div class="table">
+				    <table id="table-remit">
+                    <tr>
+		             <th>日期</th>
+		             <th>订单名称</th>
+		             <th>交易号</th>
+		             <th>费用类型</th>
+		             <th>金额（元）</th>
+		             <th>余额（元）</th>
+                    </tr>
+
+				    </table>
+				    <table id="table-refund">
+                        <tr>
+                             <th >日期</th>
+                             <th>订单名称</th>
+                             <th>交易号</th>
+                             <th>费用类型</th>
+                             <th>金额（元）</th>
+                             <th>余额（元）</th>
+                        </tr>
+                       {% for b in prepaid_data.fields %}
+		              <tr>
+                          <td>{{ b.time | date:"Y/m/d"}}</td>
+                          <td>{{ b.order_id }}</td>
+                          <td>{{ b.number }}</td>
+                          <td>充值汇款</td>
+                          <td>{{ b.amount }}</td>
+                          <td>{{ b.Balance }}</td>
+		              </tr>
+                        {% endfor %}
+				    </table>
+				</div>
+		    </div>
+			<div id="tab-remit" class="operationbox" style="position:relative">
+	            <table style="width:100%;text-align:center;">
+	                   <th>开户银行</th>
+	                   <th>账户名称</th>
+	                   <th>账号</th>
+	                   <tr>
+	                   	<td>杭州银行上海长宁支行</td>
+	                   	<td>全天互动（上海）科技有限公司</td>
+	                   	<td>123456789</td>
+	                   </tr>
+	            </table>
+	            <div style="margin:30px 0;">
+	            <span>请您在转账汇款后填写以下汇款信息，如有问题请拨打客服电话：4002348765</span>
+	            <div class="href fontblue link"  id="query_chongzhi" style="display:inherit;margin-top:30px;cursor:pointer;color:#e45b5e;">查看汇款记录</div>
+	            </div>
+	      
+				<script type="text/javascript">
+				$(function(){
+					//点击链接出现弹框
+					 $(".linkpopupbox").css("display","none");
+				    $(".link").click(function(){
+				    	$(".linkpopupbox").css("display","block");
+				    	$(".linkpopupbtn").click(function(){
+				    		$(".blackbackground").css("display","none");
+                            $("#form-remit").show()
+				    		$(".linkpopupbox").css("display","none");
+				    	})
+				    })
+				})
+				</script>
+	            <p>汇款信息</p>
+	            <form method="POST" action="{% url 'remitmoney' %}" role="form" id="form-remit">
+                    {% csrf_token %}
+	               <div class="deways">登录账户：<input class="wails" disabled="true" value="{{ request.user.email }}" type="text" name="for-num"></div>
+	               <div class="deways"><p class="color">*</p>开户名称：<input class="wails" required type="text" name="for-name"></div>
+	               <div class="deways"><p class="color">*</p>充值金额：<input class="wails" required type="text" name="for-mon">元</div>
+	               <div class="deways"><p class="color">*</p>支付账号：<input class="wails" required type="text" name="for-pay"></div>
+                   <div class="deways"><p class="color">*</p>退款方式：<input class="wails" disabled="true" value="汇款转账" type="text" name="for-way">
+{#	                 <ul class="main_box">#}
+{#	                    <li class="select_box">#}
+{#	                        <span class="img btn-name"  >请选择充值方式</span>#}
+{#                            <input type="hidden" id="recharge_box" name="for-way">#}
+{#	                        <ul class="son_ul">#}
+{#                                <li value="">请选择充值方式</li>#}
+{#                                <li  name="A">充值汇款</li>#}
+{#                                <li  name="B">支付宝</li>#}
+{#	                        </ul>#}
+{#	                    </li>#}
+{#	                </ul>#}
+                   </div>
+                   <div class="deways"><p class="color">*</p>银行信息：<input class="wails" required type="text" name="for-info">
+                   </div>
+		           <div class="deways-inf" style="margin:-60px 190px;">支行信息：<input class="wails" required type="text" name="for-add"></div>
+
+	               <p style="color:#e45b5e;">根据充值金额会收取10%佣金，佣金在申请退款时不予返还。</p>
+	               <input class="blue-btn" type="submit" name="for-sub" value="确认提交" style="float:left;">
+	            </form>
+			</div>
+			<div id="tab-refund" class="operationbox">
+	            <div id="page-a">
+		            <p style="font-size:16px;">退款记录</p>
+		            <div class="time">
+				        <div class="date">
+							<input type="text" name="" placeholder="请选择日期区间" class="choose-date select-date"/>
+						</div>
+				        <span>操作类型:</span>
+<!-- 				    	<ul class="main_box" style="margin: 0 0 0 10px;">
+						    <li class="select_box">
+						        <span class="img ">汇款转账</span>
+						        <ul class="son_ul" id="task-son-ul" name="states">
+						            <li value="0">汇款转账</li>
+                                    <li value="1">支付宝</li>
+						        </ul>
+						    </li>
+						</ul> -->
+						<input class="wails" disabled="true" value="汇款转账" type="text" name="for-way">
+                        <button class="blue blucwlookbtn chaxun" onclick="clickValues" style="margin-left:20px;">查询</button>
+				    	<button id="turn-refund" class="blue" style="float:right;">申请退款</button>
+				    </div>
+				    <table style="width:100%; margin:30px 0;" id="context-refund">
+                        <tr name="refund">
+                            <th>日期</th>
+                            <th>退款金额</th>
+                            <th>退款方式</th>
+                            <th>状态</th>
+                        <tr>
+				    </table>
+			    </div>
+			    <div id="page-b">
+	                <p style="font-size:16px;">申请退款</p>
+                     <form method="POST" action="{% url 'refundmoney' %}" role="form" id="form-rerfund">
+                       {% csrf_token %}
+		               <div class="deways"><p class="color">*</p>退款金额：<input id="refund_money" class="wails" required type="text" name="for-num"></div>
+		               <div class="deways"><p class="color">*</p>退款方式：<input  class="wails" disabled="disabled" type="text" value="汇款转账" name="for-way"></div>
+{#				    	<ul class="main_box" style="position:absolute;display:block;z-index:100;margin: -26px 0 0 70px;">#}
+{#						    <li class="select_box">#}
+{#						        <span class="img" >请选择退款方式</span>#}
+{#                                <input type="hidden" id="refund_box" name="for-way">#}
+{#						        <ul class="son_ul refund_select" id="task-son-ul" name="states">#}
+{#						            <li value="0" name="A">转账汇款</li>#}
+{#                                    <li value="1" name="B">支付宝</li>#}
+{#						        </ul>#}
+{#						    </li>#}
+{#						</ul>#}
+		               <div class="deways"><p class="color">*</p>开户名称：<input id="account_name" class="wails" required type="text" name="for-name"></div>
+		               <div class="deways"><p class="color">*</p>银行账号：<input id="bank_name" class="wails" required type="text" name="for-mon"></div>
+		               <div class="deways"><p class="color">*</p>银行信息：<input id="bank_info" class="wails" required type="text" name="for-pay"></div>
+		               <div class="deways-inf" style="margin:-60px 190px;">支行信息：<input class="wails" required type="text" name="for-add"></div>
+		               <div>
+		               	<P style="position:relative">退款说明</P>
+		               	<div class=""  name="for-text">
+		               		<textarea class="text" name="words" maxlength="500" aria-labelby="" style="resize:none;"></textarea>
+		               	</div>
+		               </div>
+		               <input id="put_on" class="blue-btn" type="submit" name="for-sub" value="确认提交" style="float:left;margin-top:50px;">
+{#		             </div>#}
+                     </form>
+			    </div>
+			</div>
+<!-- 			<div id="tab-nvoice"class="operationbox">
+				<div id="page-c">
+		            <b>发票记录</b>
+		            <div class="time">
+				        <div class="date">
+							<input type="text" name="" placeholder="请选择日期区间" class="choose-date"/>
+						</div>
+				    </div>
+				    <div>
+				    	操作类型:
+				    	<select class="blue blue-width">
+				    		<option>请选择操作类型</option>
+				    		<option>转账汇款</option>
+				    	</select>
+				    	 <button class="blue" style="margin-left:50px;">查询</button>
+				    	 <button id="turn-nvoice" class="blue" style="margin-left:20px;">开具发票</button>
+				    </div>
+				    <table style="width:100%; margin:30px 0;">
+		                <th>日期</th>
+		                <th>发票抬头</th>
+		                <th>发票金额</th>
+		                <th>申请时间</th>
+		                <th>快递公司单号</th>
+		                <th>状态</th>
+                        {% for c in invoice_data %}
+		                <tr>
+		                	<td>{{ c.time }}</td>
+		                	<td>{{ c.name }}</td>
+		                	<td>{{ c.amount }}</td>
+		                	<td>{{ c.application_time }}</td>
+		                	<td>{{ c.tracking_number }}</td>
+		                	<td>{{ c.status }}</td>
+		                </tr>
+                        {% endfor %}
+				    </table>
+			    </div>
+			    <div id="page-d">
+                   <b>发票记录</b>
+		            <form id="form-remit">
+		               <div class="deways">
+		               	<p class="color">*</p>发票类型：
+		               	<input type="radio" value="0">&nbsp;普通发票
+		               	<input type="radio" value="1">&nbsp;增值税发票
+		               </div>
+		               <div class="deways">可开发票金额：
+                            <div class="color zero">0.00元（可开发票总额=投放消费的总额-已开发票的总额）</div>
+		               </div>
+		               <div class="deways">发票内容：
+		               	<p class="server">技术服务</p>
+		               </div>
+		               <div class="deways"><p class="color">*</p>开票金额：<input class="wails" type="text" name="for-mon">元</div>
+		               <div class="deways"><p class="color">*</p>发票抬头：<input class="wails" type="text" name="for-mon"></div>
+		               <div class="deways"><p class="color">*</p>收票人省份：<select class="blue blue-width"><option>请选择</option></select></div>
+		               <div class="deways"><p class="color">*</p>详细地址：<input class="wails" type="text" name="for-mon"></div>
+		               <input class="blue-btn" type="submit" name="for-sub" value="确认提交">
+		            </form>
+			    </div>
+			</div>
+			<div id="tab-statements" class="operationbox">
+	            <b>财务报表</b>
+	            <div style="margin:30px 0;">
+	                <div style="float:left;margin-left:20p">年：   
+	            		<select>
+	                       <option>2016</option>
+	                       <option>2015</option>
+	            		</select>
+	                </div>  
+	            	<div style="float:left;margin-left:30px;">月：
+	            		<select>
+	                       <option>1</option>
+	                       <option>2</option>
+	                       <option>3</option>
+	                       <option>4</option>
+	                       <option>5</option>
+	                       <option>6</option>
+	                       <option>7</option>
+	                       <option>8</option>
+	                       <option>9</option>
+	                       <option>10</option>
+	                       <option>11</option>
+	                       <option>12</option>
+	            		</select>
+	            	</div>
+	            </div>
+	            <div style="float:right; margin:-5px 0;">
+		             <button class="blue" style="margin-right:20px;">查询</button>
+				     <button class="blue">导出Excel</button>
+			    </div>
+	             <table style="width:100%; margin-top:100px;">
+	                <th>日期</th>
+	                <th>账户类型</th>
+	                <th>上月结余</th>
+	                <th>本月充值</th>
+	                <th>本月消耗</th>
+	                <th>本月结余</th>
+	                <tr>
+	                	<td></td>
+	                	<td></td>
+	                	<td></td>
+	                	<td></td>
+	                	<td></td>
+	                	<td></td>
+	                </tr>
+
+			    </table> -->
+			</div>
+		</div>	
+    </div>
+    	            <div class="blackbackground"></div>
+    	            <div class="linkpopupbox">
+    	            <div class="visibletitle blue">
+						<span>汇款记录</span>
+					</div>
+					<div id="tab-remit" class="tablebox">
+						<table style="width:100%;text-align:center;background:#fffbef;">
+							<tr>
+								<th>登录账户</th>
+								<th>开户名称</th>
+								<th>充值金额</th>
+								<th>支付账号</th>
+								<th>充值方式</th>
+								<th>银行信息</th>
+							</tr>
+                            {% for d in recharge_data %}
+							<tr>
+								<td>{{ request.user.email }}</td>
+								<td>{{ d.name }}</td>
+								<td>{{ d.amount }}</td>
+								<td>{{ d.to_account }}</td>
+								<td>{{ d.get_type_display }}</td>
+								<td>{{ d.bank_info }}</td>
+							</tr>
+                            {% endfor %}
+						</table>
+					</div>
+					<div class="linkpopupbtn blue" style="display:block;border-radius: 5px;height: 35px;width: 98px;;margin:0 auto;text-align:center;margin-top:11px;line-height:35px;cursor:pointer">确定</div>
+				</div>
+</div>
+{% endblock %}

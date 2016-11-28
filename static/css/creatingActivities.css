@@ -1,0 +1,661 @@
+.activities{
+	margin-top: 20px;
+	overflow: hidden;
+}
+.activities .spanbox{
+	display: inline-block;
+	width: 76px;
+}
+.remark{
+	font-size: 14px;
+	text-align: right;
+	float: left;
+}
+.textarea{
+	resize:none;
+	width:360px;
+	height:128px;
+	float: left;
+}
+.save{
+	display: block;
+	margin:0 auto;
+}
+/*新建微博素材*/
+.bigtext{
+	width:87%;
+	height:35px;
+}
+.bigtextarea{
+	width: 98%;
+	margin-top: 10px;
+	height:90px;
+}
+.prompts{
+	width: 98%;
+	margin-top:5px;
+	text-align: right;
+}
+.activities p{
+	width:84px;
+	float: left;
+}
+.tonghang{
+	float: left;
+	width: 86%;
+}
+.activities .askremark{
+	width: 90px;
+	text-align: left;
+}
+.middletextarea{
+	width: 85%;
+	height:90px;
+}
+/*创建成功页面*/
+.successtitle{
+	text-align: center;
+	margin-top:-10px;
+	overflow: hidden;
+}
+
+.lookdetails{
+	cursor: pointer;
+}
+.ordered{
+	font-size: 14px;
+}
+/*创建订单*/
+.huodongstyle{
+	display: inline-block;
+	margin-right: 50px;
+}
+.bigoperationbox{
+	width:1125px;
+}
+.choicestar{
+	margin-top: 80px;
+}
+.rightredchoiced{
+	float: left;
+    display: block;
+    height: 37px;
+    line-height: 37px;
+    text-align: center;
+    width: 88px;
+    color: #faa81b;
+    border:1px solid #faa81b;
+
+}
+.choicestarbtn{
+	overflow: hidden;
+	margin-top:20px;
+	margin-bottom: 40px;
+}
+/*创建订单2*/
+.blackbackground{
+	position: absolute;
+	top:0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	width: 100%;
+	height:3324px;
+	background: rgba(0,0,0,0.3);
+	display: none;
+}
+.fansdelet{
+	color: #ff0000;
+}
+.direct{
+	margin-top: 20px;
+}
+.directcontent{
+	margin-top: 16px;
+}
+.clicknewmaterial{
+	margin-top:20px;
+}
+.cpsbox{
+	display: inline-block;
+	width: 180px;
+	height:35px;
+	border:1px solid #e1e3e8;
+	text-align: center;
+	line-height: 35px;
+	font-size: 14px;
+}
+.bigcpsbox{
+	width: 139px;
+	height:47px;
+	border:1px solid #e1e3e8;
+	text-align: center;
+	margin-left: -5px;
+	line-height: 47px;
+}
+.creatingOrder{
+	float: left;
+}
+.fontbtn{
+	display: inline-block;
+	text-align: center;
+	width: 50px;
+}
+.marginleft{
+	margin-left: 23px;
+}
+.fansinput{
+	display: none;
+}
+.fansinput input{
+	height: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 87px;
+}
+/*创建订单2弹窗*/
+.show{
+	width:1920px;
+	height: 1080px;
+	position: absolute;
+	background-color: rgba(0,0,0,0.3);
+}
+.visiblebox{
+	width: 800px;
+	position: absolute;
+	top:88px;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:auto;
+	z-index: 99;
+	/*left: 40px;
+	overflow: hidden;*/
+	height:425px;
+	background:#fffbef;
+	display: none;
+	border-radius: 5px;
+}
+.visibletitle{
+	width: 800px;
+	height:50px;
+	font-size: 18px;
+	line-height: 50px;
+	padding:0 28px;
+	box-sizing: border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.closevisible{
+	float: right;
+	cursor: pointer;
+	font-size: 30px;
+}
+.visiblecontent{
+	background: #fffbef ;
+	height: 350px;
+	overflow: auto;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.visibleconbox{
+	padding:0 30px;
+	margin-top:30px;
+	box-sizing: border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+    /*overflow: hidden;*/
+}
+.cpsmidbox{
+	width: 130px;
+	height:35px;
+	line-height: 35px;
+}
+.visiblewordbox{
+	display: inline-block;
+	width: 100px;
+
+}
+.inputcpsbux{
+	width: 456px;
+	height:35px;
+	line-height: 35px;
+	border-radius: 0;
+}
+.visibleconboxword{
+	display: inline-block;
+	width:70px;
+	padding-left:10px;
+}
+.bigheighttext{
+	height:30px;
+}
+.bigredtext{
+	width: 180px;
+	height:30px;
+	border-color: #e1e3e8;
+	border-radius: 0;
+	text-align: center;
+	margin:0 10px;
+	border-radius:5px; 
+}
+.clicklist{
+	cursor: pointer;
+	font-size: 14px;
+}
+.addborder{
+	width:580px;
+	border:1px solid #e1e3e8;
+}
+.visiblesure{
+	display: block;
+	margin:0 auto;
+}
+.square{
+	width: 35px;
+	height:35px;
+	display: inline-block;
+}
+.newschedulelist{
+	position: relative;
+	margin:43px 0px;
+}
+.newsclose{
+	position: absolute;
+	width: 20px;
+	height:20px;
+	right: 13px;
+	top: -35px;
+	font-size: 30px;
+	cursor: pointer;
+}
+.hours{
+	position:relative;
+	display:inline-block;
+	cursor:pointer
+}
+.hours>ul{
+	display: none;
+	background:#fff;
+	width:50px;
+	position:absolute;
+	top:35px;
+	left:0;
+	height:100px;
+	overflow:scroll;
+}
+.minutes{
+	position:relative;
+	display:inline-block;
+	cursor:pointer
+}
+.minutes>ul{
+	display: none;
+	background:#fff;
+	width:50px;
+	position:absolute;
+	top:35px;
+	left:0;
+	height:100px;
+	overflow:scroll;
+}
+/*删除警告*/
+.deletwarn{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom:0;
+	margin: auto;
+	width: 500px;
+	height:220px;
+	overflow: hidden;
+	background: #fffdef;
+	display: none;
+    border-radius: 5px;	
+    z-index: 120;
+}
+.warntitle{
+	width: 100%;
+	cursor: pointer;
+}
+.textcenter{
+	text-align:center;
+	margin-top:41px;
+}
+.fontred{
+	color: #FF0000;
+}
+/*素材弹窗*/
+.visibleboxtwo{
+	position: absolute;
+	top:88px;
+	left:0;
+	right:0;
+	bottom:0;
+	margin: auto;
+	background:#fffbef;
+	width: 800px;
+	text-align: center;
+	display: none;
+	height: 426px;
+	overflow: hidden;
+	z-index: 120;
+	border-radius: 5px;
+}
+.visibleboxtwo>div>table{
+	width: 100%;
+	margin:20px auto;
+	color: #666;	
+}
+.visibleboxtwo>div>table>th{
+	font-weight: normal!important;
+	color: #333;
+	font-size: 14px;
+}
+.visibleboxtwo>div>table tr:nth-child(odd){
+	background: #fdf4e4;
+}
+.visibleboxtwo>div>table tr:first-of-type{
+	background: #fffdef;
+}
+/*创建订单3*/
+.orderthreeform{
+	width: 100%;
+	border:1px solid #e1e3e8;
+}
+.orderthreeform th{
+	background: #faa81b;
+}
+.orderthreeform td{
+	height:30px;
+	line-height: 30px;
+}
+.fonteight{
+	font-size:16px
+}
+.clickchoiceredform{
+	cursor: pointer;
+}
+#clickchoiceredform{
+	background: #fffbef none repeat scroll 0 0;
+    border-radius: 5px;
+    bottom: 0;
+    display: none;
+    height: 425px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 88px;
+    width: 800px;
+    z-index: 99;
+}
+#clickchoiceredform .redmantablebox{
+	width: 100%;
+	height: 375px;
+	padding:20px;
+	overflow: auto;
+}
+#clickchoiceredform table{
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+}
+#clickchoiceredform table .redtr .headportrait{
+/*	background: #50bae2 none repeat scroll 0 0;*/
+    float: left;
+    height: 50px;
+    margin: 0 10px;
+    overflow: hidden;
+    position: relative;
+    width: 50px;
+}
+#clickchoiceredform table .redtr .headportrait img{
+	width: 100%;
+}
+#clickchoiceredform table .redtr .headportrait .draw{
+	background: #fff none repeat scroll 0 0;
+    bottom: 0;
+    font-size: 0;
+    height: 10px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    width: 10px;
+}
+#clickchoiceredform table .redtr .headportrait .reddraw{
+	background: red;
+}
+#clickchoiceredform table .redtr .headportrait .reddraw img {
+    display: inline-block;
+    width: 100%;
+}
+#clickchoiceredform table .redtr .headportraittitle{
+	float: left;
+    height: 100%;
+    margin: 15px 0px 0;
+}
+/*活动订单详情*/
+.fright{
+	float: right;
+}
+.payforbox{
+	padding-left: 20px;
+	margin-top: 30px;
+	width:100%;
+	height:74px;
+	line-height: 74px;
+}
+.pay{
+	width: 100px;
+	text-align: center;
+	margin-left: 30px;
+	cursor: pointer;
+}
+.paydetail{
+	background: #fff;
+	padding:0 20px;
+	margin-top: 30px;
+	border:1px solid #e1e3e8;
+	width:100%;
+	height:54px;
+	line-height:54px;
+}
+.orderchoicered{
+	border: 1px solid #e1e3e8;
+	border-bottom:0;
+	height:50px;
+	line-height: 50px;
+	padding:0 20px;
+}
+/*素材中心*/
+.materialtitle{
+	overflow: hidden;
+	float: left;
+}
+.materialbox{
+	overflow: hidden;
+}
+.materialsmalltitle{
+	border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    float: left;
+    height: 45px;
+    margin-right: 5px;
+    overflow: hidden;
+    width: 90px;
+    color: #fff;
+    text-align: center;
+    line-height: 45px;
+}
+.materialconten{
+	padding:0 10px;
+	border:1px solid #e1e3e8;
+	width: 100%;
+	overflow: hidden;
+}
+.materialOrder{
+	float: right;
+}
+.materialtable th{
+	width: auto;
+}
+.materialtable td{
+	padding:0 10px;
+}
+.materialbtn{
+	margin:0 1px;
+}
+.materialbtn>a{
+color:#fff;
+}
+.tablechoice{
+	margin:0 10px;
+}
+/*直播素材*/
+.materialoperationbox{
+	width:920px;
+}
+.materialinput{
+	width:294px;
+    border: 1px solid #e1e3e8;
+    height: 36px;
+	border-radius: 5px;
+}
+.materialinput input{
+	border: 0;
+    width: 258px;
+    margin: 0;
+    float: left;
+}
+.materialinput img{
+	width:30px;
+	cursor: pointer;
+}
+.materialpagebreakbox{
+	width: auto;
+}
+.materialtable>table{
+	width: 100%;
+}
+button>a{
+	color: #fff;
+}
+/*链接弹窗*/
+.linkpopupbox{
+	position: absolute;
+	top: 100px;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 500px;
+	height:220px;
+	overflow: hidden;
+	background: #fffdef;
+	border:1px solid #e1e3e8;
+	display: none;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius:5px;
+	border-radius: 5px;
+}
+.linkpopupboxtitle{
+	width: 100%;
+	cursor: pointer;
+}
+.linkpopupboxtextcenter{
+	text-align:center;
+	margin-top:41px;
+}
+.fontred{
+	color: #666;
+}
+/* .linkpopupbox{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin:auto;
+	overflow: hidden;
+	border: 1px solid #e1e3e8;
+	text-align: center;	
+	background: #fff;
+	display: none;
+	width:1110px;
+	height:300px;
+	padding:0 20px;
+}
+.linkpopupbox .linkpopupboxtitle{
+	display: inline-block;
+	margin-top: 20px;
+}
+.linkpopupbox table{
+	width:100%;
+	margin:0 auto;
+	margin-top: 10px;
+}
+.linkpopupbox th{
+	width:auto;
+}
+.linkpopupbtn{
+	margin:0 auto;
+	width:100px;
+	height:40px;
+	background: #50bae4;
+	cursor: pointer;
+	line-height: 40px;
+	margin-top: 18px;
+	color: #fff;
+} */
+.ordername,.subscribe,.quote{
+	width: 180px;
+	height: 35px;
+	line-height: 35px;
+	padding-left: 12px;
+	
+}
+.payforbox a{
+	color: #fff;
+}
+.red{color: #ff0000;
+}
+.red:hover{color: #ff0000;
+}
+#name,#advertiser_name,#budget{
+   	width: 150px;
+	height: 30px;
+	line-height: 30px;
+}
+.form-control:focus{
+	box-shadow: none !important;
+	border-color: #fff !important;
+}
+.deletall_a{
+	margin: -8px 0;
+	position: absolute;
+}
+.fontgrey_span a{
+	color: #ff0000;
+}
+.fontgrey_span a:hover{
+	color: #ff0000;
+}
+/*确认付款弹窗样式*/
+#paymentsuccess{
+	position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+	width:500px;
+	height:200px;
+	display: none;
+	padding:0;
+}

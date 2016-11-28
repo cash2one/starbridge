@@ -1,0 +1,231 @@
+ul,li{list-style: none;margin:0;padding: 0}
+.main_box{position: absolute;z-index: 100;display: inline-block;}
+.select_box {width:180px; height:35px;background:#ff8600; padding-right:20px; padding-left:10px; position:relative;border-radius:5px;color:#fff;}
+.select_box span {cursor:pointer; display:block; line-height:35px; width:100%; height:35px; overflow:hidden;}
+.select_box ul li {cursor:pointer;}
+.son_ul {width:180px; position:absolute;left:0;top:29px; background:#ff8600;border-radius:5px;color:#fff;border:1px solid #ff8600;}
+.son_ul li {display:block; line-height:35px; padding-left:10px;}
+.hover {background:#fff;color:#ff8600;border-radius: 4px;}
+.img{
+    background:url(/static/img/arrows.png) no-repeat scroll 100% center;
+    background-size:12px;
+}
+
+input{
+	background:#fbfbfb;
+	border: 1px solid #E1E3E8;
+	border-radius: 5px;
+	margin-right: 10px;
+	outline:medium !important;
+}
+.containerbox{
+	padding:0 40px;
+	overflow: hidden;
+	min-width:850px;
+	padding-left: 60px; 
+}
+.smalloperationbox{
+	border-radius: 5px;
+	padding:15px;
+	width: 1039px;
+	border:1px solid #E2E2E2;
+	background: #fffbef;
+	overflow: hidden;
+}
+.crumb{
+	padding:10px 0px;
+	font-size: 16px;
+	color: #303030;
+}
+.slash{
+	padding:0 5px;
+}
+.blue{
+	background: #ff8600;
+	color: #fff;
+}
+.lightblue{
+	background: #faa81b;
+	color: #fff;
+	font-weight: bold;
+}
+.darkblue{
+	background: #faa81b;
+}
+.fontblue{
+	color: #333;
+    letter-spacing: 1.5px;
+}
+.fontgrey{
+	color: #666;
+}
+.smallfontsize{
+	font-size: 12px;
+}
+.bigfontsize{
+	font-size: 20px;
+	letter-spacing: 1.5px;
+}
+.operationbox{
+	width: 800px;
+	border:1px solid #E2E2E2;
+/*	box-shadow: 1px 4px 6px #888888;*/
+	padding: 40px;
+	background: #fffbef;
+	overflow: hidden;
+}
+button{
+	border: 0;
+	width:98px;
+	height:35px;
+	border-radius: 5px;
+}
+button:hover{
+	background:#faa81b;
+}
+table{
+	border:1px solid #E5E5E5;
+	border-radius: 5px;
+}
+th{
+	border:1px solid #E5E5E5;
+	width:100px;
+	text-align: center;
+	height:35px;
+}
+td{
+	border:1px solid #E5E5E5;
+	text-align: center;
+	overflow: hidden;
+	height: 30px;
+	font-size: 12px;
+}
+.pagebreakbox{
+	width: 1040px;
+}
+.pager li{
+	display: inline-block;
+}
+.pager li > a,.pager li > span{
+	background:transparent;
+	border:0;
+	color: #fff;
+	padding:0;
+}
+.pager li > a:focus,.pager li > a:hover{
+	background: transparent;
+}
+.pager .disabled > a, .pager .disabled > a:focus, .pager .disabled > a:hover, .pager .disabled > span {
+	background: transparent;
+	color: #fff;
+}
+.pagebox{
+	float: right;
+}
+.pagebox div{
+	float: left;
+}
+.pagebtnbox{
+	width: 80px;
+	height:30px;
+	border-radius: 15px;
+	margin:0 10px;
+	position: relative;
+	cursor: pointer;
+}
+.prev span:first-of-type{
+	display: inline-block;
+	position: absolute;
+	left:7px;
+	top:5px;
+	background: #ff8600;
+	width: 20px;
+	height:20px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.prev span:last-of-type{
+	display: inline-block;
+	position: absolute;
+	right:13px;
+	top:5px;
+}
+.prev a{
+	display: inline-block;
+	position: absolute;
+	right:13px;
+	top:5px;
+}
+.next span:first-of-type{
+	display: inline-block;
+	position: absolute;
+	right:7px;
+	top:5px;
+	background: #ff8600;
+	width: 20px;
+	height:20px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.next span:last-of-type{
+	display: inline-block;
+	position: absolute;
+	left:13px;
+	top:5px;
+}
+.next a{
+	display: inline-block;
+	position: absolute;
+	left:13px;
+	top:5px;
+}
+.next .rightimg{
+	left:0;
+}
+.pagenumbox{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 30px;
+	margin:0 10px;
+	cursor: pointer;
+	vertical-align: top;
+}
+.pagenumbox>a{
+    display: inline-block;
+    width: 100%;
+}
+.time{
+	margin: 50px 0 0 -20px;
+}
+.onlyshowactive{color:#525147;}
+.date{
+    float: left;
+}
+.date input{
+    width: 200px;
+    height: 33px;
+    border-radius: 5px;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.date_detail{
+    color: #333;
+    float: left;
+    margin-left: 20px;
+    line-height: 31px;
+    cursor: pointer;
+}
+.date_detail:hover{color: #ff8600;}
+.font-size18{
+	font-size: 18px;
+	color: #999;
+}
+.div-date{
+	text-align: center;
+	width: 180px;
+	height: 30px;
+	line-height: 30px;
+}

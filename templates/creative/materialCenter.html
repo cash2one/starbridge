@@ -1,0 +1,218 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ active_menu }}{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/creatingActivities.css">
+<script type="text/javascript" src="/static/js/creatOrder.js"></script>
+<div class="containerbox">
+	<div class="crumb">
+		<span>首页</span>
+		<span class="slash">/</span>
+		<span>素材中心</span>
+		<span class="slash">/</span>
+		<span>直播素材</span>
+	</div>
+	<div class="operationbox creatingOrder materialoperationbox">
+	    <div class="materialbox">
+			<ul class="materialtitle">
+				<li class="materialsmalltitle blue">
+				    直播素材
+				</li>
+			</ul>
+			<div class="materialinput materialOrder">
+				<form role="form" method="get" name="search_form">
+					{% csrf_token %}
+			    <input type="search" class="form-control" name="keyword" placeholder="请输入的素材名称" id="id_search_input" onkeyup="key_up()"
+						   autofocus>
+			    <img src="/static/img/search.png">
+				</form>
+		    </div>
+
+			<script type="text/javascript">
+               //搜索框自动提交的时间为距离上次按键抬起1秒(js代码)
+				function key_up(){
+				var old_value = $('#id_search_input').val();
+				setTimeout(function () {
+					var new_value = $('#id_search_input').val();
+					if (old_value == new_value) {
+						document.search_form.submit();
+						}
+					}, 1000);
+				}
+               //全选删除,单条删除,改变状态
+				$(function(){
+					$(".selectall").prev("input").click(function(){
+						var selectinput=$(".selectall").prev("input").prop("checked");
+						if(selectinput==undefined||selectinput==false){
+							$(".materialtable").find("input").prop("checked",false)
+					    }else{
+					    	$(".materialtable").find("input").prop("checked",true)
+					    }
+					})
+					var deletall="";
+					$(".deletall").click(function(){
+						deletall="";
+						$(".materialltr").each(function(){
+							var checked=$(this).find("input").prop("checked");
+							if(checked==true){
+								deletall+=$(this).attr("id")+",";
+							}
+						})
+						$("#materialid").val(deletall.slice(0,-1));
+						$("#materialform").submit();
+					})
+				})
+			</script>
+        <!--素材中心数据展示-->
+			<div class="materialconten">
+					<div class="activities">
+						<a href="{% url 'creative_add' %}"><button class="blue materialOrder">创建素材</button></a>
+					</div>
+
+					<form id="materialform" action="{% url 'creative_many_delete' %}" method="POST">
+						{% csrf_token %}
+					<div class="activities">
+						<div class="creatingOrder">
+							<div class="tablechoice">
+						    	<input type="checkbox">
+				    	    	<span class="selectall">全选</span>
+				            </div>
+						</div>
+						<div class="creatingOrder">
+							<div class="tablechoice">
+                                <button class="blue deletall">删除已选
+                                   <input type="hidden" class="deletall">
+								</button>
+				            </div>
+						</div>
+					</div>
+					<input name="materialid" type="hidden" value="" id="materialid">
+					</form>
+
+					<div class="activities materialtable">
+					
+						<table>
+					    <tr>
+							<th>选择</th>
+							<th>名称</th>
+							<th>创建时间</th>
+							<th>操作</th>
+						</tr>
+							{% for zhibo in zhibo_list.list %}
+							<tr id={{ zhibo.id }} class="materialltr">
+								<td>
+									<input type="checkbox">
+								</td>
+								<td>{{ zhibo.name }}</td>
+								<td>
+									<span>{{ zhibo.create_time|date:"Y-m-d H:i:s" }}</span>
+								</td>
+								<td>
+								   <div style="margin:0 auto;overflow:hidden;width:300px">
+									<a href="{% url 'creative_edit' %}?id={{ zhibo.id }}">
+									<button class="blue creatingOrder materialbtn">编辑
+									</button>
+									</a>
+									<button class="blue creatingOrder materialbtn link " name="{{ zhibo.archive_url }}">
+									链接
+									</button>
+									   <div class="linkpopupbox">
+  										   <div class="visibletitle blue linkpopupboxtitle">
+  											   <span>链接</span>
+  											   <div class="linkpopupboxwarnx" style="float:right">
+  											   	<img src="/static/img/del.png" style="background-size:12px;width:12px">
+  											   </div>
+  										   </div>
+  										   <div class="directcontent linkpopupboxtextcenter linkpopupboxzmb">
+  											   <span id="linkpopupboxzmb"></span>
+  										   </div>
+  										   <div class="directcontent linkpopupboxtextcenter">
+  											   <button class="blue linkpopupboxdeletdel">取消</button>
+  										   </div>
+									   </div>
+									<button class="blue creatingOrder materialbtn orderdelet">删除</button>
+										<div class="deletwarn">
+										   <div class="visibletitle blue warntitle">
+											   <span>删除</span>
+											   <div class="warnx" style="float:right">
+											   	<img src="/static/img/del.png" style="background-size:12px;width:12px">
+											   </div>
+										   </div>
+										   <div class="directcontent textcenter zmb">
+											   <span id="zmb"></span>
+										   </div>
+										   <div class="directcontent textcenter">
+
+										   		<button class="blue deletsure">
+                                                    确定</button>
+											   <button class="blue deletdel">取消</button>
+										   </div>
+									   </div>
+									</div>
+								</td>
+							</tr>
+							{% empty %}
+							<tr>
+								<td colspan="4">暂无直播素材</td>
+                            </tr>
+							{% endfor %}
+						</table>
+					</div>	
+			</div>
+		</div>
+
+		<!--分页代码-->
+      <div class="managementpage">
+		    <div class="pagination" style="width:100%">
+                        <ul class="pager pagebox">
+                            {% if zhibo_list.list.has_previous %}
+                                <li class="previous pagebtnbox blue prev">
+									<a href="{{ query_category }}&page={{ zhibo_list.list.previous_page_number }}">
+                                    <span style="top:0;left:-24px;">
+								    	<img src="/static/img/left.png" style="width:15px;">
+								    </span>
+                                      上一页</a>
+                                </li>
+                            {% else %}
+                                <li class="previous disabled pagebtnbox blue prev">
+									<a href="#">
+                                	<span style="top:0;left:-24px;">
+								    	<img src="/static/img/left.png" style="width:15px;">
+								    </span>
+                                	上一页</a>
+                                </li>
+                            {% endif %}
+                            {% for p in zhibo_list.page_range %}
+                                {% ifequal p zhibo_list.list.number %}
+                                    <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
+                                {% else %}
+                                    <li class="pagenumbox blue"><a href="{{ query_category }}&page={{p}}" title="第{{p}}页">{{p}}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
+
+                            {% if zhibo_list.list.has_next %}
+                                <li class="next pagebtnbox blue next">
+                                    <a href="{{ query_category }}&page={{ zhibo_list.list.next_page_number }}">下一页
+                                    <span  style="left:41px;top:0">
+								    	<img src="/static/img/right.png" style="width:15px;">
+								    </span>
+									</a>
+                                </li>
+                            {% else %}
+                                <li class="next disabled pagebtnbox blue next">
+                                	<a href="#">下一页
+                                	<span  style="left:41px;top:0;">
+								    	<img src="/static/img/right.png" style="width:15px;">
+								    </span>
+									</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+            </div>
+        </div>
+
+
+	</div>
+</div>
+{% endblock %}
+	

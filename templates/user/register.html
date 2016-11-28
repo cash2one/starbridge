@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/user.css">
+    <script type="text/javascript" src="/static/js/common/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        //默认让注册提交按钮不可用，只有点击同意协议的时候，提交按钮才可以用
+        function check_box(){
+            if (document.getElementById('starid').checked)
+                document.getElementById('put_in').disabled = false;
+            else
+                document.getElementById('put_in').disabled = 'disabled';
+        }
+
+        //验证手机号是否是11位
+        function validate_phone(){
+            var x=document.getElementById("phone").value
+            var span=document.getElementById("error_phone")
+            if (x.length == 11){
+                span.innerHTML=""
+                return true;
+            }else{
+{#                span.style.color="#fff";#}
+{#                span.style.position="absloute";#}
+{#                span.style.left="460px";#}
+{#                span.innerHTML='请输入正确的号码';#}
+                alert('请输入正确的号码');
+                return false;
+            }
+        }
+
+    $(function() {
+         //验证两次输入的密码是否相等
+        $(document).ready(function () {
+            $("#confirm_password1").blur(function () {
+                a = $("#password1").val()
+                b = $("#confirm_password1").val()
+                if(a==b){
+{#                    alert('密码一致')#}
+                }else {
+                    alert('两次输入密码不一致')
+                }
+            });
+        });
+
+        //验证该用户名是否注册，也就是数据库中是否有这个用户名
+        $(document).ready(function(){
+            $('#newusername').blur(function(){
+                a = $('#newusername').val()  //获取输入用户名的值
+                sumdata ={'a':a}
+                $.ajax({
+                        type: 'POST',
+                        datatype:'json',
+                        data: sumdata,
+                        url: '/register/',
+                        async: true,
+                        success: function (data) {
+                            if(data.register_username == 'a'){
+                                alert('该用户已经注册')
+                            }
+                        }
+                })
+            })
+            //验证该邮箱是否注册，也就是数据库中是否有这个邮箱
+           $('#newemail').blur(function(){
+                b = $('#newemail').val()  //获取输入用户名的值
+                sumdata ={'b':b}
+                $.ajax({
+                        type: 'POST',
+                        datatype:'json',
+                        data: sumdata,
+                        url: '/register/',
+                        async: true,
+                        success: function (data) {
+                            if(data.register_email == 'b'){
+                                alert('该邮箱已经注册')
+                            }
+                        }
+                })
+            })
+
+        })
+    })
+//防止403 forbidden
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+    var csrftoken = getCookie('csrftoken');
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+    </script>
+</head>
+<body>
+<form action="" method="post">
+{% csrf_token %}
+<div class="content">
+    <div class="border_reg">
+        <div class="border_center_reg">
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">*&nbsp;用户名:
+                    <input class="border_input detial_reg" id="newusername" required type="text" name="username">
+                </label>
+            </div>
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">*&nbsp;公司名称:
+                    <input class="border_input detial_reg" required type="text" name="company">
+                </label>
+            </div>
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">*&nbsp;密码:
+                    <input class="border_input detial_reg" id="password1" type="password" required name="password">
+                </label>
+            </div>
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">*&nbsp;重复密码:
+                    <input class="border_input detial_reg" id="confirm_password1" required type="password" name="confirm_password">
+                </label>
+                <span id="confirmpassword"></span>
+            </div>
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">*&nbsp;手机号:
+                    <input class="border_input detial_reg"  id="phone" onblur="validate_phone()"maxlength="11" required type="text" name="phone">
+                </label>
+                <span id="error_phone" ></span>
+            </div>
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">*&nbsp;邮箱:
+                    <input id="newemail" class="border_input detial_reg" required type="email" name="email">
+                </label>
+            </div>
+            <div class="fieldWrapper_reg">
+                <label class="white" for="">&nbsp;&nbsp;公司/店铺网址:
+                    <input class="border_input detial_reg" type="text" name="">
+                </label>
+            </div>
+             <p class="rem_reg_p white">
+                  <input class="rem" type="checkbox" onclick="check_box()" name="agree" id="starid" value="">同意《云粉吧用户注册协议》
+             </p>
+             <div class="button_dopuble">
+             	<input class="login button_margin" type="submit" id="put_in" disabled="disabled"  value="提交" onclick="return(confirm(注册成功,请登录))">
+             </div>
+    	</div>
+    </div>
+</div>
+</form>
+</body>
+</html>

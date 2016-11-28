@@ -1,0 +1,73 @@
+#content{
+    color:gray;
+}
+#daohang {
+    color: #333333 !important;
+}
+#daohang ul{
+    list-style:none;
+    color: #333333;
+}
+#daohang ul li{
+    float: left;
+}
+.star_data{
+    box-shadow: 1px 4px 6px #888;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    width: 90%;
+    margin-left: 2%;
+    margin-top:5px;
+}
+.bqian{
+    height: 40px;
+    line-height: 40px;
+    margin-left: 10px;
+    font-size: 14px !important;
+    border-bottom: 1px solid lightgray;
+}
+.bqian div a {
+    margin-left: 10px;
+}
+.middle{
+    width: 90%;
+    margin-left: 30px ;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.table{
+    width: 96%;
+    margin-left: 10px;
+
+}
+.page{
+    float:right ;
+    margin-right: 105px;
+}
+.image_info{
+    width: 40px;
+    height: 40px;
+    background-color: deepskyblue;
+    float: left;
+}
+.image_info input{
+    position: relative;
+    left:28px;
+    top: 23px;
+    border: 0px;
+}
+.info th{
+    background-color: #50bae2!important;
+    border: none;
+}
+.guide{
+    margin-left: 20px;
+}
+.breadcrumb{
+    background-color: white!important;
+    font-size: 18px;
+}
+.breadcrumb li a{
+    color: #303030!important;
+}
+
