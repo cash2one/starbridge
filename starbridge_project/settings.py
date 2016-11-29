@@ -90,23 +90,18 @@ WSGI_APPLICATION = 'starbridge_project.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test_starbridge',
-        'USER': 'amuser',
-        'PASSWORD': 'amuser',
-        'HOST': '122.144.167.178',
-        'PROT': '',
-    },
-    # 'db_200': {
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'starbridge',
-    #     'USER': 'ssp_test',
-    #     'PASSWORD': '1q2w3e4r',
-    #     'HOST': '10.0.2.200',
+    #     'NAME': 'test_starbridge',
+    #     'USER': 'amuser',
+    #     'PASSWORD': 'amuser',
+    #     'HOST': '122.144.167.178',
     #     'PROT': '',
     # },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
