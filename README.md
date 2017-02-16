@@ -1,15 +1,13 @@
 # starbridge项目说明
 
-项目原型:  [http://www1.cloudcross.net/netfav/adver/index.html](http://www1.cloudcross.net/netfav/adver/index.html)
-
------
+项目原型:
 
 启动服务器:  http://127.0.0.1:8000/ <p>
 首页页面URL:  http://127.0.0.1:8000/home/ <p>
 后台URL:  http://127.0.0.1:8000/admin/   
 
 
-<font color=#0099ff size=3 face="黑体">**后台用户名：admin    密码：admin1234**</font>
+<font color=#0099ff size=3 face="黑体">**后台用户名：admin    密码：Admin2017**</font>
 
 ##项目目录说明
 

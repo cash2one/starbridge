@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/static/js/creatOrder.js"></script>
 <script type="text/javascript" src="/static/js/creatOrder2.js"></script>
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
+<body>
 <div class="containerbox tanchuang">
 	<div class="crumb">
 		<span>首页</span>
@@ -77,7 +78,7 @@
             	<input type="hidden" value="" id="fansnum" name="fansnum">
                 <input type="hidden" value="{{ scheduleid }}" id="scheduleid" name="scheduleid">
                 <input type="hidden" value="" id="zhiboid" name="zhibo.id">
-                <input type="hidden" value="" id="outsidelink" name="outsidelink">
+                 <input type="hidden" value="" id="outsidelink" name="outsidelink">
            </form>
 	    </div>
 	</div>
@@ -109,14 +110,15 @@
 	        <div class="visibleconbox">
 	        	<input class="blue cpsbox lookdetails" id="addnewschedule" type="button" value="添加新的排期">
 	        </div>
-            {% for sch in schedulealls %}
-                <span class="suibianla" style="display:none">{{ sch }}</span>
+            {% for t in schedulealls %}
+                <span class="suibianla" style="display:none">{{ t }}</span>
             {% endfor %}
 	        <div class="visibleconbox">
 	        	<button class="blue search visiblesure" id="flightingsubmit">确认</button>
 	        </div>
 		</div>
 		</div>
+</div>
 	</form>
 
 	<div class="visibleboxtwo">

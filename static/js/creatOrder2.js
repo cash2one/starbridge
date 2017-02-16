@@ -83,8 +83,6 @@ $(function(){
 	//添加素材效果
 	$("#updisabled").click(function(){
 		if($(this).prop("checked")==true){
-			$(".sucaixuanqu").val("从素材库选取");
-			$(".sucaixuanqu").attr("id","");
 			$(".sucaixuanqu").click(function(){
 				$(".visibleboxtwo").css("display","none");
 			})
@@ -275,7 +273,6 @@ $(function(){
     		$(".deletwarn").css("display","none");
     	})
     	$(this).next().next().find(".sure").click(function(){
-    		$(".blackbackground").css("display","none");
     		$(this).parents(".activematerial").remove();
     	})
     })
@@ -428,9 +425,7 @@ $(function(){
 		})
          //素材选取
          $(document).on("click",".orfixedvisiblebox .sucaixuanqu",function(){
-         	if($(this).parents(".visiblecontent").find("#updisabled").prop("checked") == false){
-         		$(".visibleboxtwo").css("display","block");
-         	}
+		$(".visibleboxtwo").css("display","block");
 		$(".visibleboxtwo").find("tr:not(:first)").click(function(){
 			$(".sucaixuanqu").val("");
 			$(".sucaixuanqu").val($(this).find("td").eq(0).text());
@@ -491,9 +486,7 @@ $(function(){
 							
 							$(this).parents(".activematerial").append("<div class='activityscheduling'><div class='directcontent'><span class='fontgrey'>—</span><span class='fontgrey'>日期：</span><span class='fontgrey dataone'>"+$(".newschedulelist").eq(j).find(".bigheighttext").eq(0).val()+"</span><span class='fontgrey'>&nbsp;至&nbsp;</span><span class='fontgrey datatwo'>"+$(".newschedulelist").eq(j).find(".bigheighttext").eq(1).val()+"</span></div><div class='directcontent marginleft'><span class='fontgrey'>时段：</span><span class='fontgrey timeone'>"+$(".newschedulelist").eq(j).find(".square").eq(0).val()+"</span><span class='fontgrey'>:</span><span class='fontgrey timetwo'>"+$(".newschedulelist").eq(j).find(".square").eq(1).val()+"</span><span class='fontgrey'>&nbsp;-&nbsp;</span><span class='fontgrey timethree'>"+$(".newschedulelist").eq(j).find(".square").eq(2).val()+"</span><span class='fontgrey'>:</span><span class='fontgrey timefour'>"+$(".newschedulelist").eq(j).find(".square").eq(3).val()+"</span></div><div class='directcontent marginleft'><span class='fontgrey'>投放平台：</span><span class='fontgrey pingtaizhi'>"+checked.slice(0,-1)+"</span></div></div>")
 						};
-						$(this).parents(".orfixedvisiblebox").prev().find(".hiddenlinkcon").val($(".updisabledone").val());
-						$(this).parents(".orfixedvisiblebox").prev().find(".hiddenid").val($(".sucaixuanqu").attr("id"));
-						$(this).parents(".orfixedvisiblebox").prev().find(".span_title").text($(".sucaixuanqu").val());	
+							
 						$(".blackbackground").css("display","none");
 						$(".orfixedvisiblebox").remove();
 					}
@@ -502,23 +495,19 @@ $(function(){
 		}
 		return false;
 	})
+
+
     	$(".orfixedvisiblebox").css("display","block");
     	$(".orfixedvisiblebox #updisabled").click(function(){
 			if($(this).prop("checked")==true){
-				$(".orfixedvisiblebox .sucaixuanqu").val("从素材库选取");
-				$(".orfixedvisiblebox .sucaixuanqu").attr("id","");
 				$(".orfixedvisiblebox .sucaixuanqu").click(function(){
-					$(".visibleboxtwo").css("display","none");
+					$(".orfixedvisiblebox .visibleboxtwo").css("display","none")
 				})
 				$(".orfixedvisiblebox .updisabledone").attr("disabled","disabled");
 			}else{
-				var aa=$(this).parents(".orfixedvisiblebox").prev(".directcontent").find(".span_title").text();
-				var aaid=$(this).parents(".orfixedvisiblebox").prev(".directcontent").find(".hiddenid").val();
-				$(".orfixedvisiblebox .sucaixuanqu").val(aa);
-				$(".orfixedvisiblebox .sucaixuanqu").attr("id",aaid);
 				$(".orfixedvisiblebox .updisabledone").attr("disabled",false);
 				$(".orfixedvisiblebox .sucaixuanqu").click(function(){
-					$(".visibleboxtwo").css("display","block");
+					$(".orfixedvisiblebox .visibleboxtwo").css("display","block");
 				})
 			}
 		})

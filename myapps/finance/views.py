@@ -78,11 +78,10 @@ class FinancePageView(ListView):
                 balance_money = 0
             else:
             #资金管理中的余额
-                balance_object = Expenses.objects.filter(user_id=now_userid).last()
+                balance_data = Expenses.objects.filter(user_id=now_userid).values('Balance')[0]
                 ''' 下面的for循环主要是为了让显示的余额标准显示'''
-                # for key,value in balance_data.items():
-                balance_data = balance_object.Balance
-                balance_money=",".join(wrap(str(balance_data)[::-1],3))[::-1]
+                for key,value in balance_data.items():
+                    balance_money=",".join(wrap(str(value)[::-1],3))[::-1]
             '''充值汇款数据  充值汇款里的查看汇款记录里面，展示的数据应该是当前登录用户的数据，故，应该判断当前登录用户，
             并获取当前登录用户录入的数据'''
             recharge_data=Recharge.objects.filter(user=now_user)

@@ -20,9 +20,6 @@
 	padding:10px 0;
 	cursor: pointer;
 }
-.redli a:hover{
-	color: #faa81b;
-}
 .redborder{
 	border-bottom:2px solid #faa81b;
 	padding-bottom:8px

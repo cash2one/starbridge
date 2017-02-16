@@ -37,17 +37,16 @@
         });
         //导出查询后的数据以excel保存
         $('#export').find("span").click(function () {
-            var name = $(".activityname").val();
-            var start_date = $("#txtBeginDate").val();
-            var end_date = $("#txtEndDate").val();
-            var activity_status = $("#img").val();
+            var name = $(".activityname").val()
+            var start_date = $("#txtBeginDate").val()
+            var end_date = $("#txtEndDate").val()
+            var activity_status = $("#img").val()
 {#            $.ajax({#}
 {#                type: "GET",#}
-{#                async: false,#}
+{#                async: true,#}
 {#                url:"/activity/exportactivity/",#}
-{#                contentType:'application/vnd.ms-excel',#}
 {#                data: {"name": name, "start_date": start_date, "end_date": end_date, "activity_status": activity_status},#}
-{#                success: function(data){#}
+{#                success: function(response){#}
 {#                    return false#}
 {#                }#}
 {#            });#}
@@ -64,6 +63,7 @@
 	<div class="smalloperationbox">
 		<!--多条件查询-->
 		<form action="{% url 'queryactivity' %}" method="get" id="activityform">
+{#			{% csrf_token %}#}
 	    <div class="activemanagement">
 	    	<div class="management">
 				<span class="fontgrey spanbox">活动名称：</span>
@@ -132,7 +132,7 @@
 	<div class="activemanagement">
 	    <a href="{% url 'addactivity' %}" style="color:#fff"><button class="blue up">创建活动</button></a>
 	</div>
-    {% for activity in page_range.list %}
+    {% for activity in activity_list %}
         <!--活动无订单显示-->
         {% if activity.list|length == 0 %}
             <ul  class="smalloperationbox onlyshowactive">
@@ -233,9 +233,9 @@
  <div class="pagebreakbox managementpage">
     <div class="pagination" style="width:100%">
     <ul class="pager pagebox">
-        {% if page_range.list.has_previous %}
+        {% if activity_list.has_previous %}
             <li class="previous pagebtnbox blue prev">
-                <a href="?type={{getValue}}&page={{ page_range.list.previous_page_number }}" class="previous">
+                <a href="?type={{getValue}}&page={{ activity_list.previous_page_number }}" class="previous">
                     <span style="top:0px;left:-24px;">
                         <img src="../../static/img/left.png" width="15px">
                     </span>上一页</a>
@@ -250,16 +250,16 @@
             </li>
         {% endif %}
 
-        {% for p in page_range.page_range %}
-            {% ifequal p page_range.list.number %}
+        {% for p in page_range %}
+            {% ifequal p activity_list.number %}
                 <li class="pagenumbox blue"><a class="noclick">{{p}}</a></li>
             {% else %}
                 <li class="pagenumbox blue"><a href="?type={{getValue}}&page={{p}}" title="第{{p}}页">{{p}}</a></li>
             {% endifequal %}
         {% endfor %}
-        {% if page_range.list.has_next %}
+        {% if activity_list.has_next %}
             <li class="next pagebtnbox blue next">
-                <a href="?type={{getValue}}&page={{ page_range.list.next_page_number }}">下一页
+                <a href="?type={{getValue}}&page={{ activity_list.next_page_number }}">下一页
                     <span  style="left:41px;top:0px">
                         <img src="../../static/img/right.png" width="15px">
                     </span>

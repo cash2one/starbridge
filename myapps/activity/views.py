@@ -11,39 +11,99 @@ import xlwt
 from myapps.activity.helpers import *
 import re
 from datetime import datetime
-from myapps.report.paginator import list_page
 import random
-from myapps.activity.activityshow import activityshow
+
+
 # Create your views here.
 
 class ActivityPageView(ListView):
-    # 活动首页展示
-    def activity(request):
+    # display_amount:每页显示的数量
+    def activity(request,display_amount=5, after_range_num = 3,bevor_range_num = 2):
         activity_list = Activity.objects.all().order_by('-update_time')
-        # 引用activityshow.py文件里的activityshow方法
-        activity_order_list=activityshow(request,activity_list)
-        # 分页代码
-        page_range =list_page(request,list=activity_order_list,display=5,after_range_num=3,bevor_range_num=2)
+        activity_order_list=[]  ## 初始化  包含有订单的 活动 数组
+        for act in activity_list:
+            orderlist = Order.objects.filter(activity__id__contains=act.id)
+            order_list=[]       ## 初始化 活动内部 的订单数组
+            for order in orderlist:
+                if order.id > 0:
+                    order_addid = Order.objects.filter(pk=order.id).values('order_add_id')  # 根据订单ID获取中间表的ID
+                    fanscomms = Order_add.objects.filter(pk=order_addid).values('content')[0]['content']  # 粉丝保底佣金量
+
+                    commsfan = []
+                    commissions = fanscomms.split('-')
+                    for commission in commissions:
+                        if commission != '':
+                            commsfan.append(commission)
+                    commlen = len(commsfan)  # 计算列表长度
+                    comms = []
+                    if commlen != 0:
+                        comms.append(commsfan[commlen-1])
+
+                    # 活动素材直播信息(已上传,未上传)
+                    createzhibo_id = Order_add.objects.filter(pk=order_addid).values('creativezhibo_id')[0]['creativezhibo_id']
+                    createzhibo_mid = createzhibo_id.split(',')
+                    createzhiboarray = []
+                    for zhibo in createzhibo_mid:
+                        createzhiboarray.append(re.findall(r'(\w*[0-9]+)\w*', zhibo))
+                    create_zhibo = []
+                    for createid in createzhiboarray[0]:
+                        create_zhibo.append(CreativeZhibo.objects.filter(pk=createid))  # 素材信息
+                    #已选红人个数
+                    celebrityall = Order_add.objects.filter(pk=order_addid).values('celebrityzhibo_id')
+                    celebrityallcount = eval(celebrityall[0].get('celebrityzhibo_id'))
+                    #已选明星个数
+                    starallcount = Order_add.objects.filter(pk=order_addid).values('starzhibo_id').count()
+                    order_list.append({'createzhibo': create_zhibo,'comms':comms, 'order_adds': Order_add.objects.filter(pk=order_addid),'order':order,'celebritynum': len(celebrityallcount),'starnum': starallcount})
+                else:
+                    order_list.append({'createzhibo': '','comms':'', 'order_adds': '','order':'','celebritynum': '','starnum': ''})
+            activity_order_list.append({'object':act,'list':order_list})   ## 组成  包含有订单的 活动 数组
+
+		# 分页代码
+        paginator = Paginator(activity_order_list, display_amount)
+        try:
+            page = int(request.GET.get('page'))
+        except:
+            page = 1
+        try:
+            activity_order_list = paginator.page(page)
+        except PageNotAnInteger:
+            activity_order_list = paginator.page(1) #页码不是整数,返回第一页
+        except EmptyPage:
+            activity_order_list = paginator.page(paginator.num_pages)
+        if page > after_range_num:
+            page_range = paginator.page_range[page - after_range_num:page + bevor_range_num]
+        else:
+            page_range = paginator.page_range[0:page + bevor_range_num]
         content = {
             'active_menu': '活动管理',
+            'activity_list': activity_order_list,
             'page_range': page_range,
             }
         return render(request,'activity/activeManagement.html',content)
 
     # 多条件查询
-    def queryactivity(request):
+    def queryactivity(request,display_amount=5, after_range_num = 3,bevor_range_num = 2):
         # 获取搜索的关键字
-        if request.method == 'GET':
-            actname = request.GET.get('name', '')                       ##活动名称
-            start_dates = request.GET.get('start_date', '')            ##活动开始时间
-            end_dates = request.GET.get('end_date', '')                ##活动结束时间
-            activity_status = request.GET.get('activity_status', '')   ##活动状态
+        if request.method == 'POST':
+            actname = request.POST.get('name','')                       ##活动名称
+            start_dates = request.POST.get('start_date', '')            ##活动开始时间
+            end_dates = request.POST.get('end_date', '')                ##活动结束时间
+            activity_status = request.POST.get('activity_status', '')   ##活动状态
+        else:
+            actname = request.GET.get('name','')
+            start_dates = request.GET.get('start_date','')
+            end_dates = request.GET.get('end_date','')
+            activity_status = request.GET.get('activity_status', '')
+
         ##活动时间格式处理
+
         enddates = end_dates + '/23/59/59'
         start_date = datetime.strptime(start_dates, '%Y-%m-%d')
         end_date = datetime.strptime(enddates, '%Y-%m-%d/%H/%M/%S')
+
         ##活动信息以修改时间进行排序
         activity_list = Activity.objects.all().order_by('-update_time')
+
         ##活动名称
         if actname != '':
             activity_list = activity_list.filter(name__contains=actname)
@@ -53,12 +113,69 @@ class ActivityPageView(ListView):
         ##活动日期
         if start_date != '' and end_date != '':
             activity_list = activity_list.filter(start_date__gte=start_date).filter(end_date__lt=end_date)
-        activity_order_list = activityshow(request,activity_list)
+
+        ##初始化  包含有订单的 活动 数组
+        activity_order_list = []
+        for act in activity_list:
+            orderlist = Order.objects.filter(activity__id__contains=act.id)
+            order_list = []  ## 初始化 活动内部 的订单数组
+            for order in orderlist:
+                if order.id > 0:
+                    order_addid = Order.objects.filter(pk=order.id).values('order_add_id')  ##根据订单ID获取中间表的ID
+                    fanscomms = Order_add.objects.filter(pk=order_addid).values('content')[0]['content']  ##粉丝保底佣金量
+                    commsfan = []
+                    commissions = fanscomms.split('-')
+                    for commission in commissions:
+                        if commission != '':
+                            commsfan.append(commission)
+                    commlen = len(commsfan)  ##计算列表长度(代表选择红人个数)
+                    comms = []
+                    if commlen != 0:
+                        comms.append(commsfan[commlen - 1])
+
+                    ##活动素材直播信息(已上传,未上传)
+                    createzhibo_id = Order_add.objects.filter(pk=order_addid).values('creativezhibo_id')[0]['creativezhibo_id']
+                    createzhibo_mid = createzhibo_id.split(',')
+                    createzhiboarray = []
+                    for zhibo in createzhibo_mid:
+                        createzhiboarray.append(re.findall(r'(\w*[0-9]+)\w*', zhibo))
+                    create_zhibo = []
+                    for createid in createzhiboarray[0]:
+                        create_zhibo.append(CreativeZhibo.objects.filter(pk=createid))  # 素材信息
+                    ##已选红人个数
+                    celebrityall = Order_add.objects.filter(pk=order_addid).values('celebrityzhibo_id')
+                    celebrityallcount = eval(celebrityall[0].get('celebrityzhibo_id'))
+                    ##已选明星个数
+                    starallcount = Order_add.objects.filter(pk=order_addid).values('starzhibo_id').count()
+                    order_list.append({'createzhibo': create_zhibo, 'comms': comms,
+                                       'order_adds': Order_add.objects.filter(pk=order_addid), 'order': order,
+                                       'celebritynum': len(celebrityallcount), 'starnum': starallcount})
+                else:
+                    order_list.append(
+                        {'createzhibo': '', 'comms': '', 'order_adds': '', 'order': '', 'celebritynum': '',
+                         'starnum': ''})
+            activity_order_list.append({'object': act, 'list': order_list})  ## 组成  包含有订单的 活动 数组
+
         # 分页代码
         getValue='&actname='+actname+'&start_date='+start_dates+'&end_date='+end_dates+'&activity_status='+activity_status
-        page_range =list_page(request,list=activity_order_list,display=5,after_range_num=3,bevor_range_num=2)
+        paginator = Paginator(activity_order_list, display_amount)
+        try:
+            page = int(request.GET.get('page'))
+        except:
+            page = 1
+        try:
+            activity_order_list = paginator.page(page)
+        except PageNotAnInteger:
+            activity_order_list = paginator.page(1)  # 页码不是整数,返回第一页
+        except EmptyPage:
+            activity_order_list = paginator.page(paginator.num_pages)
+        if page > after_range_num:
+            page_range = paginator.page_range[page - after_range_num:page + bevor_range_num]
+        else:
+            page_range = paginator.page_range[0:page + bevor_range_num]
         content = {
-            'active_menu': '活动管理',
+            'active_menu': 'activity',
+            'activity_list': activity_order_list,
             'actname': actname,
             'start_dates': start_dates,
             'end_dates': end_dates,
@@ -67,7 +184,6 @@ class ActivityPageView(ListView):
             'getValue':getValue,
         }
         return render(request, 'activity/activeManagement.html', content)
-
     # 活动详情
     def acitve_detail(request):
         activity_id = request.GET.get('id', '')
@@ -145,9 +261,152 @@ class ActivityPageView(ListView):
         return render(request,'activity/activeOrderDetails.html', content)
 
     # 创建活动订单1
-    def create_order1(request):
-        # 引用helpers.py中的create_zhibo_order方法
-        content = create_zhibo_order(request)
+    def create_order1(request, display_amount = 10, after_range_num = 5, bevor_range_num = 4):
+        activity_id = request.GET.get('id', '') #活动ID
+        activitylists = Activity.objects.get(pk=activity_id)
+        # 在红人直播筛选条件 列表
+        genderArray = [{'sid':'0','name':'不限'},{'sid':'1','name':'女'},{'sid':'2','name':'男'},{'sid':'3','name':'其他'}]
+        categoryArray = CelebrityZhiCategory.objects.values('sid','name').order_by('sid')
+        fans_numArray = CelebrityZhiFansNum.objects.values('sid','name').order_by('sid')
+        priceArray = CelebrityZhiPrice.objects.values('sid','name').order_by('sid')
+        areaArray = CelebrityZhiArea.objects.values('sid','name').order_by('sid')
+        platformArray = CelebrityZhiPlatForm.objects.values('sid','name').order_by('sid')
+
+        # 页面上方 的筛选条件
+        filters = {
+                    'gender': genderArray,
+                    'category': categoryArray,
+                    'fans_num': fans_numArray,
+                    'price': priceArray,
+                    'area': areaArray,
+                    'platform': platformArray,
+        }
+        gender = request.GET.get("gender", "0")
+        category = request.GET.get("category", "0")
+        fans_num = request.GET.get("fans_num", "0")
+        price = request.GET.get("price", "0")
+        area = request.GET.get("area", "0")
+        platform = request.GET.get("platform", "0")
+        cred = request.GET.get('cred', '0')
+        key = request.GET.get('key', '')
+        checkedid = request.GET.get('checkedids', '')
+        pagenextdones = request.GET.get('pagenextdone', '')
+        fans_num1 = request.GET.get('fans_num1', '')
+        fans_num2 = request.GET.get('fans_num2', '')
+        price1 = request.GET.get('price1', '')
+        price2 = request.GET.get('price2', '')
+
+        selected ={
+                        'gender': gender,
+                        'category': category,
+                        'fans_num': fans_num,
+                        'price': price,
+                        'area': area,
+                        'platform': platform,
+                        'cred': cred,
+                        'key': key,
+        }
+        # celebrity_list = CelebrityZhibo.objects.all().order_by('-is_credibility')
+        celebrity_list = CelebrityZhibo.objects.all()
+
+
+        if gender != '0':           ## 性别
+            celebrity_list=celebrity_list.filter(celebrity__gender=gender)
+        if category != '0':         ## 分类
+            celebrity_list=celebrity_list.filter(category__sid=category)
+        if fans_num != '0':         ## 粉丝数
+            if fans_num== '1':
+                celebrity_list = celebrity_list.filter(fans_num__lt='10000')
+            elif fans_num == '2':
+                celebrity_list = celebrity_list.filter(fans_num__gte='10000').filter(fans_num__lt='50000')
+            elif fans_num == '3':
+                celebrity_list = celebrity_list.filter(fans_num__gte='50000').filter(fans_num__lt='100000')
+            elif fans_num == '4':
+                celebrity_list = celebrity_list.filter(fans_num__gte='100000')
+            else :
+                celebrity_list = celebrity_list.filter(fans_num__gte='100000')
+
+        if fans_num1 == "" and fans_num2 == "":
+            if fans_num != '0':  ## 粉丝数
+                if fans_num == '1':
+                    celebrity_list = celebrity_list.filter(fans_num__lt='10000')
+                elif fans_num == '2':
+                    celebrity_list = celebrity_list.filter(fans_num__gte='10000').filter(fans_num__lt='50000')
+                elif fans_num == '3':
+                    celebrity_list = celebrity_list.filter(fans_num__gte='50000').filter(fans_num__lt='100000')
+                elif fans_num == '4':
+                    celebrity_list = celebrity_list.filter(fans_num__gte='100000')
+                else:
+                    celebrity_list = celebrity_list.filter(fans_num__gte='100000')
+        elif fans_num1 != "" and fans_num2 != "":
+            celebrity_list = celebrity_list.filter(fans_num__gte=fans_num1).filter(fans_num__lt=fans_num2)
+
+        if price != '0':            ## 价格
+            if price == '1':
+                celebrity_list = celebrity_list.filter(export_price__lt='1000')
+            elif price == '2':
+                celebrity_list = celebrity_list.filter(export_price__gte='1000').filter(export_price__lt='5000')
+            elif price == '3':
+                celebrity_list = celebrity_list.filter(export_price__gte='5000').filter(export_price__lt='10000')
+            else :
+                celebrity_list = celebrity_list.filter(export_price__gte='10000')
+
+        if price1 == "" and price2 == "":
+            if price != '0':  ## 价格
+                if price == '1':
+                    celebrity_list = celebrity_list.filter(export_price__lt='1000')
+                elif price == '2':
+                    celebrity_list = celebrity_list.filter(export_price__gte='1000').filter(export_price__lt='5000')
+                elif price == '3':
+                    celebrity_list = celebrity_list.filter(export_price__gte='5000').filter(export_price__lt='10000')
+                else:
+                    celebrity_list = celebrity_list.filter(export_price__gte='10000')
+        elif price1 != "" and price2 != "":
+            celebrity_list = celebrity_list.filter(export_price__gte=price1).filter(export_price__lt=price2)
+
+
+        if area != '0':             ## 地区
+            celebrity_list = celebrity_list.filter(area__sid=area)
+        if platform != '0':         ##平台
+            celebrity_list = celebrity_list.filter(broadcast_platform__sid=platform)
+        if cred != '0':
+            celebrity_list = celebrity_list.filter(is_credibility='B')
+        if key != '':
+            celebrity_list = celebrity_list.filter(nickname=key)
+
+        # 分页代码
+        paginator = Paginator(celebrity_list, display_amount)
+        try:
+            page = int(request.GET.get('page'))
+        except:
+            page = 1
+        try:
+            celebrity_list = paginator.page(page)
+        except PageNotAnInteger:
+            celebrity_list = paginator.page(1)  # 页码不是整数,返回第一页
+        except EmptyPage:
+            celebrity_list = paginator.page(paginator.num_pages)
+        if page > after_range_num:
+            page_range = paginator.page_range[page - after_range_num:page + bevor_range_num]
+        else:
+            page_range = paginator.page_range[0:page + bevor_range_num]
+
+        getValue = '?id='+activity_id+'&category='+category+'&fans_num='+fans_num+'&price='+price+'&area='+area+'&platform='+platform+'&key='+key+'&checkedid='+checkedid
+
+
+        content = {
+                'filters': filters,
+                'query_category': getValue,
+                'activity_id':activity_id,
+                'selected': selected,
+                'celebrityList': celebrity_list,
+                'activitylists': activitylists,
+                'page_range': page_range,
+                'getValue': getValue,
+                'checkedid': checkedid,
+                'pagenextdones': pagenextdones,
+
+            }
         return render(request, 'activity/creatingOrder.html',content)
 
     # 创建活动订单2
@@ -201,6 +460,7 @@ class ActivityPageView(ListView):
             creative_ids = []
             creative_id = ''  # 初始化素材ID
             for f in createsflightingsStr:
+                # creatvename = f['sucai_content']['name']
                 sucaiid = f['sucai_content']['id'] #获取素材id
                 links = f['sucai_content']['link'] #获取外部链接
                 if links == '' or links == None:
@@ -227,6 +487,13 @@ class ActivityPageView(ListView):
                         creative_id = creativezhibo.pk
                         creative_ids.append(creative_id)
                         creative_zhibos.append(creativezhibo)
+                    # elif links !='':
+                    #     #如果外部链接(links)不为空,新建素材,links值赋给outer_url
+                    #     creativezhibo = CreativeZhibo(name='素材',is_upload='A', outer_url=links)
+                    #     creativezhibo.save()
+                    #     creative_id=creativezhibo.pk  # 已上传的ID
+                    #     creative_ids.append(creative_id)
+                    #     creative_zhibos.append(creativezhibo)
                 else:
                     if links !='':
                         creativezhibo = CreativeZhibo.objects.create(name='素材'+numbers, outer_url=links)
@@ -259,14 +526,11 @@ class ActivityPageView(ListView):
                     flightings.save()
             creative_arr.append(platform_date)
         #已选红人直播信息
-        celebrityreids =request.POST.get("scheduleid")
-        celebrityids = celebrityreids.split(',')                     # 已选的红人ID
+        celebrityids = request.POST.get("scheduleid").split(',')                     # 已选的红人ID
         celebrityalls = []
-        # 截取后的红人ID
         celebrity_ids = []
         for i in celebrityids:
-            celebrity_ids.append(i)
-
+            celebrity_ids.append(i)                                                  # 截取后的红人ID
         celebritycount = len(celebrity_ids)                                           # 已选红人个数
         for cele_id in celebrity_ids:                                                 # 遍历之后的已选红人ID
             celebrityalls.append(CelebrityZhibo.objects.filter(pk=cele_id))              # 已选红人ID查询的信息
@@ -283,23 +547,20 @@ class ActivityPageView(ListView):
         ordertimepre = request.POST.get("ordertimepre")                             # 用户输入的订单投放开始日期
         ordertimenext = request.POST.get("ordertimenext")                           # 用户输入的订单投放结束日期
 
-        ##创建迭代器
-        creative_idsiter = iter(creative_ids)
-        for creatids in creative_idsiter:
-            # 创建订单附加的order_add表
-            order_add = Order_add(
-                cps=cps,                                                                # cps
-                content=fansnum,                                                        # 佣金内容,粉丝量
-                activity_id=activitysid,                                                # 活动ID
-                celebrityzhibo_id=celebrityreids,                                        # 已选红人ID
-                creativezhibo_id=creatids,                                              # 已创建素材ID
-                # ordername=ordername,                                                    # 用户输入的订单名称
-                # ordertimepre=ordertimepre,                                              # 用户输入的订单投放开始日期
-                # ordertimenext=ordertimenext,                                            # 用户输入的订单投放结束日期
+        # 创建订单附加的order_add表
+        order_add = Order_add(
+            cps=cps,                                                                # cps
+            content=fansnum,                                                        # 佣金内容,粉丝量
+            activity_id=activitysid,                                                # 活动ID
+            celebrityzhibo_id=celebrity_ids,                                         # 已选红人ID
+            creativezhibo_id=creative_ids,                                          # 已创建素材ID
+            ordername=ordername,                                                    # 用户输入的订单名称
+            ordertimepre=ordertimepre,                                              # 用户输入的订单投放开始日期
+            ordertimenext=ordertimenext,                                            # 用户输入的订单投放结束日期
 
-            )
-            order_add.save()
-            order_add_id = order_add.pk                                                 # 中间表的ID
+        )
+        order_add.save()
+        order_add_id = order_add.pk                                                 # 中间表的ID
 
         content = {
             'activitylists': activitylists,                                         # 活动信息
@@ -319,15 +580,13 @@ class ActivityPageView(ListView):
         return render(request, 'activity/creatingOrder3.html', content)
 
     # 保存订单前素材上传
-    @csrf_exempt
     def upload_goods_url(request):
-        creativeid = request.POST.get('id')  # 上传素材id
-        goods_url = request.FILES.get('goods_url', '')  # 植入商品图像的url
-        if goods_url != "":
-            creative = CreativeZhibo.objects.get(pk=creativeid)
-            creative.goods_url = goods_url
-            creative.is_upload = 'A'  # 上传状态改为(A:已上传)
-            creative.save()
+        creativeid = request.GET.get('id')  # 上传素材id
+        goods_url = request.GET.get('goods_url','')  # 植入商品图像的url
+        creative = CreativeZhibo.objects.get(pk=creativeid)
+        creative.goods_url = goods_url
+        creative.is_upload = 'A'  # 上传状态改为(A:已上传)
+        creative.save()
         context = {'creativeid': creativeid}
         return JsonResponse(context)
 
@@ -340,7 +599,6 @@ class ActivityPageView(ListView):
         endtime = request.POST.get("ordertimenext")
         sch_id = request.POST.get("sch_id")
         orderpays = request.POST.get("hiddentotally")
-        new_user = request.user
         # 用户输入的订单信息
         order = Order(
             activity_id=activitysid,
@@ -349,7 +607,6 @@ class ActivityPageView(ListView):
             start_time = starttime,                                                 # 用户输入的订单投放开始日期
             end_time = endtime,                                                     # 用户输入的订单投放结束日期
             order_pay= orderpays,
-            create_user= new_user,
         )
         order.save()
         return HttpResponseRedirect('/activity')
@@ -406,6 +663,8 @@ class ActivityPageView(ListView):
                                                                                      'advertiser_name','budget','memo',
                                                                                      'activity_status','create_time','create_user',
                                                                                      'update_time','update_user')
+        else:
+            activity_list = Activity.objects.values_list()
 
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename=activity.xls'  # 返回下载文件的名称(activity.xls)
@@ -433,7 +692,6 @@ class ActivityPageView(ListView):
 class AddActivityView(ListView):
     #添加活动
     def addactivity(request):
-        new_user = request.user
         if request.method == 'POST':
             new_activity = Activity(
                 name=request.POST.get('name', ''),                      # 活动名称
@@ -442,8 +700,6 @@ class AddActivityView(ListView):
                 advertiser_name=request.POST.get('advertiser_name', ''),# 广告主
                 budget=request.POST.get('budget', ''),                  # 总预算
                 memo=request.POST.get('memo', ''),                      # 备注
-                create_user=new_user,
-                update_user=new_user,
             )
             new_activity.save()
             return HttpResponseRedirect('/activity')                    #重定向的活动管理展示页面
@@ -491,8 +747,7 @@ class AddActivityView(ListView):
         payall = Order.objects.filter(pk=orderid).values('order_pay')[0]['order_pay'] ##平台报价,实收款,支付金额
         now_userid = request.user.id
         try:
-            balance_data = Expenses.objects.filter(user_id=now_userid).last()
-            balance_money = balance_data.Balance
+            balance_money = Expenses.objects.filter(user_id=now_userid).values('Balance')[0]['Balance']
         except:
             balance_money = 0
 

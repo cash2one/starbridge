@@ -44,10 +44,6 @@ class Recharge(models.Model):
         ('B',"支付宝"),
         # ('C', ''),
     )
-    RECHARGE_STATUS = (
-        ('A','未审核'),
-        ('B','已审核'),
-    )
     user = models.ForeignKey(CustomUser, verbose_name='财务相关的登录帐户')
     time = models.DateTimeField(blank=True, null=True, verbose_name='充值时间')
     name = models.CharField(max_length=100, verbose_name='开户名称')
@@ -58,7 +54,6 @@ class Recharge(models.Model):
     type =  models.CharField(max_length = 1, choices = RECHARGE_TYPE, verbose_name='充值方式')
     bank_info = models.CharField(max_length=100, verbose_name='银行信息')
     branch_info = models.CharField(max_length=100, verbose_name='支行信息')
-    status = models.CharField(max_length = 1, choices = RECHARGE_STATUS,  default = 'A', verbose_name='充值状态')
 
     class Meta:
         db_table = 't_recharge'

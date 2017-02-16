@@ -5,9 +5,10 @@
     color: #303030!important;
 }
 .content_head  {
-    width: 920px;
+    width: 70%;
     height: 300px;
     float: left;
+    margin-left: 20px;
     margin-bottom: 20px;
     background-color: #fffbef!important;
     border: 1px solid #e3e2e2;
@@ -53,7 +54,8 @@ a{
     color: white;
 }
 .table1{
-    width: 920px;
+    width: 70%;
+    margin-left: 20px;
 }
 .table_head th span{
     color: white;

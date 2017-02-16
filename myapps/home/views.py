@@ -71,7 +71,7 @@ class HomePageView(ListView):
     @login_required
     def list_data(request):
         #好像用到了django管理器，查询到未审核的所有订单总和
-        order_counts = Order.ray_objects.order_count()
+        i = Order.ray_objects.order_count()
         '''获取当前登录用户，并判断当前登录用户是否在数据库里面，如果不在数据库里面，则显示余额为0，否则，取得
         当前登录用户的id，然后取出登录用户余额'''
         now_user = request.user
@@ -86,8 +86,7 @@ class HomePageView(ListView):
             if balance_count == 0:
                 balance_money = 0
             else:
-                balance_object = Expenses.objects.filter(user_id=now_userid).last()
-                balance_data = balance_object.Balance
+                balance_data = Expenses.objects.filter(user_id=now_userid).values('Balance')[0]['Balance']
                 # for key,value in balance_data.items():
                 balance_money=",".join(wrap(str(balance_data)[::-1],3))[::-1]
         '''把这个数据传递给前端页面，然后前端页面处理，显示活动名称'''
@@ -112,7 +111,7 @@ class HomePageView(ListView):
 
         content = {
             'active_menu': '首页',
-            'order_count': order_counts,
+            'order_count': i,
             'activity_list': activity_list,
             # 'exposure_list': json.dumps(exposure_list),
             # 'click_list': json.dumps(click_list),

@@ -18,7 +18,7 @@ class Celebrity(models.Model):
     is_busy = models.IntegerField(blank=True, null=True, verbose_name='活动状态')
     gender = models.CharField(max_length = 1, choices = GENDER_STATUS, default = '2', verbose_name='性别')
     create_user = models.CharField(max_length=100, blank=True, null=True, verbose_name='创建者')
-    create_time = models.DateTimeField(auto_now_add=True, verbose_name='记录创建时间')
+    create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='创建时间')
 
     class Meta:
         db_table = 't_celebrity'

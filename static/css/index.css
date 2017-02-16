@@ -2,10 +2,8 @@
     background-color:#ebebeb;
 }
 .content_head{
-    width: 100%;
+    padding-left: 20px;
     padding-top: 20px;
-    overflow: hidden;
-    min-width: 850px;
 }
 
 .content_head div {
@@ -17,9 +15,6 @@
     background-color: #fffdef!important;
     border: 1px solid #ebebeb;
     border-radius: 5px;
-}
-.content_head div:first-of-type{
-     margin-left: 0px;
 }
 .content_head div span{
     margin-left: 25px;
@@ -34,15 +29,15 @@
     color: #333;    
 }
 .content_middle{
-    width: 92%;
+    width: 90%;
     height: 80px;
     clear:both;
+    margin-left: 40px;
     padding-left: 20px;
     padding-top: 20px;
     background-color: #fffdef!important;
     border: 1px solid #ebebeb;
     border-radius: 5px;
-    min-width: 820px;
 }
 .check{
     float: right;
@@ -61,16 +56,14 @@
     float: right;
     left: -115px;
     top:15px;
-    height:87px;
 }
 .content_button button{
     float: right;
     margin-left:6px;
 }
 .content-charts{
-   padding: 20px 0 0 0;
+   padding: 20px 0 0 40px;
    width: 92.5%;
-   min-width: 820px;
 }
 .content-list{
     width: 90%;

@@ -95,7 +95,6 @@ $(function(){
 	})
 	$(".clicknewmaterial").click(function(){
 		$(".sucaixuanqu").val("从素材库选取");
-		$(".sucaixuanqu").attr("id","");
 		$(".blackbackground").css("display","block");
 		$(".visiblebox").css("display","block");
 		$(".newschedulelist").remove();
@@ -218,48 +217,19 @@ $(function(){
 			return false;
 		}else{
 			var creatid = $("#creatid").val()
-			// var goodsurl = ($("#goodsurl").val())
-			// $.ajax({
-			// 	type:"GET",
-			// 	async:false,
-			// 	url:"/activity/upload_goods_url",
-			// 	data: {"id":creatid,"goods_url":goodsurl},
-			// 	success:function (data) {
-			// 		$("#mainContent span").hide()
-			// 		if (data.creativeid!=""){
-			// 			$("#mainContent").append('<span name="remit-name" class="fontred">素材:&nbsp;'+data.creativeid+'&nbsp;,素材已上传</span><br/><br/>'+'<span class="red">注:订单必须上传完素材后才会被提交审核<span>')
-			// 		}
-			// 	},
-			// });
-
-			$.ajaxFileUpload
-            	(
-                {
-                    url: '/activity/upload_goods_url/', //用于文件上传的服务器端请求地址
-                    type:"GET",
-                    secureuri: false, //是否需要安全协议，一般设置为false
-                    fileElementId: 'goodsurl', //文件上传域的ID
-                    dataType: 'json', //返回值类型 一般设置为json
-                    data: {"id":creatid},
-                    success: function (data)  //服务器成功响应处理函数
-                    {
-          		 	$("#mainContent span").hide()
-			 		if (data.creativeid!=""){
-			 			$("#mainContent").append('<span name="remit-name" class="fontred">素材:&nbsp;'+data.creativeid+'&nbsp;,素材已上传</span><br/><br/>'+'<span class="red">注:订单必须上传完素材后才会被提交审核<span>')
-			 		}
-                    },
-                    error: function (data)//服务器响应失败处理函数
-                    {
-                        alert('上传失败');
-                    }
-                }
-            )
-
-
-
-
-
-
+			var goodsurl = ($("#goodsurl").val())
+			$.ajax({
+				type:"GET",
+				async:false,
+				url:"/activity/upload_goods_url",
+				data: {"id":creatid,"goods_url":goodsurl},
+				success:function (data) {
+					$("#mainContent span").hide()
+					if (data.creativeid!=""){
+						$("#mainContent").append('<span name="remit-name" class="fontred">素材:&nbsp;'+data.creativeid+'&nbsp;,素材已上传</span><br/><br/>'+'<span class="red">注:订单必须上传完素材后才会被提交审核<span>')
+					}
+				},
+			});
 		}
 	});
 	// 点击查看订单素材上传
@@ -269,51 +239,21 @@ $(function(){
 			return false;
 		}else{
 			var creatid = $("#creat_id").val()
-			//var goodsurl = ($("#goods_url").val())
-			//$.ajax({
-			//	type:"GET",
-			//	async:false,
-			//	url:"/activity/upload_goods_url",
-			//	//data: {"id":creatid,"goods_url":goodsurl},
-             //   data: {"id":creatid},
-			//	success:function (data) {
-			//		$("#checkshowContent span").hide()
-			//		if (data.creativeid!=""){
-			//			$("#checkshowContent").append('<span name="remit-name" class="fontred">素材:&nbsp;'+data.creativeid+'&nbsp;,素材已上传</span><br/>')
-			//		}
-			//	},
-			//});
-            //ajax 上传文件
-            $.ajaxFileUpload
-            (
-                {
-                    url: '/activity/upload_goods_url/', //用于文件上传的服务器端请求地址
-                    type:"GET",
-                    secureuri: false, //是否需要安全协议，一般设置为false
-                    fileElementId: 'goods_url', //文件上传域的ID
-                    dataType: 'json', //返回值类型 一般设置为json
-                    data: {"id":creatid},
-                    success: function (data)  //服务器成功响应处理函数
-                    {
-                    $("#checkshowContent span").hide()
+			var goodsurl = ($("#goods_url").val())
+			$.ajax({
+				type:"GET",
+				async:false,
+				url:"/activity/upload_goods_url",
+				data: {"id":creatid,"goods_url":goodsurl},
+				success:function (data) {
+					$("#checkshowContent span").hide()
 					if (data.creativeid!=""){
 						$("#checkshowContent").append('<span name="remit-name" class="fontred">素材:&nbsp;'+data.creativeid+'&nbsp;,素材已上传</span><br/>')
-					    }
-                    },
-                    error: function (data)//服务器响应失败处理函数
-                    {
-                        alert('上传失败');
-                    }
-                }
-            )
-
-
-
-
+					}
+				},
+			});
 		}
 	});
-
-
 	//点击确认付款改变付款状态
 	$("#payment").click(function () {
 		var orderid = $("#payorderid").val();

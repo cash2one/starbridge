@@ -5,7 +5,7 @@ from myapps.star.models import Star
 from myapps.creative.models import CreativeZhibo
 # Create your models here.
 
-##活动
+# 活动
 class Activity(models.Model):
     Activity_STATUS = (
         ('A', '待审核'),
@@ -24,10 +24,12 @@ class Activity(models.Model):
     advertiser_name = models.CharField(max_length=255, blank=True, null=True, verbose_name='广告主')
     budget = models.FloatField(verbose_name='总预算')
     memo = models.TextField(max_length=255, blank=True, null=True, verbose_name='备注')
+    # agent_id = models.IntegerField(verbose_name='代理商') ##############################################
     activity_status = models.CharField(max_length = 1, choices = Activity_STATUS, default = 'A', verbose_name='活动状态')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')  ##  auto_now_add=True,为添加时的时间，更新对象时不会有变动。
     create_user = models.CharField(max_length=100, blank=True, null=True,verbose_name='创建者')
     update_time = models.DateTimeField(auto_now=True, verbose_name='修改时间')      ##  auto_now=True,无论是你添加还是修改对象，时间为你添加或者修改的时间。
+    # update_time.editable=True
     update_user = models.CharField(max_length=100,blank=True, null=True, verbose_name='修改者')
 
     class Meta:
@@ -38,14 +40,13 @@ class Activity(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
-    ##把活动状态字母在html显示为对应汉字
+    # 把活动状态字母在html显示为对应汉字
     @property
     def activity_status_(self):
         return self.get_activity_status_display()
 
-##订单
-class Order(models.Model):
-    ##状态
+# 订单
+class Order(models.Model):  #状态
     ORDER_STATUS = (
         ('A', '未审核'),
         ('B', '待审核'),
@@ -63,13 +64,12 @@ class Order(models.Model):
     create_user = models.CharField(max_length=100, blank=True, null=True, verbose_name='订单创建者')
     order_add_id = models.IntegerField(verbose_name='order_add 的id')
     order_pay = models.CharField(max_length=255, blank=True, null=True, verbose_name='订单报价总价支付金额')
-    class RAYManager(models.Manager):
-    ##创建管理器类，可以更好地进行封装功能和重用代码。
-    ##增加一个方法order_count(),增加额外的管理器方法
+    class RAYManager(models.Manager):   #  创建管理器类，可以更好地进行封装功能和重用代码。
+    # 增加一个方法order_count()  增加额外的管理器方法
         def order_count(self):
             return self.filter(status__exact='A').count()
-    objects = models.Manager()  ##默认的管理器
-    ray_objects = RAYManager()  ##自定义的管理器，用新变量
+    objects = models.Manager()  # 默认的管理器
+    ray_objects = RAYManager()  # 自定义的管理器，用新变量
 
     class Meta:
         db_table = 't_order'
@@ -82,7 +82,7 @@ class Order(models.Model):
     def status_(self):
         return self.get_status_display()
 
-##排期
+# 排期
 class Flighting(models.Model):
     # order = models.ForeignKey(Order, verbose_name='订单')
     custom_time = models.CharField(max_length=255, blank=True, null=True, verbose_name='选择时间')   ##	逗号分隔
@@ -110,10 +110,17 @@ class Flighting(models.Model):
 #     def __str__(self):
 #         return "%s" % (self.order_sid)
 
-##创建订单附加的order_add表
+# 创建订单附加的order_add表
 class Order_add(models.Model):
+    # order_add_sid = models.IntegerField(verbose_name='order_add 表的sid')
+    ordername = models.CharField(max_length=255, blank=True, null=True, verbose_name='订单名称')
+    ordertimepre = models.DateTimeField(blank=True, null=True, verbose_name='自定义排期开始时间')
+    ordertimenext = models.DateTimeField(blank=True, null=True, verbose_name='自定义排期结束时间')
+
     content = models.CharField(max_length=255, blank=True, null=True, verbose_name='粉丝量-保底佣金') # 逗号分隔
     cps = models.CharField(max_length=255,blank=True, null=True, verbose_name='CPS') # cps
+    # commission = models.ForeignKey(Commission, verbose_name='佣金') #commission
+    # flighting = models.ForeignKey(Flighting, verbose_name='排期') # 投放日期,自定义时间,投放平台
     activity_id = models.CharField(max_length=255, blank=True, null=True, verbose_name='活动ID')  # 活动id存入Activity
     celebrityzhibo_id = models.CommaSeparatedIntegerField(max_length=255, blank=True, null=True, verbose_name='网红直播信息')  # 已选红人直播ID
     starzhibo_id = models.CommaSeparatedIntegerField(max_length=255, blank=True, null=True, verbose_name='明星直播信息')  # 已选明星直播ID
@@ -125,7 +132,8 @@ class Order_add(models.Model):
     def __str__(self):
         return "%s" % (self.id)
 
-##订单和红人关联表
+################################################################################
+# 订单和红人关联表
 class OrderCelebrityShip(models.Model):
     order = models.ForeignKey(Order, verbose_name='订单')
     celebrity = models.ForeignKey(Celebrity, verbose_name='红人')
@@ -138,7 +146,7 @@ class OrderCelebrityShip(models.Model):
     def __str__(self):
         return "%s -- %s" % (self.order.name, self.celebrity.name)
 
-##订单和明星关联表
+# 订单和明星关联表
 class OrderStarShip(models.Model):
     order = models.ForeignKey(Order, verbose_name='订单')
     star = models.ForeignKey(Star, verbose_name='明星')
